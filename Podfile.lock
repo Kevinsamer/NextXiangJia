@@ -1,0 +1,96 @@
+PODS:
+  - Alamofire (4.7.1)
+  - AlamofireObjectMapper (5.0.0):
+    - Alamofire (~> 4.1)
+    - ObjectMapper (~> 3.0)
+  - CircleLabel (1.0.0)
+  - Eureka (4.1.1)
+  - FontAwesome.swift (1.3.2)
+  - FSPagerView (0.7.1)
+  - ImageRow (3.0.0):
+    - Eureka (~> 4.0)
+  - Kingfisher (4.6.4)
+  - ObjectMapper (3.1.0)
+  - PullToRefresher (3.0.2)
+  - R.swift (4.0.0):
+    - R.swift.Library (~> 4.0.0)
+  - R.swift.Library (4.0.0)
+  - SnapKit (4.0.0)
+  - SwifterSwift (4.2.0):
+    - SwifterSwift/AppKit (= 4.2.0)
+    - SwifterSwift/CoreGraphics (= 4.2.0)
+    - SwifterSwift/CoreLocation (= 4.2.0)
+    - SwifterSwift/Foundation (= 4.2.0)
+    - SwifterSwift/MapKit (= 4.2.0)
+    - SwifterSwift/SwiftStdlib (= 4.2.0)
+    - SwifterSwift/UIKit (= 4.2.0)
+  - SwifterSwift/AppKit (4.2.0)
+  - SwifterSwift/CoreGraphics (4.2.0)
+  - SwifterSwift/CoreLocation (4.2.0)
+  - SwifterSwift/Foundation (4.2.0)
+  - SwifterSwift/MapKit (4.2.0)
+  - SwifterSwift/SwiftStdlib (4.2.0)
+  - SwifterSwift/UIKit (4.2.0)
+  - SwiftyJSON (4.0.0)
+  - Toast-Swift (3.0.1)
+  - XLPagerTabStrip (8.0.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - AlamofireObjectMapper
+  - CircleLabel
+  - Eureka (~> 4.0)
+  - FontAwesome.swift
+  - FSPagerView
+  - ImageRow (~> 3.0)
+  - Kingfisher (~> 4.6.4)
+  - PullToRefresher (~> 3.0.1)
+  - R.swift
+  - SnapKit
+  - SwifterSwift (~> 4.2.0)
+  - SwiftyJSON
+  - Toast-Swift (~> 3.0.1)
+  - XLPagerTabStrip
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - AlamofireObjectMapper
+    - CircleLabel
+    - Eureka
+    - FontAwesome.swift
+    - FSPagerView
+    - ImageRow
+    - Kingfisher
+    - ObjectMapper
+    - PullToRefresher
+    - R.swift
+    - R.swift.Library
+    - SnapKit
+    - SwifterSwift
+    - SwiftyJSON
+    - Toast-Swift
+    - XLPagerTabStrip
+
+SPEC CHECKSUMS:
+  Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
+  AlamofireObjectMapper: 5fafc816351cbbc0d486611aaeba7461c0cbad49
+  CircleLabel: 61e9f7255c0ee1e1089a45650dda410b9945f93b
+  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
+  FontAwesome.swift: b4e4c8ccbbecb12f9b592bc533ff237af3706667
+  FSPagerView: 958aba39684e1573755ddcfcc29f7eebb8413cee
+  ImageRow: 048123c296de9a6ac3998c415a6706c45ce480af
+  Kingfisher: 68498a706e46c2a050b0c9572f100e5db407f6e0
+  ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
+  PullToRefresher: 25a367871a70b1da0b28e8e7cecceb4ef04f5f56
+  R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
+  R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SwifterSwift: 1d101dcfb0c3123226900f3b4d220d57fb60d546
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  Toast-Swift: ba0b01b095aada709d915f9beb1d38184a2721c3
+  XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
+
+PODFILE CHECKSUM: a056646e4e40a2f8aa9d76007e5b23803ccff599
+
+COCOAPODS: 1.5.0.beta.1

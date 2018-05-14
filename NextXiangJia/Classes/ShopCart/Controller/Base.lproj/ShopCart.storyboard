@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BEY-nq-RZr">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Shop Cart View Controller-->
+        <scene sceneID="wtY-ln-68C">
+            <objects>
+                <viewController id="OZi-B9-98a" customClass="ShopCartViewController" customModule="NextXiangJia" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oBL-4y-bhb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.9724701356032972" green="1" blue="0.36456441499003767" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="Q5Y-hX-gV3"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ld6-dd-jJz"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DlQ-Au-3Sm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1334" y="396"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="LFa-iC-ZBp">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BEY-nq-RZr" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="tabBar_cart_normal" selectedImage="tabBar_cart_press" id="ZHH-K3-fhu"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wXh-7c-m4k">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="OZi-B9-98a" kind="relationship" relationship="rootViewController" id="2pp-q8-vI8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i5c-Wj-nXt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="564.79999999999995" y="396.70164917541234"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="tabBar_cart_normal" width="64" height="50"/>
+        <image name="tabBar_cart_press" width="64" height="50"/>
+    </resources>
+</document>
