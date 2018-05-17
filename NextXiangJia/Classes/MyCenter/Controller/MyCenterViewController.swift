@@ -123,8 +123,8 @@ class MyCenterViewController: UIViewController {
     private lazy var searchBar:UISearchBar = {
         //搜索栏
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: 64))
-        searchBar.searchBarStyle = UISearchBarStyle.minimal
-        searchBar.barStyle = UIBarStyle.black
+        searchBar.searchBarStyle = UISearchBarStyle.default
+        searchBar.barStyle = UIBarStyle.default
         searchBar.autocapitalizationType = .words
         searchBar.delegate = self
         searchBar.placeholder = "请输入搜索内容"
@@ -154,7 +154,7 @@ class MyCenterViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
+        //self.tabBarController?.tabBar.isHidden = false
     }
 
 }
@@ -311,74 +311,92 @@ extension MyCenterViewController :UICollectionViewDataSource, UICollectionViewDe
         case 0:
             print("我的订单")
             let orderVC = MyOrdersViewController()
+            orderVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(orderVC, sender: self)
         case 1:
             print("我的积分")
             let scoreVC = MyScoreViewController()
+            scoreVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(scoreVC, sender: self)
         case 2:
             print("我的代金券")
             let vouchersVC = MyVouchersViewController()
+            vouchersVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(vouchersVC, sender: self)
         case 3:
             print("退款申请")
             let refundVC = MyRefundApplicationViewController()
+            refundVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(refundVC, sender: self)
         case 4:
             print("站点建议")
             let suggestionVC = MySuggestionsViewController()
+            suggestionVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(suggestionVC, sender: self)
         case 5:
             print("商品咨询")
             let advisoryVC = MyAdvisoryViewController()
+            advisoryVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(advisoryVC, sender: self)
         case 6:
             print("商品评价")
             let evaluationVC = MyEvaluationViewController()
+            evaluationVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(evaluationVC, sender: self)
         case 7:
             print("短信息")
             let messageVC = MyMessageViewController()
+            messageVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(messageVC, sender: self)
         case 8:
             print("收藏夹")
             let collectionVC = MyCollectionViewController()
+            collectionVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(collectionVC, sender: self)
         case 9:
             print("账户余额")
             let balanceVC = MyBalanceViewController()
+            balanceVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(balanceVC, sender: self)
         case 10:
             print("在线充值")
             let rechargeVC = MyRechargeOnlineViewController()
+            rechargeVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(rechargeVC, sender: self)
         case 11:
             print("地址管理")
             let addressVC = MyAddressViewController()
+            addressVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(addressVC, sender: self)
         case 12:
             print("个人资料")
             let myInfoVC = MyInfoViewController()
+            myInfoVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(myInfoVC, sender: self)
         case 13:
             print("修改密码")
             let changePasswordVC = ChangePasswordViewController()
+            changePasswordVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(changePasswordVC, sender: self)
         case 14:
             print("发票管理")
             let invoiceManage = MyInvoiceManageViewController()
+            invoiceManage.hidesBottomBarWhenPushed = true
             self.navigationController?.show(invoiceManage, sender: self)
         case 15:
             print("我的推介")
             let commendVc = MyCommendViewController()
+            commendVc.hidesBottomBarWhenPushed = true
             self.navigationController?.show(commendVc, sender: self)
         case 16:
             print("我的下线成员")
             let myMemberVC = MyMemberViewController()
+            myMemberVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(myMemberVC, sender: self)
         case 17:
             print("我的佣金")
             let commissionVC = MyCommissionViewController()
+            commissionVC.hidesBottomBarWhenPushed = true
             self.navigationController?.show(commissionVC, sender: self)
         default:
             break
@@ -426,9 +444,9 @@ extension MyCenterViewController {
             searchBarState = 2
         }else if searchBarState == 2 {
             //显示
+            view.addSubview(alphaView)
             view.addSubview(searchBar)
             searchBar.becomeFirstResponder()
-            view.addSubview(alphaView)
             searchBarState = 1
         }
     }

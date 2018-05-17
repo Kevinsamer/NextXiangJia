@@ -71,8 +71,8 @@ class HomeViewController: UIViewController {
     private lazy var searchBar:UISearchBar = {
         //搜索栏
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: 64))
-        searchBar.searchBarStyle = UISearchBarStyle.minimal
-        searchBar.barStyle = UIBarStyle.black
+        searchBar.searchBarStyle = UISearchBarStyle.default
+        searchBar.barStyle = UIBarStyle.default
         searchBar.autocapitalizationType = .words
         searchBar.delegate = self
         searchBar.placeholder = "请输入搜索内容"
@@ -264,7 +264,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
+        //self.tabBarController?.tabBar.isHidden = false
     }
 
 }
@@ -355,6 +355,7 @@ extension HomeViewController{
         //navigationItem.titleView = title
         navigationController?.navigationBar.barTintColor = UIColor.init(named: "global_orange")//设置导航栏和状态栏颜色
         navigationController?.navigationBar.isTranslucent = false
+        self.tabBarController?.tabBar.isTranslucent = true
     }
 }
 // MARK: - 设置banner的数据源和代理
@@ -461,9 +462,10 @@ extension HomeViewController{
             searchBarState = 2
         }else if searchBarState == 2 {
             //显示
-            view.addSubview(searchBar)
+            
             searchBar.becomeFirstResponder()
             self.view.addSubview(alphaView)
+            view.addSubview(searchBar)
             searchBarState = 1
         }
     }
@@ -480,7 +482,7 @@ extension HomeViewController : UISearchBarDelegate {
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        self.rootScrollView.addSubview(alphaView)
+        //self.rootScrollView.addSubview(alphaView)
         return true
     }
 }
