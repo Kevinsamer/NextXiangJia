@@ -14,7 +14,7 @@ pod "Kingfisher","~> 4.6.4"
 #AutoLayout
 pod "SnapKit"
 #View
-pod "PullToRefresher","~> 3.0.1"
+pod "PullToRefreshKit"
 pod "Toast-Swift", "~> 3.0.1"
 #font
 pod "FontAwesome.swift"

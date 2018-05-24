@@ -11,7 +11,7 @@ PODS:
     - Eureka (~> 4.0)
   - Kingfisher (4.6.4)
   - ObjectMapper (3.1.0)
-  - PullToRefresher (3.0.2)
+  - PullToRefreshKit (0.8.6)
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
@@ -44,7 +44,7 @@ DEPENDENCIES:
   - FSPagerView
   - ImageRow (~> 3.0)
   - Kingfisher (~> 4.6.4)
-  - PullToRefresher (~> 3.0.1)
+  - PullToRefreshKit
   - R.swift
   - SnapKit
   - SwifterSwift (~> 4.2.0)
@@ -63,7 +63,7 @@ SPEC REPOS:
     - ImageRow
     - Kingfisher
     - ObjectMapper
-    - PullToRefresher
+    - PullToRefreshKit
     - R.swift
     - R.swift.Library
     - SnapKit
@@ -82,7 +82,7 @@ SPEC CHECKSUMS:
   ImageRow: 048123c296de9a6ac3998c415a6706c45ce480af
   Kingfisher: 68498a706e46c2a050b0c9572f100e5db407f6e0
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
-  PullToRefresher: 25a367871a70b1da0b28e8e7cecceb4ef04f5f56
+  PullToRefreshKit: 172df52ab9c6cb2c1d4b1872b49f448d6291523f
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
@@ -91,6 +91,6 @@ SPEC CHECKSUMS:
   Toast-Swift: ba0b01b095aada709d915f9beb1d38184a2721c3
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: a056646e4e40a2f8aa9d76007e5b23803ccff599
+PODFILE CHECKSUM: 9d4da2cf06af8f1fa94539e6628cd427dc40373a
 
 COCOAPODS: 1.5.0.beta.1
