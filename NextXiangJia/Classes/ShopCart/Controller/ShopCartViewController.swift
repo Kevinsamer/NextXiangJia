@@ -48,9 +48,9 @@ extension ShopCartViewController{
         leftBtn.setTitleColor(UIColor.init(named: "dark_gray"), for: .highlighted)
         
         let rightBtn = UIButton()
-        rightBtn.setTitle(String.fontAwesomeIcon(name: .search), for: .normal)
+        rightBtn.setTitle(String.fontAwesomeIcon(name: .edit), for: .normal)
         rightBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
-        rightBtn.setTitleColor(.white                                                                   , for: .normal)
+        rightBtn.setTitleColor(.white, for: .normal)
         rightBtn.setTitleColor(UIColor.init(named: "dark_gray"), for: .highlighted)
         
         //设置标题

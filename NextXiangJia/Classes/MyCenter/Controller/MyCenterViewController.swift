@@ -415,6 +415,7 @@ extension MyCenterViewController{
     }
     @objc func clickToLogin(sender: UITapGestureRecognizer){
         let loginVC = LoginViewController()
+        loginVC.hidesBottomBarWhenPushed = true
         self.navigationController?.show(loginVC, sender: self)
         print("login")
     }

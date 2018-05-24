@@ -30,7 +30,4 @@ pod "XLPagerTabStrip"
 #swift语法糖
 #pod "SwifterSwift", :git => "https://github.com/SwifterSwift/SwifterSwift.git","~> 4.2.0"          # All Extensions
 pod "SwifterSwift","~> 4.2.0"          # All Extensions
-#pod "SwifterSwift/Foundation" # Foundation Extensions
-#pod "SwifterSwift/UIKit"      # UIKit Extensions
-#pod "SwifterSwift/Cocoa"      # Cocoa Extensions
 end
