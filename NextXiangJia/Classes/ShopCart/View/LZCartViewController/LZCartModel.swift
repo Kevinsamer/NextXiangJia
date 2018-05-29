@@ -9,7 +9,7 @@
 import UIKit
 
 class LZCartModel: NSObject {
-
+    var shop:String?
     var select: Bool?
     var number: Int = 0
     var price: String?
