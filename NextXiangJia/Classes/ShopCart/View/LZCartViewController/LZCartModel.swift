@@ -13,8 +13,16 @@ class LZCartModel: NSObject {
     var select: Bool?
     var number: Int = 0
     var price: String?
+    var indexPath: IndexPath?
     
     var name:String?
     var date:String?
     var image:UIImage?
+    
+    public func showInfo(){
+        if testMode{
+            print("name:\(name) + num:\(number)")
+        }
+    }
+    
 }

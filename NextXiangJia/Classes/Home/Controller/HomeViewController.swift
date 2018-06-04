@@ -398,6 +398,7 @@ extension HomeViewController{
     }
     @objc func shopCartTapAction(){
         print("Shopcart Clicked")
+        self.tabBarController?.selectedIndex = 1
     }
     @objc func collectionTapAction(){
         print("Collection Clicked")

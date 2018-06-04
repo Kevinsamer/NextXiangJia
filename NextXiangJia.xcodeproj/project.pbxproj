@@ -81,6 +81,7 @@
 		0992E46020BC02D900B7902E /* LZColorTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992E45320BC02D900B7902E /* LZColorTool.swift */; };
 		0992E46120BC02D900B7902E /* LZConfigFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992E45420BC02D900B7902E /* LZConfigFile.swift */; };
 		0992E46320BCE6E600B7902E /* 40fe711f9b754b596159f3a6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0992E46220BCE6E600B7902E /* 40fe711f9b754b596159f3a6.jpg */; };
+		0992E46520BF841F00B7902E /* ios_tickets_520.png in Resources */ = {isa = PBXBuildFile; fileRef = 0992E46420BF841F00B7902E /* ios_tickets_520.png */; };
 		09D1AE2E209A94B9004C4DA4 /* UIButton-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */; };
 		09E37272209BEC1400F6E8B3 /* RegistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37271209BEC1400F6E8B3 /* RegistViewController.swift */; };
 		09E37274209BF43800F6E8B3 /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37273209BF43800F6E8B3 /* AuthCodeView.swift */; };
@@ -187,6 +188,7 @@
 		0992E45320BC02D900B7902E /* LZColorTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LZColorTool.swift; sourceTree = "<group>"; };
 		0992E45420BC02D900B7902E /* LZConfigFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LZConfigFile.swift; sourceTree = "<group>"; };
 		0992E46220BCE6E600B7902E /* 40fe711f9b754b596159f3a6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 40fe711f9b754b596159f3a6.jpg; sourceTree = "<group>"; };
+		0992E46420BF841F00B7902E /* ios_tickets_520.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios_tickets_520.png; sourceTree = "<group>"; };
 		09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-extension.swift"; sourceTree = "<group>"; };
 		09E37271209BEC1400F6E8B3 /* RegistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistViewController.swift; sourceTree = "<group>"; };
 		09E37273209BF43800F6E8B3 /* AuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeView.swift; sourceTree = "<group>"; };
@@ -567,6 +569,7 @@
 		0992E44720BC02D900B7902E /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				0992E46420BF841F00B7902E /* ios_tickets_520.png */,
 				0992E46220BCE6E600B7902E /* 40fe711f9b754b596159f3a6.jpg */,
 				0992E44820BC02D900B7902E /* back_button@2x.png */,
 				0992E44920BC02D900B7902E /* cart_addBtn_highlight@2x.png */,
@@ -710,6 +713,7 @@
 				090269942040FCC7007FF5B9 /* Home.storyboard in Resources */,
 				0908C8532064D9A300CED99E /* HeadView.xib in Resources */,
 				0992E45A20BC02D900B7902E /* cart_default_bg.png in Resources */,
+				0992E46520BF841F00B7902E /* ios_tickets_520.png in Resources */,
 				0992E45B20BC02D900B7902E /* cart_selected_btn@2x.png in Resources */,
 				0992E46320BCE6E600B7902E /* 40fe711f9b754b596159f3a6.jpg in Resources */,
 				090269632040F710007FF5B9 /* Assets.xcassets in Resources */,
