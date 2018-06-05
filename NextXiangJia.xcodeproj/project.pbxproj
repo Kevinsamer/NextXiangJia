@@ -82,6 +82,7 @@
 		0992E46120BC02D900B7902E /* LZConfigFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992E45420BC02D900B7902E /* LZConfigFile.swift */; };
 		0992E46320BCE6E600B7902E /* 40fe711f9b754b596159f3a6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0992E46220BCE6E600B7902E /* 40fe711f9b754b596159f3a6.jpg */; };
 		0992E46520BF841F00B7902E /* ios_tickets_520.png in Resources */ = {isa = PBXBuildFile; fileRef = 0992E46420BF841F00B7902E /* ios_tickets_520.png */; };
+		0992E46920C617A000B7902E /* NetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992E46820C617A000B7902E /* NetworkTools.swift */; };
 		09D1AE2E209A94B9004C4DA4 /* UIButton-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */; };
 		09E37272209BEC1400F6E8B3 /* RegistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37271209BEC1400F6E8B3 /* RegistViewController.swift */; };
 		09E37274209BF43800F6E8B3 /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37273209BF43800F6E8B3 /* AuthCodeView.swift */; };
@@ -189,6 +190,7 @@
 		0992E45420BC02D900B7902E /* LZConfigFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LZConfigFile.swift; sourceTree = "<group>"; };
 		0992E46220BCE6E600B7902E /* 40fe711f9b754b596159f3a6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 40fe711f9b754b596159f3a6.jpg; sourceTree = "<group>"; };
 		0992E46420BF841F00B7902E /* ios_tickets_520.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ios_tickets_520.png; sourceTree = "<group>"; };
+		0992E46820C617A000B7902E /* NetworkTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
 		09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-extension.swift"; sourceTree = "<group>"; };
 		09E37271209BEC1400F6E8B3 /* RegistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistViewController.swift; sourceTree = "<group>"; };
 		09E37273209BF43800F6E8B3 /* AuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeView.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				090269AC2041399B007FF5B9 /* fontawesome.ttf */,
 				090269B32043B392007FF5B9 /* Common.swift */,
 				09F9EE40207DF257007D18D0 /* YTools.swift */,
+				0992E46820C617A000B7902E /* NetworkTools.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 				090DDDDF2092EE4500A42E3F /* MyMessageViewController.swift in Sources */,
 				090DDDE72092F04700A42E3F /* MyAddressViewController.swift in Sources */,
 				090DDDDD2092EDF600A42E3F /* MyEvaluationViewController.swift in Sources */,
+				0992E46920C617A000B7902E /* NetworkTools.swift in Sources */,
 				09E37272209BEC1400F6E8B3 /* RegistViewController.swift in Sources */,
 				0908C83B2060DAB700CED99E /* ShopCartViewController.swift in Sources */,
 				0908C83D2060DAF100CED99E /* MyCenterViewController.swift in Sources */,
