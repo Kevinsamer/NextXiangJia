@@ -36,6 +36,7 @@ private var scrollViewContentSizeH:CGFloat = bannerH + fourBtnH + collectionView
 //private var finalContentViewH = UIDevice.current.isX() ? finalScreenH - finalStatusBarH - finalNavigationBarH - finalTabBarH - IphonexHomeIndicator : finalScreenH - finalStatusBarH - finalNavigationBarH - finalTabBarH
 class HomeViewController: UIViewController {
     // MARK: - 懒加载属性
+    private lazy var homeViewModel : HomeViewModel = HomeViewModel()
     private lazy var alphaView : UIControl = {
         //UISearchBar的蒙层
         let view = UIControl(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: finalContentViewHaveTabbarH))
@@ -446,10 +447,12 @@ extension HomeViewController{
         initCollectionData()
     }
     private func initBannerData(){
-        bannerImages = ["1","2","3","4","5"]
+        bannerImages = ["1","2","3","4","5"]//测试数据
+        homeViewModel.requestBannerData()
+        
     }
     private func initCollectionData(){
-        
+        homeViewModel.requestCollectionData()
     }
 }
 
