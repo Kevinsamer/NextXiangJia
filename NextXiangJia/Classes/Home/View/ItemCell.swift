@@ -9,10 +9,16 @@
 import UIKit
 
 class ItemCell: UICollectionViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
+    
+    //MARK: - 控件属性
+    @IBOutlet var itemImageView: UIImageView!
+    @IBOutlet var itemTextLabel: UILabel!
+    
+    //MARK: - 定义Model
+    //var goods : GoodsGroup? {
+    //    didSet{
+    //        itemImageView.image = UIImage(goods.image)
+    //        itemTextLabel.text = goods.goodsName
+    //    }
+    //}
 }

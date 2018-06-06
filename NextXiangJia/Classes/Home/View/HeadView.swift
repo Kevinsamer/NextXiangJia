@@ -9,10 +9,8 @@
 import UIKit
 
 class HeadView: UICollectionReusableView {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    //MARK: - 控件属性
+    @IBOutlet var headTitleLabel: UILabel!
+    @IBOutlet var headFAIcionLabel: UILabel!
     
 }
