@@ -20,7 +20,7 @@ public class YTools{
         navCT.navigationBar.tintColor = color
         navItem.title = titleName
     }
-    
+    //显示toast
     public static func showMyToast(rootView: UIView, message:String, duration:TimeInterval = 3.0, position:ToastPosition = .bottom){
         var myStyle = ToastStyle()
         myStyle.backgroundColor = UIColor(named: "global_orange")!
@@ -33,6 +33,18 @@ public class YTools{
             return Int(categoryNum) / num + 1
         }else{
             return Int(categoryNum) / num
+        }
+    }
+    
+    //通过class_copyIvarList来查看类中所有的属性--p1:目标类  p2:属性个数的指针(返回时包含返回数组的长度)。该函数返回所有属性的地址
+    public static func printKVCKey(_ cls: AnyClass?){
+        var count : UInt32 = 0
+        let ivars = class_copyIvarList(cls, &count)!
+        //循环count次，查看所有属性
+        for i in 0..<count {
+            let ivar = ivars[Int(i)]
+            let name = ivar_getName(ivar)
+            print(String(cString : name!))
         }
     }
     

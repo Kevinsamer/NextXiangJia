@@ -57,7 +57,7 @@ extension ShopCartViewController{
         backgroundView.backgroundColor = LZColorTool.colorFromRGB(245, G: 245, B: 245)
         self.view.addSubview(backgroundView)
         
-        backgroundView.snp.makeConstraints { (make) in
+        backgroundView.snp.makeConstraints { [unowned self] (make) in
             
             make.left.right.equalTo(self.view)
             make.height.equalTo(finalTabBarH)
@@ -69,7 +69,7 @@ extension ShopCartViewController{
         lineView.backgroundColor = UIColor.lightGray
         backgroundView.addSubview(lineView)
         
-        lineView.snp.makeConstraints { (make) in
+        lineView.snp.makeConstraints { [unowned self](make) in
             
             make.left.right.equalTo(self.view)
             make.top.equalTo(backgroundView)
@@ -161,7 +161,7 @@ extension ShopCartViewController{
         backgroundView.addGestureRecognizer(swipe)
         self.view.addSubview(backgroundView)
         
-        backgroundView.snp.makeConstraints { (make) in
+        backgroundView.snp.makeConstraints {[unowned self] (make) in
             //通过设置make.edges来一次设置目标view的全部约束
             make.edges.equalTo(self.view)
         }
@@ -229,7 +229,7 @@ extension ShopCartViewController{
         cartTableView?.refreshControl = UIRefreshControl()
         cartTableView?.refreshControl?.attributedTitle = NSAttributedString(string: "下拉刷新")
         cartTableView?.refreshControl?.addTarget(self, action: #selector(refreshCartTable), for: UIControlEvents.valueChanged)
-        cartTableView?.snp.makeConstraints({ (make) in
+        cartTableView?.snp.makeConstraints({[unowned self] (make) in
             make.left.right.equalTo(self.view)
             make.top.equalTo(self.view).offset(0)
             make.bottom.equalTo(self.view).offset(UIDevice.current.isX() ? 0 - finalTabBarH * 2 - IphonexHomeIndicatorH : 0 - finalTabBarH * 2)

@@ -83,6 +83,8 @@ class CategoryViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         setUI()
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

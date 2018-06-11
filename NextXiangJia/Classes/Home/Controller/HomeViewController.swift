@@ -37,7 +37,7 @@ private var scrollViewContentSizeH:CGFloat = bannerH + fourBtnH + collectionView
 class HomeViewController: UIViewController {
     // MARK: - 懒加载属性
     private lazy var homeViewModel : HomeViewModel = HomeViewModel()
-    private lazy var alphaView : UIControl = {
+    private lazy var alphaView : UIControl = { [weak self] in
         //UISearchBar的蒙层
         let view = UIControl(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: finalContentViewHaveTabbarH))
         view.backgroundColor = .black
@@ -448,7 +448,11 @@ extension HomeViewController{
     }
     private func initBannerData(){
         bannerImages = ["1","2","3","4","5"]//测试数据
-        homeViewModel.requestBannerData()
+        homeViewModel.requestBannerData {
+            //请求结束后重载视图数据
+            self.topBanner.reloadData()
+            print("加载banner数据")
+        }
         
     }
     private func initCollectionData(){

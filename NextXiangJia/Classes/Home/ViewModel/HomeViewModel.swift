@@ -15,7 +15,7 @@ class HomeViewModel {
 
 //MARK: - 首页网络请求
 extension HomeViewModel {
-    func requestBannerData(){
+    func requestBannerData(finishCallback : @escaping () -> ()){
         //swift异步操作聚合同步
 //        let group = DispatchGroup()
 //        group.enter()
@@ -23,7 +23,7 @@ extension HomeViewModel {
 //        group.leave()
 //        group.notify(queue: DispatchQueue.main) {
 //            //所有异步操作完成
-//        }
+//        }	
         NetworkTools.requestData(type: .GET, urlString: "http://capi.douyucdn.cn/api/v1/getHotCate", parameters: ["limit":"4","offset":"0","time":NSDate.getCurrentDateInterval() as NSString]) { (result) in
             //print(result)
             guard let resultDict = result as? [String : NSObject] else {
@@ -44,6 +44,8 @@ extension HomeViewModel {
                 }
                 print("--------")
             }
+            //所有数据请求完毕后回调
+            finishCallback()
         }
     }
     

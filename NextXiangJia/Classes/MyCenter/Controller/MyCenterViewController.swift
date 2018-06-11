@@ -39,7 +39,7 @@ class MyCenterViewController: UIViewController {
         return coll
     }()
     //Head Iconssa
-    lazy var headImageView : UIImageView = {[unowned self] in
+    lazy var headImageView : UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 40, y: 420, width: 80, height: 80))
 //        imageView.image = UIImage(named: "loading")
         imageView.contentMode = .scaleAspectFill
