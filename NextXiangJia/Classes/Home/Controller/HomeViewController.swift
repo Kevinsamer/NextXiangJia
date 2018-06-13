@@ -12,7 +12,10 @@ import FSPagerView
 import CircleLabel
 import SwifterSwift
 import Kingfisher
+import SwiftEventBus
 
+//searchBar attribute
+private let searchBarH:CGFloat = 64
 //banner attribute
 private let bannerCellID = "bannerCellID"
 private var bannerNumbers = 5
@@ -71,12 +74,19 @@ class HomeViewController: UIViewController {
     }()
     private lazy var searchBar:UISearchBar = {
         //搜索栏
-        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: 64))
+        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: searchBarH))
         searchBar.searchBarStyle = UISearchBarStyle.default
         searchBar.barStyle = UIBarStyle.default
         searchBar.autocapitalizationType = .words
         searchBar.delegate = self
         searchBar.placeholder = "请输入搜索内容"
+//        let textField = searchBar.value(forKey: "_searchField") as! UITextField //获取searchBar的输入框
+//        textField.isOpaque = true
+//        textField.backgroundColor = .white
+        //searchBar.barTintColor = UIColor.clear
+        searchBar.tintColor = UIColor(named: "global_orange")
+        var background = searchBar.value(forKey: "_background") as! UIView
+        background.removeFromSuperview()
         return searchBar
     }()
     private lazy var collections:UICollectionView = {
@@ -159,7 +169,7 @@ class HomeViewController: UIViewController {
         let circle = CircleLabel(frame: CGRect(x: fourBtnW / 2 - 25, y: 10, width: 50, height: 50))
         circle.useTextColor = false
         circle.textColor = .white
-        circle.circleColor = UIColor.init(hexString: "#F89910")!
+        circle.circleColor = UIColor(named: "global_orange")!
         circle.text = String.fontAwesomeIcon(name: .listUL)
         circle.font = UIFont.fontAwesome(ofSize: 30)
         var label:UILabel = {
@@ -486,7 +496,15 @@ extension HomeViewController : UISearchBarDelegate {
         alphaView.removeFromSuperview()
         searchBtnClicked()
         searchContent = (searchBar.textField?.text)!
-        print(searchContent)
+        let vc = SearchResultController(collectionViewLayout: UICollectionViewFlowLayout())
+        vc.hidesBottomBarWhenPushed = true
+        vc.SendData(data: searchContent)
+        //CommunicationTools.post(name: Communications.SearchResult, data: searchContent)
+//        DispatchQueue.afterDelay(duration: 0.01) {
+//            SwiftEventBus.post("searchKeys", sender: searchContent)
+//        }
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {

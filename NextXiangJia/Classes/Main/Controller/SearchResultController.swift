@@ -13,7 +13,7 @@ private var collectionItemH = UIDevice.current.isX() ? collectionItemW * 10 / 8 
 private var cellID = "cellID"
 private let listCellID = "listCellID"
 private let collCellID = "collCellID"
-var keys = ""
+private var keys = ""
 class SearchResultController: UICollectionViewController {
     
     override init(collectionViewLayout layout: UICollectionViewLayout) {
@@ -87,12 +87,18 @@ extension SearchResultController {
     }
     
     private func initData(){
-        
-        SwiftEventBus.onBackgroundThread(self, name: "searchKeys") {[unowned self] (result) in
-            keys = result?.object as! String
-            self.navigationItem.title = keys
-            print(keys)
-        }
+
+//        SwiftEventBus.onBackgroundThread(self, name: "searchKeys") {[unowned self] (result) in
+//            keys = result?.object as! String
+//            self.navigationItem.title = keys
+//            print(keys)
+//        }
+//        CommunicationTools.getCommunications(self, name: Communications.SearchResult) { [unowned self] (notification) in
+//            keys = notification?.object as! String
+//            self.navigationItem.title = keys
+//            print(keys)
+//        }
+        navigationItem.title = keys
     }
     
     private func setNavigationBar(){
@@ -135,7 +141,7 @@ extension SearchResultController {
             }
             
             if let navigationbar = self.navigationController?.navigationBar {
-                navigationbar.barTintColor = UIColor.orange
+                navigationbar.barTintColor = UIColor(named: "global_orange")
             }
             navigationItem.searchController = searchBarVC
             navigationItem.hidesSearchBarWhenScrolling = false
@@ -201,5 +207,13 @@ extension SearchResultController {
             
         }
         
+    }
+}
+
+extension SearchResultController : SendDataProtocol {
+    func SendData(data: Any?) {
+        if let key = data as? String {
+            keys = key
+        }
     }
 }

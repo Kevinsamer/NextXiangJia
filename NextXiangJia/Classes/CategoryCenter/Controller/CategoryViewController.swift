@@ -67,6 +67,9 @@ class CategoryViewController: UIViewController {
         searchBar.autocapitalizationType = .words
         searchBar.delegate = self
         searchBar.placeholder = "请输入搜索内容"
+        searchBar.tintColor = UIColor(named: "global_orange")
+        var background = searchBar.value(forKey: "_background") as! UIView
+        background.removeFromSuperview()
         return searchBar
     }()
     private lazy var alphaView : UIControl = {

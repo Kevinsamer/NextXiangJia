@@ -28,6 +28,8 @@
 		0904C37920CFC0DE009A8282 /* CollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0904C37520CFC0DD009A8282 /* CollCell.xib */; };
 		0904C37A20CFC0DE009A8282 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C37620CFC0DD009A8282 /* ListCell.swift */; };
 		0904C37B20CFC0DE009A8282 /* ListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0904C37720CFC0DD009A8282 /* ListCell.xib */; };
+		0904C37D20D0AA32009A8282 /* CommunicationTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C37C20D0AA32009A8282 /* CommunicationTools.swift */; };
+		0904C3A220D0FC0F009A8282 /* SendDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C3A120D0FC0F009A8282 /* SendDataProtocol.swift */; };
 		0908C83B2060DAB700CED99E /* ShopCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908C83A2060DAB700CED99E /* ShopCartViewController.swift */; };
 		0908C83D2060DAF100CED99E /* MyCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908C83C2060DAF100CED99E /* MyCenterViewController.swift */; };
 		0908C83F2060DB0F00CED99E /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908C83E2060DB0F00CED99E /* CategoryViewController.swift */; };
@@ -145,6 +147,8 @@
 		0904C37520CFC0DD009A8282 /* CollCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollCell.xib; sourceTree = "<group>"; };
 		0904C37620CFC0DD009A8282 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		0904C37720CFC0DD009A8282 /* ListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListCell.xib; sourceTree = "<group>"; };
+		0904C37C20D0AA32009A8282 /* CommunicationTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationTools.swift; sourceTree = "<group>"; };
+		0904C3A120D0FC0F009A8282 /* SendDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDataProtocol.swift; sourceTree = "<group>"; };
 		0908C83A2060DAB700CED99E /* ShopCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCartViewController.swift; sourceTree = "<group>"; };
 		0908C83C2060DAF100CED99E /* MyCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCenterViewController.swift; sourceTree = "<group>"; };
 		0908C83E2060DB0F00CED99E /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
@@ -369,6 +373,8 @@
 				090269B32043B392007FF5B9 /* Common.swift */,
 				09F9EE40207DF257007D18D0 /* YTools.swift */,
 				0992E46820C617A000B7902E /* NetworkTools.swift */,
+				0904C37C20D0AA32009A8282 /* CommunicationTools.swift */,
+				0904C3A120D0FC0F009A8282 /* SendDataProtocol.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -504,9 +510,9 @@
 			children = (
 				090DDDCD2092AF9700A42E3F /* MyInfoControllers */,
 				090269982040FD55007FF5B9 /* MyCenter.storyboard */,
+				0908C83C2060DAF100CED99E /* MyCenterViewController.swift */,
 				09E37271209BEC1400F6E8B3 /* RegistViewController.swift */,
 				090DDE1C2093FCE800A42E3F /* LoginViewController.swift */,
-				0908C83C2060DAF100CED99E /* MyCenterViewController.swift */,
 				094919A1209B032600E82D0A /* ChangePasswordViewController.swift */,
 			);
 			path = Controller;
@@ -878,6 +884,7 @@
 				090269B22043AEB9007FF5B9 /* PageTitleView.swift in Sources */,
 				0992E45D20BC02D900B7902E /* LZCartModel.swift in Sources */,
 				09026A0F204546D8007FF5B9 /* UIColor-extension.swift in Sources */,
+				0904C3A220D0FC0F009A8282 /* SendDataProtocol.swift in Sources */,
 				090269B0204157A2007FF5B9 /* UIBarButtonItem-Extension.swift in Sources */,
 				090269A7204103C1007FF5B9 /* MainViewController.swift in Sources */,
 				090DDDCC208F193200A42E3F /* MyCenterCell.swift in Sources */,
@@ -935,6 +942,7 @@
 				0908C83F2060DB0F00CED99E /* CategoryViewController.swift in Sources */,
 				090269B42043B392007FF5B9 /* Common.swift in Sources */,
 				0978EF9B20A528AE004BEACF /* MySuggesttionTabSubmitViewController.swift in Sources */,
+				0904C37D20D0AA32009A8282 /* CommunicationTools.swift in Sources */,
 				0992E45E20BC02D900B7902E /* LZCartTableViewCell.swift in Sources */,
 				090DDDD32092C22100A42E3F /* MyScoreViewController.swift in Sources */,
 				0978EFA120A5834A004BEACF /* MyTextField.swift in Sources */,
