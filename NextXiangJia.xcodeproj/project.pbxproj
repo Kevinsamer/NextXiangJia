@@ -24,6 +24,10 @@
 		090269B22043AEB9007FF5B9 /* PageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090269B12043AEB9007FF5B9 /* PageTitleView.swift */; };
 		090269B42043B392007FF5B9 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090269B32043B392007FF5B9 /* Common.swift */; };
 		09026A0F204546D8007FF5B9 /* UIColor-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09026A0E204546D8007FF5B9 /* UIColor-extension.swift */; };
+		0904C37820CFC0DE009A8282 /* CollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C37420CFC0DD009A8282 /* CollCell.swift */; };
+		0904C37920CFC0DE009A8282 /* CollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0904C37520CFC0DD009A8282 /* CollCell.xib */; };
+		0904C37A20CFC0DE009A8282 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C37620CFC0DD009A8282 /* ListCell.swift */; };
+		0904C37B20CFC0DE009A8282 /* ListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0904C37720CFC0DD009A8282 /* ListCell.xib */; };
 		0908C83B2060DAB700CED99E /* ShopCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908C83A2060DAB700CED99E /* ShopCartViewController.swift */; };
 		0908C83D2060DAF100CED99E /* MyCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908C83C2060DAF100CED99E /* MyCenterViewController.swift */; };
 		0908C83F2060DB0F00CED99E /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908C83E2060DB0F00CED99E /* CategoryViewController.swift */; };
@@ -87,6 +91,7 @@
 		0992E46F20C660B700B7902E /* NSDate-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992E46E20C660B700B7902E /* NSDate-extension.swift */; };
 		0992E47120C6738500B7902E /* TagData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992E47020C6738500B7902E /* TagData.swift */; };
 		0992E47320C6762900B7902E /* RoomData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992E47220C6762900B7902E /* RoomData.swift */; };
+		09A396A720CE096D00B82970 /* SearchResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A396A620CE096D00B82970 /* SearchResultController.swift */; };
 		09D1AE2E209A94B9004C4DA4 /* UIButton-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */; };
 		09E37272209BEC1400F6E8B3 /* RegistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37271209BEC1400F6E8B3 /* RegistViewController.swift */; };
 		09E37274209BF43800F6E8B3 /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37273209BF43800F6E8B3 /* AuthCodeView.swift */; };
@@ -136,6 +141,10 @@
 		090269B12043AEB9007FF5B9 /* PageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTitleView.swift; sourceTree = "<group>"; };
 		090269B32043B392007FF5B9 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		09026A0E204546D8007FF5B9 /* UIColor-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor-extension.swift"; sourceTree = "<group>"; };
+		0904C37420CFC0DD009A8282 /* CollCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollCell.swift; sourceTree = "<group>"; };
+		0904C37520CFC0DD009A8282 /* CollCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollCell.xib; sourceTree = "<group>"; };
+		0904C37620CFC0DD009A8282 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		0904C37720CFC0DD009A8282 /* ListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListCell.xib; sourceTree = "<group>"; };
 		0908C83A2060DAB700CED99E /* ShopCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCartViewController.swift; sourceTree = "<group>"; };
 		0908C83C2060DAF100CED99E /* MyCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCenterViewController.swift; sourceTree = "<group>"; };
 		0908C83E2060DB0F00CED99E /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
@@ -199,6 +208,7 @@
 		0992E46E20C660B700B7902E /* NSDate-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate-extension.swift"; sourceTree = "<group>"; };
 		0992E47020C6738500B7902E /* TagData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagData.swift; sourceTree = "<group>"; };
 		0992E47220C6762900B7902E /* RoomData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomData.swift; sourceTree = "<group>"; };
+		09A396A620CE096D00B82970 /* SearchResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultController.swift; sourceTree = "<group>"; };
 		09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-extension.swift"; sourceTree = "<group>"; };
 		09E37271209BEC1400F6E8B3 /* RegistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistViewController.swift; sourceTree = "<group>"; };
 		09E37273209BF43800F6E8B3 /* AuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeView.swift; sourceTree = "<group>"; };
@@ -397,6 +407,7 @@
 			children = (
 				0902695C2040F710007FF5B9 /* Main.storyboard */,
 				090269A4204103C1007FF5B9 /* MainViewController.swift */,
+				09A396A620CE096D00B82970 /* SearchResultController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -411,6 +422,7 @@
 		090269A6204103C1007FF5B9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0904C37320CFC0DD009A8282 /* SearchResultCell */,
 				0978EF8F20A2DE5D004BEACF /* AreaPickerView */,
 				090269B12043AEB9007FF5B9 /* PageTitleView.swift */,
 				09E37273209BF43800F6E8B3 /* AuthCodeView.swift */,
@@ -430,6 +442,17 @@
 				0992E46E20C660B700B7902E /* NSDate-extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		0904C37320CFC0DD009A8282 /* SearchResultCell */ = {
+			isa = PBXGroup;
+			children = (
+				0904C37420CFC0DD009A8282 /* CollCell.swift */,
+				0904C37520CFC0DD009A8282 /* CollCell.xib */,
+				0904C37620CFC0DD009A8282 /* ListCell.swift */,
+				0904C37720CFC0DD009A8282 /* ListCell.xib */,
+			);
+			path = SearchResultCell;
 			sourceTree = "<group>";
 		};
 		0908C8402060DBA600CED99E /* Model */ = {
@@ -741,6 +764,7 @@
 				0992E46320BCE6E600B7902E /* 40fe711f9b754b596159f3a6.jpg in Resources */,
 				090269632040F710007FF5B9 /* Assets.xcassets in Resources */,
 				0992E45920BC02D900B7902E /* cart_cutBtn_nomal@2x.png in Resources */,
+				0904C37920CFC0DE009A8282 /* CollCell.xib in Resources */,
 				090269AD2041399C007FF5B9 /* fontawesome.ttf in Resources */,
 				0902699A2040FD55007FF5B9 /* MyCenter.storyboard in Resources */,
 				0908C84D2064D96F00CED99E /* ItemCell.xib in Resources */,
@@ -750,6 +774,7 @@
 				0902699D2040FD70007FF5B9 /* CategoryCenter.storyboard in Resources */,
 				0978EF9320A2DE5D004BEACF /* address.txt in Resources */,
 				090269972040FD33007FF5B9 /* ShopCart.storyboard in Resources */,
+				0904C37B20CFC0DE009A8282 /* ListCell.xib in Resources */,
 				0902695E2040F710007FF5B9 /* Main.storyboard in Resources */,
 				0992E45520BC02D900B7902E /* back_button@2x.png in Resources */,
 				0992E45720BC02D900B7902E /* cart_addBtn_nomal@2x.png in Resources */,
@@ -810,6 +835,7 @@
 				"${BUILT_PRODUCTS_DIR}/PullToRefreshKit/PullToRefreshKit.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftEventBus/SwiftEventBus.framework",
 				"${BUILT_PRODUCTS_DIR}/SwifterSwift/SwifterSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework",
@@ -829,6 +855,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PullToRefreshKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftEventBus.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwifterSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast_Swift.framework",
@@ -864,9 +891,11 @@
 				090DDDDF2092EE4500A42E3F /* MyMessageViewController.swift in Sources */,
 				090DDDE72092F04700A42E3F /* MyAddressViewController.swift in Sources */,
 				090DDDDD2092EDF600A42E3F /* MyEvaluationViewController.swift in Sources */,
+				0904C37A20CFC0DE009A8282 /* ListCell.swift in Sources */,
 				0992E46920C617A000B7902E /* NetworkTools.swift in Sources */,
 				09E37272209BEC1400F6E8B3 /* RegistViewController.swift in Sources */,
 				0908C83B2060DAB700CED99E /* ShopCartViewController.swift in Sources */,
+				09A396A720CE096D00B82970 /* SearchResultController.swift in Sources */,
 				0908C83D2060DAF100CED99E /* MyCenterViewController.swift in Sources */,
 				0992E46F20C660B700B7902E /* NSDate-extension.swift in Sources */,
 				0978EF8E20A282BB004BEACF /* AddNewAddressViewController.swift in Sources */,
@@ -896,6 +925,7 @@
 				09F9EE41207DF257007D18D0 /* YTools.swift in Sources */,
 				0992E47120C6738500B7902E /* TagData.swift in Sources */,
 				0978EF9420A2DE5D004BEACF /* AreaPickView.swift in Sources */,
+				0904C37820CFC0DE009A8282 /* CollCell.swift in Sources */,
 				094C407820AAC400001E5C77 /* SMSegment.swift in Sources */,
 				09D1AE2E209A94B9004C4DA4 /* UIButton-extension.swift in Sources */,
 				0978EF9520A2DE5D004BEACF /* Extention.swift in Sources */,

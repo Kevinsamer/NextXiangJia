@@ -47,7 +47,14 @@ public class YTools{
             print(String(cString : name!))
         }
     }
-    
+    //文字添加中划线，返回NSAttributedString
+    public static func textAddMiddleLine(text: String) -> NSAttributedString{
+        let attributeText = NSMutableAttributedString(string: text)
+        attributeText.addAttribute(NSAttributedStringKey.baselineOffset, value: 0, range: NSMakeRange(0, attributeText.length))
+        attributeText.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeText.length))
+        attributeText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.lightGray, range: NSRange(location:0,length:attributeText.length))
+        return attributeText
+    }
     
 }
 //MARK: - objc func

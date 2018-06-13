@@ -27,6 +27,9 @@ pod "Eureka","~> 4.0"
 pod "ImageRow", "~> 3.0"
 pod "XLPagerTabStrip"
 
+#组件通讯
+pod "SwiftEventBus", :tag => "3.0.0", :git => "https://github.com/cesarferreira/SwiftEventBus.git"
+
 #swift语法糖
 #pod "SwifterSwift", :git => "https://github.com/SwifterSwift/SwifterSwift.git","~> 4.2.0"          # All Extensions
 pod "SwifterSwift","~> 4.2.0"          # All Extensions
