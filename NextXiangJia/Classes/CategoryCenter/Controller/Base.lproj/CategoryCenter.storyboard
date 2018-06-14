@@ -25,10 +25,10 @@
             </objects>
             <point key="canvasLocation" x="1334" y="1775"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--My Navigation Controller-->
         <scene sceneID="s4I-Xs-cR7">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jeT-cs-vVT" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jeT-cs-vVT" customClass="MyNavigationController" customModule="NextXiangJia" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tabBar_category_normal" selectedImage="tabBar_category_press" id="wdJ-vl-6db"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="13Z-26-ErO">

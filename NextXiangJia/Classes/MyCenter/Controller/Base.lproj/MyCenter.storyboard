@@ -63,10 +63,10 @@
             </objects>
             <point key="canvasLocation" x="1333.5999999999999" y="1078.1109445277361"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--My Navigation Controller-->
         <scene sceneID="XR0-31-stf">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bIz-fV-qeD" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bIz-fV-qeD" customClass="MyNavigationController" customModule="NextXiangJia" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tabBar_myJD_normal" selectedImage="tabBar_myJD_press" id="pdD-43-hYq"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Y6K-tR-hnR">

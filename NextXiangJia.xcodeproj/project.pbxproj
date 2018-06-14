@@ -30,6 +30,7 @@
 		0904C37B20CFC0DE009A8282 /* ListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0904C37720CFC0DD009A8282 /* ListCell.xib */; };
 		0904C37D20D0AA32009A8282 /* CommunicationTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C37C20D0AA32009A8282 /* CommunicationTools.swift */; };
 		0904C3A220D0FC0F009A8282 /* SendDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C3A120D0FC0F009A8282 /* SendDataProtocol.swift */; };
+		0904C3D020D207D3009A8282 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C3CF20D207D3009A8282 /* MyNavigationController.swift */; };
 		0908C83B2060DAB700CED99E /* ShopCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908C83A2060DAB700CED99E /* ShopCartViewController.swift */; };
 		0908C83D2060DAF100CED99E /* MyCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908C83C2060DAF100CED99E /* MyCenterViewController.swift */; };
 		0908C83F2060DB0F00CED99E /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908C83E2060DB0F00CED99E /* CategoryViewController.swift */; };
@@ -149,6 +150,7 @@
 		0904C37720CFC0DD009A8282 /* ListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListCell.xib; sourceTree = "<group>"; };
 		0904C37C20D0AA32009A8282 /* CommunicationTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationTools.swift; sourceTree = "<group>"; };
 		0904C3A120D0FC0F009A8282 /* SendDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDataProtocol.swift; sourceTree = "<group>"; };
+		0904C3CF20D207D3009A8282 /* MyNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNavigationController.swift; sourceTree = "<group>"; };
 		0908C83A2060DAB700CED99E /* ShopCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCartViewController.swift; sourceTree = "<group>"; };
 		0908C83C2060DAF100CED99E /* MyCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCenterViewController.swift; sourceTree = "<group>"; };
 		0908C83E2060DB0F00CED99E /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				09E37273209BF43800F6E8B3 /* AuthCodeView.swift */,
 				0978EFA020A5834A004BEACF /* MyTextField.swift */,
 				0978EFA220A5933A004BEACF /* MyTextView.swift */,
+				0904C3CF20D207D3009A8282 /* MyNavigationController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -880,6 +883,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				090DDDEF2092F1A000A42E3F /* MyCommendViewController.swift in Sources */,
+				0904C3D020D207D3009A8282 /* MyNavigationController.swift in Sources */,
 				0978EFA320A5933A004BEACF /* MyTextView.swift in Sources */,
 				090269B22043AEB9007FF5B9 /* PageTitleView.swift in Sources */,
 				0992E45D20BC02D900B7902E /* LZCartModel.swift in Sources */,

@@ -25,6 +25,11 @@ class SearchResultController: UICollectionViewController {
     }
     
     //MARK: - 懒加载
+    lazy var searchBarVC: UISearchController = {
+        let searchBarVC = UISearchController(searchResultsController: nil)
+        
+        return searchBarVC
+    }()
     lazy var tableLayout: UICollectionViewFlowLayout = {
         //流式布局--selected
         let layout = UICollectionViewFlowLayout()
@@ -98,12 +103,12 @@ extension SearchResultController {
 //            self.navigationItem.title = keys
 //            print(keys)
 //        }
-        navigationItem.title = keys
+        
     }
     
     private func setNavigationBar(){
         navigationItem.rightBarButtonItem = rightItem
-        
+        navigationItem.title = "搜索结果"
     }
     
     private func setCollectionView(){
@@ -116,7 +121,7 @@ extension SearchResultController {
     
     private func setSearchBar(){
         if #available(iOS 11.0, *) {
-            let searchBarVC = UISearchController(searchResultsController: nil)
+            
             searchBarVC.delegate = self
             let searchBar = searchBarVC.searchBar
             searchBar.tintColor = UIColor.white
@@ -126,6 +131,7 @@ extension SearchResultController {
             searchBar.barStyle = UIBarStyle.default
             searchBar.autocapitalizationType = .words
             searchBar.placeholder = "请输入搜索内容"
+            searchBarVC.searchBar.placeholder = keys
             searchBar.setValue("取消", forKey: "_cancelButtonText")
             if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
                 textfield.textColor = UIColor.blue
@@ -134,14 +140,15 @@ extension SearchResultController {
                     backgroundview.backgroundColor = UIColor.white
                     
                     // Rounded corner
-                    backgroundview.layer.cornerRadius = 10;
-                    backgroundview.clipsToBounds = true;
+                    backgroundview.layer.cornerRadius = 10
+                    backgroundview.clipsToBounds = true
                     
                 }
             }
             
             if let navigationbar = self.navigationController?.navigationBar {
                 navigationbar.barTintColor = UIColor(named: "global_orange")
+                navigationbar.tintColor = .white
             }
             navigationItem.searchController = searchBarVC
             navigationItem.hidesSearchBarWhenScrolling = false
@@ -204,7 +211,6 @@ extension SearchResultController {
         }else{
             collectionView?.collectionViewLayout = collLayout
             collectionView?.reloadData()
-            
         }
         
     }
@@ -212,7 +218,8 @@ extension SearchResultController {
 
 extension SearchResultController : SendDataProtocol {
     func SendData(data: Any?) {
-        if let key = data as? String {
+        if let key = (data as? String){
+            print("key = \(key)")
             keys = key
         }
     }

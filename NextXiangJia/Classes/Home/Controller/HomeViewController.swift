@@ -40,14 +40,14 @@ private var scrollViewContentSizeH:CGFloat = bannerH + fourBtnH + collectionView
 class HomeViewController: UIViewController {
     // MARK: - 懒加载属性
     private lazy var homeViewModel : HomeViewModel = HomeViewModel()
-    private lazy var alphaView : UIControl = { [weak self] in
-        //UISearchBar的蒙层
-        let view = UIControl(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: finalContentViewHaveTabbarH))
-        view.backgroundColor = .black
-        view.alpha = 0.3
-        view.addTarget(self, action: #selector(dismissAlphaViewAndSearchBar), for: .touchUpInside)
-        return view
-    }()
+//    private lazy var alphaView : UIControl = { [weak self] in
+//        //UISearchBar的蒙层
+//        let view = UIControl(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: finalContentViewHaveTabbarH))
+//        view.backgroundColor = .black
+//        view.alpha = 0.3
+//        view.addTarget(self, action: #selector(dismissAlphaViewAndSearchBar), for: .touchUpInside)
+//        return view
+//    }()
     private lazy var tipInfoView : UIView = {
         //tip信息view
         let view = UIView(frame: CGRect(x: 20, y: bannerH + fourBtnH + collectionViewH + categoryDHHeadH + categoryDHViewH + 20, width: finalScreenW - 40, height: tipInfoViewH))
@@ -72,23 +72,28 @@ class HomeViewController: UIViewController {
         view.backgroundColor = UIColor.cyan
         return view
     }()
-    private lazy var searchBar:UISearchBar = {
-        //搜索栏
-        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: searchBarH))
-        searchBar.searchBarStyle = UISearchBarStyle.default
-        searchBar.barStyle = UIBarStyle.default
-        searchBar.autocapitalizationType = .words
-        searchBar.delegate = self
-        searchBar.placeholder = "请输入搜索内容"
+//    private lazy var searchBar:UISearchBar = {
+//        //搜索栏
+//        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: searchBarH))
+//        searchBar.searchBarStyle = UISearchBarStyle.minimal
+//        searchBar.barStyle = UIBarStyle.default
+//        searchBar.autocapitalizationType = .words
+//        searchBar.delegate = self
+//        searchBar.placeholder = "请输入搜索内容"
 //        let textField = searchBar.value(forKey: "_searchField") as! UITextField //获取searchBar的输入框
-//        textField.isOpaque = true
-//        textField.backgroundColor = .white
-        //searchBar.barTintColor = UIColor.clear
-        searchBar.tintColor = UIColor(named: "global_orange")
-        var background = searchBar.value(forKey: "_background") as! UIView
-        background.removeFromSuperview()
-        return searchBar
-    }()
+//        if let backgroundview = textField.subviews.first {
+//            // Background color
+//            backgroundview.backgroundColor = UIColor.white
+//            // Rounded corner
+//            backgroundview.layer.cornerRadius = 10
+//            backgroundview.clipsToBounds = true
+//        }
+//        searchBar.backgroundColor = UIColor(named: "global_orange")
+//        searchBar.tintColor = UIColor(named: "global_orange")
+////        var background = searchBar.value(forKey: "_background") as! UIView
+////        background.removeFromSuperview()
+//        return searchBar
+//    }()
     private lazy var collections:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: collectionItemW, height: collectionItemH)
@@ -340,33 +345,33 @@ extension HomeViewController{
     
     private func setupNavigationBar(){
         //设置图标按钮实现点击高亮效果
-        let leftBtn = UIButton.init()
-        leftBtn.setTitle(String.fontAwesomeIcon(name: .home), for: .normal)
-        leftBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
-        leftBtn.setTitleColor(.white, for: .normal)
-        leftBtn.setTitleColor(UIColor.init(named: "dark_gray"), for: .highlighted)
-        
-        let rightBtn = UIButton()
-        rightBtn.setTitle(String.fontAwesomeIcon(name: .search), for: .normal)
-        rightBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
-        rightBtn.setTitleColor(.white                                                                   , for: .normal)
-        rightBtn.setTitleColor(UIColor.init(named: "dark_gray"), for: .highlighted)
-        rightBtn.addTarget(self, action: #selector(searchBtnClicked), for: .touchUpInside)
-        //设置标题
-        let title = UILabel()
-        title.font = UIFont(name: "System", size: 18.0)
-        title.textColor = .white
-        title.text = "首页"
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: leftBtn)
-        navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightBtn)
+//        let leftBtn = UIButton.init()
+//        leftBtn.setTitle(String.fontAwesomeIcon(name: .home), for: .normal)
+//        leftBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
+//        leftBtn.setTitleColor(.white, for: .normal)
+//        leftBtn.setTitleColor(UIColor.init(named: "dark_gray"), for: .highlighted)
+//
+//        let rightBtn = UIButton()
+//        rightBtn.setTitle(String.fontAwesomeIcon(name: .search), for: .normal)
+//        rightBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
+//        rightBtn.setTitleColor(.white                                                                   , for: .normal)
+//        rightBtn.setTitleColor(UIColor.init(named: "dark_gray"), for: .highlighted)
+//        rightBtn.addTarget(self, action: #selector(searchBtnClicked), for: .touchUpInside)
+//        //设置标题
+//        let title = UILabel()
+//        title.font = UIFont(name: "System", size: 18.0)
+//        title.textColor = .white
+//        title.text = "首页"
+//
+//        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: leftBtn)
+//        navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightBtn)
         //navigationItem.rightBarButtonItem = UIBarButtonItem.init(imageName: "home_top_search_right")
         navigationItem.title = "首页"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18)]
-        //navigationItem.titleView = title
-        navigationController?.navigationBar.barTintColor = UIColor.init(named: "global_orange")//设置导航栏和状态栏颜色
-        navigationController?.navigationBar.isTranslucent = false
-        self.tabBarController?.tabBar.isTranslucent = true
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18)]
+//        //navigationItem.titleView = title
+//        navigationController?.navigationBar.barTintColor = UIColor.init(named: "global_orange")//设置导航栏和状态栏颜色
+//        navigationController?.navigationBar.isTranslucent = false
+//        self.tabBarController?.tabBar.isTranslucent = true
     }
 }
 // MARK: - 设置banner的数据源和代理
@@ -418,11 +423,11 @@ extension HomeViewController{
         print("Tuangou Clicked")
     }
     
-    @objc func dismissAlphaViewAndSearchBar(){
-        alphaView.removeFromSuperview()
-        searchBar.resignFirstResponder()
-        searchBtnClicked()
-    }
+//    @objc func dismissAlphaViewAndSearchBar(){
+//        alphaView.removeFromSuperview()
+//        searchBar.resignFirstResponder()
+//        searchBtnClicked()
+//    }
     
 }
 //MARK: - 设置collectionView的数据源和代理
@@ -470,46 +475,46 @@ extension HomeViewController{
     }
 }
 
-//MARK: - NavigationBarIetm点击事件
-extension HomeViewController{
-    @objc private func searchBtnClicked(){
-        if searchBarState == 1 {
-            //隐藏
-            searchBar.removeFromSuperview()
-            alphaView.removeFromSuperview()
-            searchBarState = 2
-        }else if searchBarState == 2 {
-            //显示
-            
-            searchBar.becomeFirstResponder()
-            self.view.addSubview(alphaView)
-            view.addSubview(searchBar)
-            searchBarState = 1
-        }
-    }
-}
+////MARK: - NavigationBarIetm点击事件
+//extension HomeViewController{
+//    @objc private func searchBtnClicked(){
+//        if searchBarState == 1 {
+//            //隐藏
+//            searchBar.removeFromSuperview()
+//            alphaView.removeFromSuperview()
+//            searchBarState = 2
+//        }else if searchBarState == 2 {
+//            //显示
+//
+//            searchBar.becomeFirstResponder()
+//            self.view.addSubview(alphaView)
+//            view.addSubview(searchBar)
+//            searchBarState = 1
+//        }
+//    }
+//}
 
 //MARK: - 设置searchBar的Delegate
-extension HomeViewController : UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        alphaView.removeFromSuperview()
-        searchBtnClicked()
-        searchContent = (searchBar.textField?.text)!
-        let vc = SearchResultController(collectionViewLayout: UICollectionViewFlowLayout())
-        vc.hidesBottomBarWhenPushed = true
-        vc.SendData(data: searchContent)
-        //CommunicationTools.post(name: Communications.SearchResult, data: searchContent)
-//        DispatchQueue.afterDelay(duration: 0.01) {
-//            SwiftEventBus.post("searchKeys", sender: searchContent)
-//        }
-        
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        //self.rootScrollView.addSubview(alphaView)
-        return true
-    }
-}
+//extension HomeViewController : UISearchBarDelegate {
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        searchBar.resignFirstResponder()
+//        alphaView.removeFromSuperview()
+//        searchBtnClicked()
+//        searchContent = (searchBar.textField?.text)!
+//        let vc = SearchResultController(collectionViewLayout: UICollectionViewFlowLayout())
+//        vc.hidesBottomBarWhenPushed = true
+//        vc.SendData(data: searchContent)
+//        //CommunicationTools.post(name: Communications.SearchResult, data: searchContent)
+////        DispatchQueue.afterDelay(duration: 0.01) {
+////            SwiftEventBus.post("searchKeys", sender: searchContent)
+////        }
+//        
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
+//    
+//    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+//        //self.rootScrollView.addSubview(alphaView)
+//        return true
+//    }
+//}
 
