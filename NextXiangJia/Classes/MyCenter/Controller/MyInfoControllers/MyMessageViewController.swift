@@ -39,7 +39,8 @@ extension MyMessageViewController {
     private func setUI(){
         //1.设置navagationBar
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "短信息", navItem:self.navigationItem)
+//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "短信息", navItem:self.navigationItem)
+        navigationItem.title = "短信息"
         //2.设置bodyContent
         setupBodyContent()
     }

@@ -40,7 +40,8 @@ class MyInfoViewController: FormViewController {
 extension MyInfoViewController {
     private func setUI(){
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "个人资料", navItem:self.navigationItem)
+//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "个人资料", navItem:self.navigationItem)
+        navigationItem.title = "个人资料"
         //2.设置bodyContent
         setupBodyContent()
     }

@@ -39,7 +39,8 @@ class MyCommissionViewController: UIViewController {
 extension MyCommissionViewController {
     private func setUI(){
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "我的佣金", navItem:self.navigationItem)
+//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "我的佣金", navItem:self.navigationItem)
+        navigationItem.title = "我的佣金"
         //2.设置bodyContent
         setupBodyContent()
     }

@@ -45,7 +45,8 @@ class FindPasswordViewController: ButtonBarPagerTabStripViewController {
 extension FindPasswordViewController {
     private func setUI(){
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "找回密码", navItem:self.navigationItem)
+//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "找回密码", navItem:self.navigationItem)
+        navigationItem.title = "找回密码"
         self.view.backgroundColor = .white
         //2.设置bodyContent
         setupBodyContent()

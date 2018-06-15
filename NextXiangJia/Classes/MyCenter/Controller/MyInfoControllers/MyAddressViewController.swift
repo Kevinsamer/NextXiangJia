@@ -65,7 +65,8 @@ class MyAddressViewController: UIViewController {
 extension MyAddressViewController {
     private func setUI(){
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "收货地址管理", navItem:self.navigationItem)
+//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "收货地址管理", navItem:self.navigationItem)
+        navigationItem.title = "收货地址管理"
         //2.初始化数据
         initDatas()
         //3.设置bodyContent

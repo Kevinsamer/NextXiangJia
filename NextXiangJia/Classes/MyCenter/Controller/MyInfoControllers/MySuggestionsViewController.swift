@@ -52,7 +52,8 @@ class MySuggestionsViewController: ButtonBarPagerTabStripViewController {
 extension MySuggestionsViewController {
     private func setUI(){
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "站点建议", navItem:self.navigationItem)
+//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "站点建议", navItem:self.navigationItem)
+        navigationItem.title = "站点建议"
         self.view.backgroundColor = .white
         //2.设置bodyContent
         setupBodyContent()

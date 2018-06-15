@@ -40,7 +40,8 @@ extension MyOrdersViewController {
     private func setUI(){
         //1.设置navagationBar
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "我的订单", navItem:self.navigationItem)
+        //YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "我的订单", navItem:self.navigationItem)
+        navigationItem.title = "我的订单"
         //2.设置bodyContent
         setupBodyContent()
     }

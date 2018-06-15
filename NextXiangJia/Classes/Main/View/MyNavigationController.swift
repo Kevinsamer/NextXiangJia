@@ -58,6 +58,18 @@ class MyNavigationController: UINavigationController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        
+        if self.viewControllers.count > 0 {
+            viewController.hidesBottomBarWhenPushed = true
+        }
+        super.pushViewController(viewController, animated: animated)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        YTools.setNavigationBarAndTabBar(navCT: (self.viewControllers.first?.navigationController)!, titleName: "", navItem: (self.viewControllers.first?.navigationItem)!)
+    }
     
 }
 //MARK: - 设置UI

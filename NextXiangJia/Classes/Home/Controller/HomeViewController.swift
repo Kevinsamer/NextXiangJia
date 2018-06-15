@@ -377,7 +377,14 @@ extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegat
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: itemCellID, for: indexPath)
+        
         return cell
+    }
+    //cell点击事件
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc:UIViewController = UIStoryboard(name: "GoodDetail", bundle: nil).instantiateViewController(withIdentifier: "GoodDetailViewController") as! GoodDetailViewController
+        //vc.hidesBottomBarWhenPushed = true
+        navigationController?.show(vc, sender: self)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

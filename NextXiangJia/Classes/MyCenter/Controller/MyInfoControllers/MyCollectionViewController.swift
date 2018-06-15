@@ -39,7 +39,8 @@ class MyCollectionViewController: UIViewController {
 extension MyCollectionViewController {
     private func setUI(){
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "收藏夹", navItem:self.navigationItem)
+//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "收藏夹", navItem:self.navigationItem)
+        navigationItem.title = "收藏夹"
         //2.设置bodyContent
         setupBodyContent()
     }

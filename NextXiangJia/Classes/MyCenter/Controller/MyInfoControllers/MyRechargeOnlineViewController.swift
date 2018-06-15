@@ -39,7 +39,8 @@ class MyRechargeOnlineViewController: UIViewController {
 extension MyRechargeOnlineViewController {
     private func setUI(){
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "在线充值", navItem:self.navigationItem)
+//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "在线充值", navItem:self.navigationItem)
+        navigationItem.title = "在线充值"
         //2.设置bodyContent
         setupBodyContent()
     }

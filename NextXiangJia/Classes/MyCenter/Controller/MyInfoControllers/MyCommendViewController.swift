@@ -39,7 +39,8 @@ class MyCommendViewController: UIViewController {
 extension MyCommendViewController {
     private func setUI(){
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "我的推介", navItem:self.navigationItem)
+//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "我的推介", navItem:self.navigationItem)
+        navigationItem.title = "我的推介"
         //2.设置bodyContent
         setupBodyContent()
     }

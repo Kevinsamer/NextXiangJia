@@ -267,93 +267,75 @@ extension MyCenterViewController :UICollectionViewDataSource, UICollectionViewDe
         case 0:
             print("我的订单")
             let orderVC = MyOrdersViewController()
-            orderVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(orderVC, sender: self)
+            pushToVC(vc: orderVC)
         case 1:
             print("我的积分")
             let scoreVC = MyScoreViewController()
-            scoreVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(scoreVC, sender: self)
+            pushToVC(vc: scoreVC)
         case 2:
             print("我的代金券")
             let vouchersVC = MyVouchersViewController()
-            vouchersVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(vouchersVC, sender: self)
+            pushToVC(vc: vouchersVC)
         case 3:
             print("退款申请")
             let refundVC = MyRefundApplicationViewController()
-            refundVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(refundVC, sender: self)
+            pushToVC(vc: refundVC)
         case 4:
             print("站点建议")
             let suggestionVC = MySuggestionsViewController()
-            suggestionVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(suggestionVC, sender: self)
+            pushToVC(vc: suggestionVC)
         case 5:
             print("商品咨询")
             let advisoryVC = MyAdvisoryViewController()
-            advisoryVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(advisoryVC, sender: self)
+            pushToVC(vc: advisoryVC)
         case 6:
             print("商品评价")
             let evaluationVC = MyEvaluationViewController()
-            evaluationVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(evaluationVC, sender: self)
+            pushToVC(vc: evaluationVC)
         case 7:
             print("短信息")
             let messageVC = MyMessageViewController()
-            messageVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(messageVC, sender: self)
+            pushToVC(vc: messageVC)
         case 8:
             print("收藏夹")
             let collectionVC = MyCollectionViewController()
-            collectionVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(collectionVC, sender: self)
+            pushToVC(vc: collectionVC)
         case 9:
             print("账户余额")
             let balanceVC = MyBalanceViewController()
-            balanceVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(balanceVC, sender: self)
+            pushToVC(vc: balanceVC)
         case 10:
             print("在线充值")
             let rechargeVC = MyRechargeOnlineViewController()
-            rechargeVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(rechargeVC, sender: self)
+            pushToVC(vc: rechargeVC)
         case 11:
             print("地址管理")
             let addressVC = MyAddressViewController()
-            addressVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(addressVC, sender: self)
+            pushToVC(vc: addressVC)
         case 12:
             print("个人资料")
             let myInfoVC = MyInfoViewController()
-            myInfoVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(myInfoVC, sender: self)
+            pushToVC(vc: myInfoVC)
         case 13:
             print("修改密码")
             let changePasswordVC = ChangePasswordViewController()
-            changePasswordVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(changePasswordVC, sender: self)
+            pushToVC(vc: changePasswordVC)
         case 14:
             print("发票管理")
             let invoiceManage = MyInvoiceManageViewController()
-            invoiceManage.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(invoiceManage, sender: self)
+            pushToVC(vc: invoiceManage)
         case 15:
             print("我的推介")
             let commendVc = MyCommendViewController()
-            commendVc.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(commendVc, sender: self)
+            pushToVC(vc: commendVc)
         case 16:
             print("我的下线成员")
             let myMemberVC = MyMemberViewController()
-            myMemberVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(myMemberVC, sender: self)
+            pushToVC(vc: myMemberVC)
         case 17:
             print("我的佣金")
             let commissionVC = MyCommissionViewController()
-            commissionVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.show(commissionVC, sender: self)
+            pushToVC(vc: commissionVC)
         default:
             break
         }
@@ -374,6 +356,11 @@ extension MyCenterViewController{
         loginVC.hidesBottomBarWhenPushed = true
         self.navigationController?.show(loginVC, sender: self)
         print("login")
+    }
+    
+    func pushToVC(vc: UIViewController){
+        //vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.show(vc, sender: self)
     }
 }
 

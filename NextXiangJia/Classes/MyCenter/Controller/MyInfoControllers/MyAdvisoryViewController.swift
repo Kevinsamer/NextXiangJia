@@ -39,7 +39,8 @@ class MyAdvisoryViewController: UIViewController {
 extension MyAdvisoryViewController {
     private func setUI(){
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "商品咨询", navItem:self.navigationItem)
+//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "商品咨询", navItem:self.navigationItem)
+        navigationItem.title = "商品咨询"
         //2.设置bodyContent
         setupBodyContent()
     }
