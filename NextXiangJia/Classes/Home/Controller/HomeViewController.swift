@@ -13,6 +13,7 @@ import CircleLabel
 import SwifterSwift
 import Kingfisher
 import SwiftEventBus
+import SnapKit
 
 //searchBar attribute
 private let searchBarH:CGFloat = 64
@@ -26,9 +27,9 @@ private var fourBtnW = finalScreenW / 4
 private var fourBtnH:CGFloat = 100
 //collection attribute
 private var collectionItemW = ( finalScreenW - 9 ) / 2
-private var collectionItemNumbers :CGFloat = 10
+private var collectionItemNumbers :CGFloat = 18
 private var collectionItemH = collectionItemW * 6 / 5
-private var collectionViewH = collectionItemNumbers / 2 * collectionItemH + 3 * (collectionItemNumbers / 2 - 1) + 40 // 3*3(行高)=9，40=headViewH
+private var collectionViewH = collectionItemNumbers / 2 * collectionItemH + 3 * (collectionItemNumbers / 2 - 1) + 40 // 3*3(行高)=9，40=headViewH  //- finalStatusBarH - finalNavigationBarH - finalTabBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH : 0)
 private var categoryDHHeadH : CGFloat = 40
 private var categoryDHViewH : CGFloat = 120
 private var tipInfoViewH : CGFloat = 150 //实际为190，自带20的marginTop和20的marginBottom
@@ -87,12 +88,13 @@ class HomeViewController: UIViewController {
     
     private lazy var rootScrollView:UIScrollView = {
         //scrollView所有view的父view
-        let scroll = UIScrollView(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: finalContentViewHaveTabbarH ))
+        let scroll = UIScrollView(frame: CGRect(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: finalContentViewHaveTabbarH))
         scroll.backgroundColor = .white
         scroll.contentSize = CGSize(width: finalScreenW, height: scrollViewContentSizeH)
         scroll.isScrollEnabled = true
+        //scroll.contentInsetAdjustmentBehavior = .never
         scroll.showsVerticalScrollIndicator = testMode//debug时开启滚动条,release时隐藏
-        scroll.alwaysBounceVertical = false
+        scroll.alwaysBounceVertical = true
         return scroll
     }()
     
@@ -307,6 +309,10 @@ extension HomeViewController{
     
     private func addScrollerView(){
         self.view.addSubview(rootScrollView)
+//        rootScrollView.snp.makeConstraints({ (make) in
+//            //make.width.equalTo(finalScreenW)
+//            make.bottom.top.left.right.equalToSuperview()
+//        })
         //PS:scrollView的ContentSize高度 = 子视图拼接的高度
     }
     
@@ -382,9 +388,9 @@ extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegat
     }
     //cell点击事件
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc:UIViewController = UIStoryboard(name: "GoodDetail", bundle: nil).instantiateViewController(withIdentifier: "GoodDetailViewController") as! GoodDetailViewController
-        //vc.hidesBottomBarWhenPushed = true
-        navigationController?.show(vc, sender: self)
+        let vc = GoodDetailViewController()
+        navigationController?.pushViewController(vc, animated: true)
+        //navigationController?.present(vc, animated: true, completion: nil)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

@@ -25,19 +25,17 @@
             </objects>
             <point key="canvasLocation" x="352.80000000000001" y="-52.623688155922046"/>
         </scene>
-        <!--My Navigation Controller-->
+        <!--Navigation Controller-->
         <scene sceneID="uvi-3W-8Go">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S8Y-ud-foW" customClass="MyNavigationController" customModule="NextXiangJia" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S8Y-ud-foW" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="W9j-w8-3O7">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="9Zu-6t-zRs" kind="relationship" relationship="rootViewController" id="yJp-DK-IGo"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4FP-wU-OFO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

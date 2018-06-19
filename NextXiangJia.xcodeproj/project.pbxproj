@@ -58,7 +58,10 @@
 		090DDDF32092F30400A42E3F /* MyCommissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDDF22092F30400A42E3F /* MyCommissionViewController.swift */; };
 		090DDE1D2093FCE900A42E3F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDE1C2093FCE800A42E3F /* LoginViewController.swift */; };
 		0943528520D3578000D4C31A /* GoodDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943528420D3578000D4C31A /* GoodDetailViewController.swift */; };
-		0943528720D366CB00D4C31A /* GoodDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0943528620D366CB00D4C31A /* GoodDetail.storyboard */; };
+		0943528D20D3AB5300D4C31A /* GoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943528C20D3AB5300D4C31A /* GoodViewController.swift */; };
+		0943528F20D3AB6100D4C31A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943528E20D3AB6100D4C31A /* DetailViewController.swift */; };
+		0943529120D3AB9400D4C31A /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943529020D3AB9400D4C31A /* CommentViewController.swift */; };
+		0943529320D3AE6B00D4C31A /* GoodDetailBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943529220D3AE6B00D4C31A /* GoodDetailBaseViewController.swift */; };
 		094919A2209B032600E82D0A /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094919A1209B032600E82D0A /* ChangePasswordViewController.swift */; };
 		094C407820AAC400001E5C77 /* SMSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C407420AAC3FF001E5C77 /* SMSegment.swift */; };
 		094C407920AAC400001E5C77 /* SMSegmentAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C407520AAC3FF001E5C77 /* SMSegmentAppearance.swift */; };
@@ -180,7 +183,10 @@
 		090DDDF22092F30400A42E3F /* MyCommissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommissionViewController.swift; sourceTree = "<group>"; };
 		090DDE1C2093FCE800A42E3F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0943528420D3578000D4C31A /* GoodDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodDetailViewController.swift; sourceTree = "<group>"; };
-		0943528620D366CB00D4C31A /* GoodDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GoodDetail.storyboard; sourceTree = "<group>"; };
+		0943528C20D3AB5300D4C31A /* GoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodViewController.swift; sourceTree = "<group>"; };
+		0943528E20D3AB6100D4C31A /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		0943529020D3AB9400D4C31A /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
+		0943529220D3AE6B00D4C31A /* GoodDetailBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodDetailBaseViewController.swift; sourceTree = "<group>"; };
 		094919A1209B032600E82D0A /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		094C407420AAC3FF001E5C77 /* SMSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSegment.swift; sourceTree = "<group>"; };
 		094C407520AAC3FF001E5C77 /* SMSegmentAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSegmentAppearance.swift; sourceTree = "<group>"; };
@@ -580,7 +586,10 @@
 			isa = PBXGroup;
 			children = (
 				0943528420D3578000D4C31A /* GoodDetailViewController.swift */,
-				0943528620D366CB00D4C31A /* GoodDetail.storyboard */,
+				0943528C20D3AB5300D4C31A /* GoodViewController.swift */,
+				0943528E20D3AB6100D4C31A /* DetailViewController.swift */,
+				0943529020D3AB9400D4C31A /* CommentViewController.swift */,
+				0943529220D3AE6B00D4C31A /* GoodDetailBaseViewController.swift */,
 			);
 			path = GoodDetailViewController;
 			sourceTree = "<group>";
@@ -786,7 +795,6 @@
 				0992E45B20BC02D900B7902E /* cart_selected_btn@2x.png in Resources */,
 				0992E46320BCE6E600B7902E /* 40fe711f9b754b596159f3a6.jpg in Resources */,
 				090269632040F710007FF5B9 /* Assets.xcassets in Resources */,
-				0943528720D366CB00D4C31A /* GoodDetail.storyboard in Resources */,
 				0992E45920BC02D900B7902E /* cart_cutBtn_nomal@2x.png in Resources */,
 				0904C37920CFC0DE009A8282 /* CollCell.xib in Resources */,
 				090269AD2041399C007FF5B9 /* fontawesome.ttf in Resources */,
@@ -905,6 +913,7 @@
 				09026A0F204546D8007FF5B9 /* UIColor-extension.swift in Sources */,
 				0904C3A220D0FC0F009A8282 /* SendDataProtocol.swift in Sources */,
 				090269B0204157A2007FF5B9 /* UIBarButtonItem-Extension.swift in Sources */,
+				0943529120D3AB9400D4C31A /* CommentViewController.swift in Sources */,
 				090269A7204103C1007FF5B9 /* MainViewController.swift in Sources */,
 				0943528520D3578000D4C31A /* GoodDetailViewController.swift in Sources */,
 				090DDDCC208F193200A42E3F /* MyCenterCell.swift in Sources */,
@@ -927,6 +936,7 @@
 				0992E46F20C660B700B7902E /* NSDate-extension.swift in Sources */,
 				0978EF8E20A282BB004BEACF /* AddNewAddressViewController.swift in Sources */,
 				0978EF9920A41B71004BEACF /* FindPasswordTabViewController.swift in Sources */,
+				0943529320D3AE6B00D4C31A /* GoodDetailBaseViewController.swift in Sources */,
 				094919A2209B032600E82D0A /* ChangePasswordViewController.swift in Sources */,
 				090DDDF12092F20300A42E3F /* MyMemberViewController.swift in Sources */,
 				0992E46120BC02D900B7902E /* LZConfigFile.swift in Sources */,
@@ -936,6 +946,7 @@
 				09F9EE43207DF666007D18D0 /* UIDevice-extension.swift in Sources */,
 				090DDDE32092EF2400A42E3F /* MyBalanceViewController.swift in Sources */,
 				090DDDF32092F30400A42E3F /* MyCommissionViewController.swift in Sources */,
+				0943528F20D3AB6100D4C31A /* DetailViewController.swift in Sources */,
 				0978EF8A20A17B53004BEACF /* AddressCell.swift in Sources */,
 				0992E45F20BC02D900B7902E /* LZCartViewController.swift in Sources */,
 				090DDDCF2092B06200A42E3F /* MyOrdersViewController.swift in Sources */,
@@ -952,6 +963,7 @@
 				09F9EE41207DF257007D18D0 /* YTools.swift in Sources */,
 				0992E47120C6738500B7902E /* TagData.swift in Sources */,
 				0978EF9420A2DE5D004BEACF /* AreaPickView.swift in Sources */,
+				0943528D20D3AB5300D4C31A /* GoodViewController.swift in Sources */,
 				0904C37820CFC0DE009A8282 /* CollCell.swift in Sources */,
 				094C407820AAC400001E5C77 /* SMSegment.swift in Sources */,
 				09D1AE2E209A94B9004C4DA4 /* UIButton-extension.swift in Sources */,

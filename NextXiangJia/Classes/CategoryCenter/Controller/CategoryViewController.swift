@@ -38,7 +38,7 @@ class CategoryViewController: UIViewController {
         return coll
     }()
     lazy var leftScrollView: UIScrollView = {
-        var scroll = UIScrollView(frame: CGRect(x: 0, y: 0, width: leftWidth, height: finalContentViewHaveTabbarH))
+        var scroll = UIScrollView(frame: CGRect(x: 0, y: finalStatusBarH + finalNavigationBarH, width: leftWidth, height: finalContentViewHaveTabbarH))
         scroll.contentSize = CGSize(width: leftWidth, height: leftWidth * CGFloat(categoryText.count) / 2 > finalContentViewHaveTabbarH ? leftWidth * CGFloat(categoryText.count) / 2 : finalContentViewHaveTabbarH + 1 )
         scroll.backgroundColor = UIColor.init(named: "global_orange")!
         return scroll

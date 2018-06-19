@@ -18,6 +18,8 @@ let IphonexHomeIndicatorH :CGFloat = 34
 public var searchContent : String = ""
 public var finalContentViewHaveTabbarH = UIDevice.current.isX() ? finalScreenH - finalStatusBarH - finalNavigationBarH - finalTabBarH - IphonexHomeIndicatorH : finalScreenH - finalStatusBarH - finalNavigationBarH - finalTabBarH
 public var finalContentViewNoTabbarH = UIDevice.current.isX() ? finalScreenH - finalStatusBarH - finalNavigationBarH - IphonexHomeIndicatorH : finalScreenH - finalStatusBarH - finalNavigationBarH
+//public var finalContentViewHaveTabbarH = UIDevice.current.isX() ? finalScreenH - finalTabBarH - IphonexHomeIndicatorH : finalScreenH - finalStatusBarH - finalNavigationBarH - finalTabBarH
+//public var finalContentViewNoTabbarH = UIDevice.current.isX() ? finalScreenH -  IphonexHomeIndicatorH : finalScreenH - finalStatusBarH - finalNavigationBarH
 
 
 public var testMode : Bool = true//测试模式flag

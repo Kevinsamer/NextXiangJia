@@ -68,7 +68,7 @@ class MyNavigationController: UINavigationController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        YTools.setNavigationBarAndTabBar(navCT: (self.viewControllers.first?.navigationController)!, titleName: "", navItem: (self.viewControllers.first?.navigationItem)!)
+        YTools.setNavigationBarAndTabBar(navCT: (self.viewControllers.first?.navigationController)!, navItem: (self.viewControllers.first?.navigationItem)!)
     }
     
 }
@@ -93,19 +93,16 @@ extension MyNavigationController {
         rightBtn.setTitleColor(UIColor.init(named: "dark_gray"), for: .highlighted)
         rightBtn.addTarget(self, action: #selector(searchBtnClicked), for: .touchUpInside)
         //设置标题
-        let title = UILabel()
-        title.font = UIFont(name: "System", size: 18.0)
-        title.textColor = .white
-        title.text = "分类浏览"
+//self.viewControllers.first?.navigationItem.title = "分类浏览"
         
         self.viewControllers.first?.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: leftBtn)
         self.viewControllers.first?.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightBtn)
         //navigationItem.rightBarButtonItem = UIBarButtonItem.init(imageName: "home_top_search_right")
-        //self.viewControllers.first?.navigationItem.title = "分类浏览"
+        
         navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18)]
-        //navigationItem.titleView = title
-        navigationBar.barTintColor = UIColor.init(named: "global_orange")
-        navigationBar.isTranslucent = false
+        navigationBar.barTintColor = UIColor(named: "navibar_bartint_orange")
+        navigationBar.isTranslucent = true
+        
     }
 }
 

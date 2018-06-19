@@ -166,6 +166,11 @@ extension SearchResultController : UISearchBarDelegate {
 
 extension SearchResultController {
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = GoodDetailViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         print(velocity.y)
         if velocity.y > 0 {

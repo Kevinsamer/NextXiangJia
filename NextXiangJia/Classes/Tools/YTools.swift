@@ -12,13 +12,16 @@ import Toast_Swift
 private var viewC:UIViewController?
 
 public class YTools{
-    public static func setNavigationBarAndTabBar(navCT:UINavigationController, tabbarCT:UITabBarController? = nil, color:UIColor = UIColor.white, fontSize:CGFloat = 18, titleName:String, navItem:UINavigationItem){
+    public static func setNavigationBarAndTabBar(navCT:UINavigationController, tabbarCT:UITabBarController? = nil, color:UIColor = UIColor.white, fontSize:CGFloat = 18, titleName:String? = nil, navItem:UINavigationItem){
         //1.隐藏tabbar
         //tabbarCT.tabBar.isHidden = true
         //2.修改navigationBar
         navCT.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:color, NSAttributedStringKey.font: UIFont.systemFont(ofSize: fontSize)]
         navCT.navigationBar.tintColor = color
-        navItem.title = titleName
+        if titleName != nil {
+            navItem.title = titleName
+        }
+        
     }
     //显示toast
     public static func showMyToast(rootView: UIView, message:String, duration:TimeInterval = 3.0, position:ToastPosition = .bottom){
