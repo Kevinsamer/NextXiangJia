@@ -27,7 +27,7 @@ class GoodDetailBaseViewController: UIViewController ,IndicatorInfoProvider{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.random.lighten()
+//        view.backgroundColor = UIColor.random.lighten()
         // Do any additional setup after loading the view.
         
     }
@@ -36,5 +36,7 @@ class GoodDetailBaseViewController: UIViewController ,IndicatorInfoProvider{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
 
 }

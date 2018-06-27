@@ -92,7 +92,7 @@ class HomeViewController: UIViewController {
         scroll.backgroundColor = .white
         scroll.contentSize = CGSize(width: finalScreenW, height: scrollViewContentSizeH)
         scroll.isScrollEnabled = true
-        //scroll.contentInsetAdjustmentBehavior = .never
+        scroll.contentInsetAdjustmentBehavior = .never
         scroll.showsVerticalScrollIndicator = testMode//debug时开启滚动条,release时隐藏
         scroll.alwaysBounceVertical = true
         return scroll
@@ -389,7 +389,7 @@ extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegat
     //cell点击事件
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = GoodDetailViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        navigationController?.show(vc, sender: self)
         //navigationController?.present(vc, animated: true, completion: nil)
     }
     
