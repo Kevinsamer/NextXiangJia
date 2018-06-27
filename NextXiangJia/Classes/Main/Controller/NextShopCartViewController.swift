@@ -54,17 +54,19 @@ extension NextShopCartViewController{
     
     /*创建底部视图*/
     func setupBottomView() {
-        let backgroundView = UIView(frame: CGRect(x: 0, y: finalScreenH - finalNavigationBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH : 0), width: finalScreenW, height: finalTabBarH))//底部背景视图
+        
+        //let backgroundView = UIView(frame: CGRect(x: 0, y: finalStatusBarH + finalNavigationBarH + (cartTableView?.frame.height)!, width: finalScreenW, height: 60))//底部背景视图
+        let backgroundView = UIView()
         backgroundView.backgroundColor = LZColorTool.colorFromRGB(245, G: 245, B: 245)
         self.view.addSubview(backgroundView)
         
-//        backgroundView.snp.makeConstraints { [unowned self] (make) in
-//
-//            make.left.right.equalTo(self.view)
-//            make.height.equalTo(finalTabBarH)
-//            //判断设备型号(X或者其他)后设置底部约束
-//            make.bottom.equalTo(self.view).offset(UIDevice.current.isX() ? 0 - finalTabBarH - IphonexHomeIndicatorH : 0 - finalTabBarH)
-//        }
+        backgroundView.snp.makeConstraints { [unowned self] (make) in
+
+            make.left.right.equalTo(self.view)
+            make.height.equalTo(60)
+            //判断设备型号(X或者其他)后设置底部约束
+            make.bottom.equalTo(self.view).offset(UIDevice.current.isX() ? 0 - IphonexHomeIndicatorH : 0)
+        }
         
         let lineView = UIView()
         lineView.backgroundColor = UIColor.lightGray
@@ -218,10 +220,11 @@ extension NextShopCartViewController{
     }
     //初始化tableView
     private func setupTableView(){
-        cartTableView = UITableView(frame: CGRect.init(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: finalScreenH - finalStatusBarH - finalNavigationBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH + finalTabBarH: finalTabBarH)),style: UITableViewStyle.plain)
+        cartTableView = UITableView(frame: CGRect.init(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: finalScreenH - finalStatusBarH - finalNavigationBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH + 60 : 60)),style: UITableViewStyle.plain)
 //        cartTableView?.contentInsetAdjustmentBehavior = .never
         cartTableView?.delegate = self
         cartTableView?.dataSource = self
+        cartTableView?.allowsSelection = false
         cartTableView?.backgroundColor = LZColorTool.colorFromRGB(235, G: 246, B: 248)
         cartTableView?.separatorStyle = UITableViewCellSeparatorStyle.none
         cartTableView?.rowHeight = KLZTableViewCellHeight
