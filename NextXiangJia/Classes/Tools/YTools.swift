@@ -12,6 +12,7 @@ import Toast_Swift
 private var viewC:UIViewController?
 
 public class YTools{
+    
     public static func setNavigationBarAndTabBar(navCT:UINavigationController, tabbarCT:UITabBarController? = nil, color:UIColor = UIColor.white, fontSize:CGFloat = 18, titleName:String? = nil, navItem:UINavigationItem){
         //1.隐藏tabbar
         //tabbarCT.tabBar.isHidden = true

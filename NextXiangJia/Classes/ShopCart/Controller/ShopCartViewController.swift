@@ -277,7 +277,7 @@ extension ShopCartViewController{
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18)]
         //navigationItem.titleView = title
         navigationController?.navigationBar.barTintColor = UIColor.init(named: "global_orange")
-        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.isTranslucent = true
     }
 }
 //MARK: - 点击事件
@@ -327,7 +327,7 @@ extension ShopCartViewController{
     private func editEdittingState(){
         rightBtn.setTitleForAllStates("完成")
         commitButton.setTitleForAllStates("删除")
-        commitButton.setTitleColorForAllStates(.lightGray)
+        commitButton.setTitleColorForAllStates(LZColorTool.redColor())
         commitButton.backgroundColor = .white
         commitButton.borderWidth = 1
         commitButton.borderColor = .lightGray

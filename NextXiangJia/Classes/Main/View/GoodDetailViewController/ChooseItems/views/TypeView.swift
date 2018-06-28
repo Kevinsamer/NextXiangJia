@@ -48,7 +48,7 @@ class TypeView: UIView {
             btn.setTitle(text, for: UIControlState.selected)
             btn.setTitleColor(UIColor.black, for: UIControlState.normal)
             btn.setTitleColor(UIColor.white, for: UIControlState.selected)
-            btn.backgroundColor = UIColor.lightGray
+            btn.backgroundColor = UIColor(named: "line_gray")!
             let dic = NSDictionary(object: UIFont.systemFont(ofSize: 13), forKey: NSAttributedStringKey.font as NSCopying)
             
             let size: CGSize = text.size(withAttributes: (dic as! [NSAttributedStringKey : Any]))
@@ -70,7 +70,7 @@ class TypeView: UIView {
         }
         upY += 30
         let line = UILabel.init(frame: CGRect(x: 0, y: CGFloat(upY+10), width: self.frame.size.width, height: 0.5))
-        line.backgroundColor = UIColor.lightGray
+        line.backgroundColor = UIColor(named: "line_gray")!
         addSubview(line)
        mHeight = CGFloat(upY+11)
         self.frame = CGRect(x:0,y:0,width:Int(kWidth),height:Int(self.mHeight))
@@ -87,7 +87,7 @@ class TypeView: UIView {
         for i:Int in 0..<typeArray.count {
             let btn :UIButton = viewWithTag(100+i) as! UIButton
             btn.isSelected = false
-            btn.backgroundColor = UIColor.lightGray
+            btn.backgroundColor = UIColor(named: "line_gray")!
             if selectIndex == i
             {
                 btn.isSelected = true

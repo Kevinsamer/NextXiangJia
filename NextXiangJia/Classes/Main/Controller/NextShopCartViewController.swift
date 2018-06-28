@@ -278,6 +278,7 @@ extension NextShopCartViewController{
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightBtn)
         //navigationItem.rightBarButtonItem = UIBarButtonItem.init(imageName: "home_top_search_right")
         navigationItem.title = "购物车"
+        navigationController?.navigationBar.topItem?.title = ""
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18)]
         //navigationItem.titleView = title
         navigationController?.navigationBar.barTintColor = UIColor.init(named: "global_orange")
@@ -331,7 +332,7 @@ extension NextShopCartViewController{
     private func editEdittingState(){
         rightBtn.setTitleForAllStates("完成")
         commitButton.setTitleForAllStates("删除")
-        commitButton.setTitleColorForAllStates(.lightGray)
+        commitButton.setTitleColorForAllStates(LZColorTool.redColor())
         commitButton.backgroundColor = .white
         commitButton.borderWidth = 1
         commitButton.borderColor = .lightGray

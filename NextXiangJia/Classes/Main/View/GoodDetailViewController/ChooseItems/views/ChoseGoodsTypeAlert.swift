@@ -18,13 +18,14 @@ class ChoseGoodsTypeAlert: UIView , UITableViewDataSource, UITableViewDelegate, 
     var countView: CountView!
     var goodsInfo: GoodsinfoView!
     var sizeModel: SizeAttributeModel!
-    
+    var vc: GoodViewController!
     var dataSource = NSMutableArray()
     var model: GoodsModel!
     var selectSize: ((_ sizeModelBlock: SizeAttributeModel) -> Void)? = nil
     
-    init(frame: CGRect, andHeight height: CGFloat) {
+    init(frame: CGRect, andHeight height: CGFloat,vc:GoodViewController) {
         super.init(frame: frame)
+        self.vc = vc
         backgroundColor = UIColor.clear
         view = UIView.init(frame: self.bounds)
         view?.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.4)
@@ -32,7 +33,7 @@ class ChoseGoodsTypeAlert: UIView , UITableViewDataSource, UITableViewDelegate, 
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(self.hideView))
         view.addGestureRecognizer(tap)
         
-        bgView = UIView.init(frame: CGRect(x:0,y:kHeight,width:kWidth,height:height))
+        bgView = UIView.init(frame: CGRect(x:0,y:kHeight + (UIDevice.current.isX() ? IphonexHomeIndicatorH : 0),width:kWidth,height:height))
         bgView.backgroundColor = UIColor.white
         bgView.isUserInteractionEnabled = true
         addSubview(bgView)
@@ -52,7 +53,7 @@ class ChoseGoodsTypeAlert: UIView , UITableViewDataSource, UITableViewDelegate, 
             mark.width.equalTo(kWidth)
             mark.height.equalTo(kSize(width: 49))
             mark.left.equalTo(0)
-            mark.bottom.equalTo(0)
+            mark.bottom.equalTo(-(UIDevice.current.isX() ? IphonexHomeIndicatorH : 0))
         }
 
         tableview = UITableView.init(frame: CGRect(x:0,y:0,width:kWidth,height:0), style: UITableViewStyle.plain)
@@ -83,6 +84,7 @@ class ChoseGoodsTypeAlert: UIView , UITableViewDataSource, UITableViewDelegate, 
         self.tfresignFirstResponder()
         UIView.animate(withDuration: 0.25, animations: {
             self.bgView.center.y = self.bgView.center.y+self.bgView.frame.height
+            self.vc.zoomOut()
         }) { (true) in
             self.removeFromSuperview()
         }
@@ -93,6 +95,7 @@ class ChoseGoodsTypeAlert: UIView , UITableViewDataSource, UITableViewDelegate, 
         tableview.alpha = 0
         UIView.animate(withDuration: 0.25, animations: {
             self.bgView.center.y = self.bgView.center.y-self.bgView.frame.height
+            self.vc.zoomIn()
         }) { (true) in
             self.tableview.alpha = 1
         }
@@ -215,7 +218,7 @@ class ChoseGoodsTypeAlert: UIView , UITableViewDataSource, UITableViewDelegate, 
     
     // MARK: - tf
     @objc func tfresignFirstResponder() {
-        self.tableview.setContentOffset(CGPoint.init(x: 0, y: 0), animated: true)
+        //self.tableview.setContentOffset(CGPoint.init(x: 0, y: 0), animated: true)
         countView.countTextField.resignFirstResponder()
     }
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {

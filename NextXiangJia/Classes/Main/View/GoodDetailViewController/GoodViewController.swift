@@ -40,7 +40,34 @@ class GoodViewController: GoodDetailBaseViewController {
     var bannerImages : [String]?
     var model : GoodsModel = GoodsModel()
     var isLoadedWeb = false
+    var viewLayer = CALayer()//底层view的动画layer
     //MARK: - 懒加载
+    
+    //UIWindows动画，实现选择规格时的凹陷折叠效果
+    // 第一次形变
+    // 每次进来都进行初始化 回归到正常状态
+    lazy var form1: CATransform3D = {
+        var form1 = CATransform3DIdentity
+        // m34就是实现视图的透视效果的（俗称近大远小）
+        form1.m34 = 1.0 / -2000
+        //缩小的效果
+        form1 = CATransform3DScale(form1, 0.95, 0.95, 1)
+        //x轴旋转
+        form1 = CATransform3DRotate(form1, CGFloat(15.0 * .pi / 180.0), 1, 0, 0)
+        return form1
+    }()
+    // 第二次形变
+    // 每次进来都进行初始化 回归到正常状态
+    lazy var form2: CATransform3D = {
+        var form2 = CATransform3DIdentity
+        // 用上面用到的m34 来设置透视效果
+        form2.m34 = form1.m34
+        //向上平移一丢丢 让视图平滑点
+        //form2 = CATransform3DTranslate(form2, 0, self.view.frame.height * -0.08, 0)
+        //最终再次缩小到0.8倍
+        form2 = CATransform3DScale(form2, 0.95, 0.95, 1)
+        return form2
+    }()
     
     lazy var noEvaluationLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: finalScreenW / 2 - 60, y: 75, width: 120, height: 30))
@@ -229,6 +256,8 @@ class GoodViewController: GoodDetailBaseViewController {
 //设置ui
 extension GoodViewController {
     private func setUI(){
+        //-1.为底层view添加动画layer
+        self.view.layer.addSublayer(viewLayer)
         //0.初始化数据
         initData()
         //1.设置上方scrollView
@@ -480,7 +509,7 @@ extension GoodViewController: FSPagerViewDataSource,FSPagerViewDelegate{
 //MARK: - 事件响应
 extension GoodViewController {
     @objc private func popChooseView(){
-        let alert = ChoseGoodsTypeAlert(frame: CGRect(x: 0, y: UIDevice.current.isX() ? -IphonexHomeIndicatorH : 0, width: kWidth, height: kHeight), andHeight: kSize(width:500))
+        let alert = ChoseGoodsTypeAlert(frame: CGRect(x: 0, y: UIDevice.current.isX() ? -IphonexHomeIndicatorH : 0, width: kWidth, height: kHeight), andHeight: kSize(width:500), vc:self)
         alert.alpha = 0
         UIApplication.shared.keyWindow?.addSubview(alert)
         alert.selectSize = {(_ sizeModel: SizeAttributeModel) -> Void in
@@ -488,9 +517,37 @@ extension GoodViewController {
             //SVProgressHUD.showSuccess(withStatus: "选择了:"+sizeModel.value)
             YTools.showMyToast(rootView: self.view, message: "选择了: \(sizeModel.value)、\(sizeModel.count)件", duration: 2.0, position: ToastPosition.center)
             self.chosenInfoLabel.attributedText = self.goodChosenString("\(sizeModel.value)、\(sizeModel.count)件")
-            
+            //self.zoomOut()
         }
         alert.initData(goodsModel: model)
+        
+        //zoomIn()
         alert.showView()
+        
+    }
+    //navigationController的view折叠内陷方法
+    public func zoomIn(){
+        UIView.animate(withDuration: 0.25, animations: {
+            //UIApplication.shared.keyWindow?.layer.transform = self.form1
+            self.navigationController?.view.layer.transform = self.form1
+        }) { (finish) in
+            UIView.animate(withDuration: 0.25, animations: {
+                //UIApplication.shared.keyWindow?.layer.transform = self.form2
+                self.navigationController?.view.layer.transform = self.form2
+            })
+        }
+    }
+    //复原方法
+    public func zoomOut(){
+        UIView.animate(withDuration: 0.25, animations: {
+            //UIApplication.shared.keyWindow?.layer.transform = self.form1
+            
+            self.navigationController?.view.layer.transform = self.form1
+        }) { (finish) in
+            UIView.animate(withDuration: 0.25, animations: {
+                //UIApplication.shared.keyWindow?.layer.transform = CATransform3DIdentity
+                self.navigationController?.view.layer.transform = CATransform3DIdentity
+            })
+        }
     }
 }
