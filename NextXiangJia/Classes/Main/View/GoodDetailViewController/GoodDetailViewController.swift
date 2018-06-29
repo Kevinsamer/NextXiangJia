@@ -214,6 +214,8 @@ extension GoodDetailViewController {
     
     @objc private func buyNowClicked(){
         print("立即购买")
+        let vc = FillOrderViewController()
+        self.navigationController?.show(vc, sender: self)
     }
     
     @objc private func addInToShopcartClicked(){

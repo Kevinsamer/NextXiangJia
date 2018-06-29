@@ -90,6 +90,7 @@
 		0978EFA120A5834A004BEACF /* MyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978EFA020A5834A004BEACF /* MyTextField.swift */; };
 		0978EFA320A5933A004BEACF /* MyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978EFA220A5933A004BEACF /* MyTextView.swift */; };
 		0982A22E20E224EA00D9890B /* NextShopCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0982A22D20E224E900D9890B /* NextShopCartViewController.swift */; };
+		0982A23420E5D6E600D9890B /* FillOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0982A23320E5D6E600D9890B /* FillOrderViewController.swift */; };
 		0992E45520BC02D900B7902E /* back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0992E44820BC02D900B7902E /* back_button@2x.png */; };
 		0992E45620BC02D900B7902E /* cart_addBtn_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0992E44920BC02D900B7902E /* cart_addBtn_highlight@2x.png */; };
 		0992E45720BC02D900B7902E /* cart_addBtn_nomal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0992E44A20BC02D900B7902E /* cart_addBtn_nomal@2x.png */; };
@@ -226,6 +227,7 @@
 		0978EFA020A5834A004BEACF /* MyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTextField.swift; sourceTree = "<group>"; };
 		0978EFA220A5933A004BEACF /* MyTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTextView.swift; sourceTree = "<group>"; };
 		0982A22D20E224E900D9890B /* NextShopCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextShopCartViewController.swift; sourceTree = "<group>"; };
+		0982A23320E5D6E600D9890B /* FillOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillOrderViewController.swift; sourceTree = "<group>"; };
 		0992E44820BC02D900B7902E /* back_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_button@2x.png"; sourceTree = "<group>"; };
 		0992E44920BC02D900B7902E /* cart_addBtn_highlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cart_addBtn_highlight@2x.png"; sourceTree = "<group>"; };
 		0992E44A20BC02D900B7902E /* cart_addBtn_nomal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cart_addBtn_nomal@2x.png"; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 				090269A4204103C1007FF5B9 /* MainViewController.swift */,
 				09A396A620CE096D00B82970 /* SearchResultController.swift */,
 				0982A22D20E224E900D9890B /* NextShopCartViewController.swift */,
+				0982A23320E5D6E600D9890B /* FillOrderViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1000,6 +1003,7 @@
 				090DDDD72092C63600A42E3F /* MyRefundApplicationViewController.swift in Sources */,
 				090DDDD92092C96100A42E3F /* MySuggestionsViewController.swift in Sources */,
 				094C407B20AAC400001E5C77 /* SMSegmentViewConstants.swift in Sources */,
+				0982A23420E5D6E600D9890B /* FillOrderViewController.swift in Sources */,
 				09F9EE43207DF666007D18D0 /* UIDevice-extension.swift in Sources */,
 				090DDDE32092EF2400A42E3F /* MyBalanceViewController.swift in Sources */,
 				090DDDF32092F30400A42E3F /* MyCommissionViewController.swift in Sources */,

@@ -281,7 +281,7 @@ extension NextShopCartViewController{
         navigationController?.navigationBar.topItem?.title = ""
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18)]
         //navigationItem.titleView = title
-        navigationController?.navigationBar.barTintColor = UIColor.init(named: "global_orange")
+//        navigationController?.navigationBar.barTintColor = UIColor.init(named: "global_orange")
         navigationController?.navigationBar.isTranslucent = true
     }
 }

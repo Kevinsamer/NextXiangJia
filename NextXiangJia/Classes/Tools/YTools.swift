@@ -63,11 +63,30 @@ public class YTools{
     public static func getCurrentNavigationBarHeight(navCT: UINavigationController) -> CGFloat{
         return navCT.navigationBar.frame.height
     }
-    
+    //测试模式打印信息
     public static func myPrint(content: String, mode: Bool){
         if mode {
             print(content)
         }
+    }
+    //处理手机号，4-7位改为*
+    public static func changePhoneNum(phone: String) -> String{
+        return phone.slicing(from: 0, length: 3)! + "****" + phone.slicing(from: 7, length: 4)!
+    }
+    
+    //处理价格￥和小数点中间的数字加粗放大
+    public static func changePrice(price: String,fontNum: CGFloat) -> NSMutableAttributedString{
+        let ￥ = price.slicing(from: 0, to: 1)
+        let integer = price.splitted(by: ".")[0].slicing(at: 1)!
+        let decimal = price.splitted(by: ".")[1]
+        let attributedString = NSMutableAttributedString.init(string: price)
+        let rang￥ = (price as NSString).range(of: ￥!)
+        let rangInteger = (price as NSString).range(of: integer)
+        let rangDecimal = (price as NSString).range(of: "." + decimal)
+        attributedString.addAttributes([NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontNum).bold , NSAttributedStringKey.foregroundColor : UIColor.red], range: rang￥)
+        attributedString.addAttributes([NSAttributedStringKey.foregroundColor : UIColor.red , NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontNum + 6).bold], range: rangInteger)
+        attributedString.addAttributes([NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontNum).bold , NSAttributedStringKey.foregroundColor : UIColor.red], range: rangDecimal)
+        return attributedString
     }
     
 }

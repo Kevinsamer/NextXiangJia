@@ -341,8 +341,6 @@ extension GoodViewController {
         let rang2 = (text as NSString).range(of: chosenInfo)
         attributedString.addAttributes([NSAttributedStringKey.foregroundColor : UIColor.lightGray , NSAttributedStringKey.font : UIFont.systemFont(ofSize: 12)], range: rang1)
         attributedString.addAttributes([NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16).bold , NSAttributedStringKey.foregroundColor : UIColor.black], range: rang2)
-        //        attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.black, range: rang1)
-        //        attributedString.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 16), range: rang1)
         return attributedString
     }
 }

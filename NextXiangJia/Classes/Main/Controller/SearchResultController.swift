@@ -52,6 +52,7 @@ class SearchResultController: UICollectionViewController {
     lazy var imageButton: UIButton = {
         let imageButton = UIButton(type: UIButtonType.custom)
         imageButton.setImage(UIImage.init(named: "topBar_icon_09_01"), for: UIControlState())
+        
         imageButton.setImage(UIImage.init(named: "topBar_icon_10_01"), for: UIControlState.selected)
         imageButton.addTarget(self, action: #selector(changeLayout), for: UIControlEvents.touchUpInside)
         return imageButton
@@ -116,7 +117,7 @@ extension SearchResultController {
         //collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView?.register(UINib.init(nibName: "CollCell", bundle: nil), forCellWithReuseIdentifier: collCellID)
         collectionView?.register(UINib.init(nibName: "ListCell", bundle: nil), forCellWithReuseIdentifier: listCellID)
-        collectionView?.backgroundColor = .lightGray
+        collectionView?.backgroundColor = UIColor(named: "line_gray")!
     }
     
     private func setSearchBar(){
@@ -147,7 +148,7 @@ extension SearchResultController {
             }
             
             if let navigationbar = self.navigationController?.navigationBar {
-                navigationbar.barTintColor = UIColor(named: "global_orange")
+                navigationbar.barTintColor = UIColor(named: "navibar_bartint_orange")!
                 navigationbar.tintColor = .white
             }
             navigationItem.searchController = searchBarVC
@@ -181,7 +182,7 @@ extension SearchResultController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return 21
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
