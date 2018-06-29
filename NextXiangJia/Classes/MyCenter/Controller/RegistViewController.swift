@@ -15,7 +15,7 @@ private let viewSpace :CGFloat = 20
 class RegistViewController: UIViewController {
     //MARK: - 懒加载
     lazy var regUsername: MyTextField = {
-        let old = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100, width: textFieldW, height: textFieldH))
+        let old = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
         //        name.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        name.layer.borderWidth = 1
         //old.textAlignment = NSTextAlignment.center
@@ -29,7 +29,7 @@ class RegistViewController: UIViewController {
     }()
     
     lazy var regPassword: MyTextField = {
-        let new = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH + viewSpace, width: textFieldW, height: textFieldH))
+        let new = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH + viewSpace + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
         //        password.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        password.layer.borderWidth = 1
         //new.textAlignment = NSTextAlignment.center
@@ -42,7 +42,7 @@ class RegistViewController: UIViewController {
         return new
     }()
     lazy var regPasswordAgain: MyTextField = {
-        let newAgain = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 2 + viewSpace * 2, width: textFieldW, height: textFieldH))
+        let newAgain = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 2 + viewSpace * 2 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
         //        password.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        password.layer.borderWidth = 1
         //newAgain.textAlignment = NSTextAlignment.center
@@ -55,7 +55,7 @@ class RegistViewController: UIViewController {
         return newAgain
     }()
     lazy var authCodeInput: MyTextField = {
-        let authCode = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 3 + viewSpace * 3, width: textFieldW * 2 / 5, height: textFieldH))
+        let authCode = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 3 + viewSpace * 3 + finalStatusBarH + finalNavigationBarH, width: textFieldW * 2 / 5, height: textFieldH))
         //        password.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        password.layer.borderWidth = 1
         //authCode.textAlignment = NSTextAlignment.center
@@ -69,7 +69,7 @@ class RegistViewController: UIViewController {
     }()
     
     lazy var authCodePic: AuthCodeView = {
-        let viewFrame = CGRect(x: finalScreenW / 2 - textFieldW / 10 + viewSpace, y: 100 + textFieldH * 3 + viewSpace * 3, width: textFieldW * 3 / 5 - viewSpace, height: textFieldH)
+        let viewFrame = CGRect(x: finalScreenW / 2 - textFieldW / 10 + viewSpace, y: 100 + textFieldH * 3 + viewSpace * 3 + finalStatusBarH + finalNavigationBarH, width: textFieldW * 3 / 5 - viewSpace, height: textFieldH)
         let auth = AuthCodeView(frame: viewFrame, with: IdentifyingCodeType.defaultType)
         auth.kCharCount = 5
         auth.kLineCount = 9
@@ -79,7 +79,7 @@ class RegistViewController: UIViewController {
     
     lazy var registerButton: UIButton = {
         let button = UIButton(type: UIButtonType.system)
-        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 4 + viewSpace * 4, width: textFieldW, height: textFieldH)
+        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 4 + viewSpace * 4 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH)
         button.setTitleForAllStates("立即注册")
         button.titleLabel?.textAlignment = .center
         button.setTitleColorForAllStates(.white)

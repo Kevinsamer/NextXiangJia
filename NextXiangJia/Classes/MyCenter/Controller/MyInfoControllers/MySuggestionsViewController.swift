@@ -64,5 +64,7 @@ extension MySuggestionsViewController {
         buttonBarView.backgroundColor = UIColor(named: "global_orange")
         pagerBehaviour = .progressive(skipIntermediateViewControllers: true, elasticIndicatorLimit: true)
         //pagerBehaviour = .common(skipIntermediateViewControllers: false)
+        //containerView.frame = self.view.frame
+        //在子页面中修改
     }
 }

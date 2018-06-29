@@ -15,7 +15,7 @@ private let buttonW: CGFloat = (finalScreenW - 80) / 3
 class MySuggesttionTabSubmitViewController: UIViewController, IndicatorInfoProvider {
     //MARK: - 懒加载
     lazy var suggestionTitle: MyTextField = {
-        let title = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 20, width: textFieldW, height: textFieldH))
+        let title = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 20 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
         //        name.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        name.layer.borderWidth = 1
         
@@ -30,7 +30,7 @@ class MySuggesttionTabSubmitViewController: UIViewController, IndicatorInfoProvi
     }()
     
     lazy var suggestionContent: UITextView = {
-        let content = UITextView(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 20 + textFieldH + viewSpace, width: textFieldW, height: textFieldH * 3))
+        let content = UITextView(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 20 + textFieldH + viewSpace + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH * 3))
         //        name.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        name.layer.borderWidth = 1
         //content.textAlignment = NSTextAlignment.center
@@ -45,8 +45,8 @@ class MySuggesttionTabSubmitViewController: UIViewController, IndicatorInfoProvi
     
     lazy var submitButton: UIButton = {
         let button = UIButton(type: UIButtonType.system)
-        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 20 + textFieldH * 4 + viewSpace * 2 , width: textFieldW, height: textFieldH)
-        button.setTitleForAllStates("找回密码")
+        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 20 + textFieldH * 4 + viewSpace * 2 + finalStatusBarH + finalNavigationBarH , width: textFieldW, height: textFieldH)
+        button.setTitleForAllStates("确定提交")
         button.titleLabel?.textAlignment = .center
         button.setTitleColorForAllStates(.white)
         button.backgroundColor = UIColor(named: "global_orange")
@@ -113,6 +113,6 @@ extension MySuggesttionTabSubmitViewController : UITextFieldDelegate,UITextViewD
 
 extension MySuggesttionTabSubmitViewController{
     @objc func submitButtonClicked(){
-        
+        YTools.myPrint(content: "确认提交", mode: testMode)
     }
 }

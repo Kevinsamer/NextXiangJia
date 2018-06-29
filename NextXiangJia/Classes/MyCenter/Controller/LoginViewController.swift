@@ -16,7 +16,7 @@ private var passwordString = ""
 class LoginViewController: UIViewController {
     //MARK: - 懒加载
     lazy var username: MyTextField = {
-        let name = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100, width: textFieldW, height: textFieldH))
+        let name = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
 //        name.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
 //        name.layer.borderWidth = 1
         //name.textAlignment = NSTextAlignment.center
@@ -30,7 +30,7 @@ class LoginViewController: UIViewController {
     }()
     
     lazy var password: MyTextField = {
-        let password = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH + viewSpace, width: textFieldW, height: textFieldH))
+        let password = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH + viewSpace + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
 //        password.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
 //        password.layer.borderWidth = 1
         //password.textAlignment = NSTextAlignment.center
@@ -54,7 +54,7 @@ class LoginViewController: UIViewController {
 //    }()
     lazy var loginButton: UIButton = {
         let button = UIButton(type: UIButtonType.system)
-        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 2 + viewSpace * 2, width: textFieldW, height: textFieldH)
+        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 2 + viewSpace * 2 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH)
         button.setTitleForAllStates("登录")
         button.titleLabel?.textAlignment = .center
         button.setTitleColorForAllStates(.white)
@@ -66,7 +66,7 @@ class LoginViewController: UIViewController {
     
     lazy var registerButton: UIButton = {
         let button = UIButton(type: UIButtonType.system)
-        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 3 + viewSpace * 3, width: finalScreenW / 5, height: textFieldH)
+        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 3 + viewSpace * 3 + finalStatusBarH + finalNavigationBarH, width: finalScreenW / 5, height: textFieldH)
 //        button.backgroundColor = .orange
 //        button.setTitleColorForAllStates(.white)
         button.setTitleForAllStates("注册")
@@ -78,7 +78,7 @@ class LoginViewController: UIViewController {
     
     lazy var forgetPasswordButton: UIButton = {
         let button = UIButton(type: UIButtonType.system)
-        button.frame = CGRect(x: finalScreenW / 2 + (textFieldW / 2 - finalScreenW / 5), y: 100 + textFieldH * 3 + viewSpace * 3, width: finalScreenW / 5, height: textFieldH)
+        button.frame = CGRect(x: finalScreenW / 2 + (textFieldW / 2 - finalScreenW / 5), y: 100 + textFieldH * 3 + viewSpace * 3 + finalStatusBarH + finalNavigationBarH, width: finalScreenW / 5, height: textFieldH)
 //        button.backgroundColor = .orange
 //        button.setTitleColorForAllStates(.white)
         button.setTitleForAllStates("忘记密码")
@@ -90,7 +90,7 @@ class LoginViewController: UIViewController {
     
     lazy var signInWithLabel: UILabel = {
         //第三方账号登录promptLabel
-        let label = UILabel(frame: CGRect(x: finalScreenW / 2 - finalScreenW / 3 / 2, y: 100 + textFieldH * 4 + viewSpace * 4, width: finalScreenW / 3, height: textFieldH))
+        let label = UILabel(frame: CGRect(x: finalScreenW / 2 - finalScreenW / 3 / 2, y: 100 + textFieldH * 4 + viewSpace * 4 + finalStatusBarH + finalNavigationBarH, width: finalScreenW / 3, height: textFieldH))
         label.text = "第三方账号登录"
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 15)
@@ -100,14 +100,14 @@ class LoginViewController: UIViewController {
     }()
     //分隔线
     lazy var dividerLine: UIView = {
-        let view = UIView(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 4 + viewSpace * 4 + 19.5, width: textFieldW, height: 1))
+        let view = UIView(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 4 + viewSpace * 4 + 19.5 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: 1))
         view.backgroundColor = UIColor(named: "dark_gray")
         return view
     }()
     
     lazy var loginByQQ: UIButton = {
         let qq = UIButton(type: UIButtonType.custom)
-        qq.frame = CGRect(x: 20, y: 100 + textFieldH * 5 + viewSpace * 5, width: buttonW, height: buttonW)
+        qq.frame = CGRect(x: 20, y: 100 + textFieldH * 5 + viewSpace * 5 + finalStatusBarH + finalNavigationBarH, width: buttonW, height: buttonW)
         //qq.setTitleForAllStates("QQ登录")
         qq.setImageForAllStates(UIImage(named: "ic_qq_70")!)
         qq.setButtonTitleImageStyle(padding: 5, style: TitleImageStyly.ButtonImageTitleStyleTop)
@@ -116,7 +116,7 @@ class LoginViewController: UIViewController {
     }()
     lazy var loginByWX: UIButton = {
         let wx = UIButton(type: UIButtonType.custom)
-        wx.frame = CGRect(x: 40 + buttonW, y: 100 + textFieldH * 5 + viewSpace * 5, width: buttonW, height: buttonW)
+        wx.frame = CGRect(x: 40 + buttonW, y: 100 + textFieldH * 5 + viewSpace * 5 + finalStatusBarH + finalNavigationBarH, width: buttonW, height: buttonW)
         //wx.setTitleForAllStates("微信登录")
         wx.setImageForAllStates(UIImage(named: "ic_wx_70")!)
         wx.setButtonTitleImageStyle(padding: 5, style: TitleImageStyly.ButtonImageTitleStyleTop)
@@ -125,7 +125,7 @@ class LoginViewController: UIViewController {
     }()
     lazy var loginByWB: UIButton = {
         let wb = UIButton(type: UIButtonType.custom)
-        wb.frame = CGRect(x: 60 + buttonW * 2, y: 100 + textFieldH * 5 + viewSpace * 5, width: buttonW, height: buttonW)
+        wb.frame = CGRect(x: 60 + buttonW * 2, y: 100 + textFieldH * 5 + viewSpace * 5 + finalStatusBarH + finalNavigationBarH, width: buttonW, height: buttonW)
         //wb.setTitleForAllStates("微博登录")
         wb.setImageForAllStates(UIImage(named: "ic_sina_70")!)
         wb.setButtonTitleImageStyle(padding: 5, style: TitleImageStyly.ButtonImageTitleStyleTop)

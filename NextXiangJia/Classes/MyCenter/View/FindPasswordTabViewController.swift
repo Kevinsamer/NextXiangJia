@@ -20,7 +20,7 @@ private var phoneString = ""
 class FindPasswordTabViewController: UIViewController, IndicatorInfoProvider {
     //MARK: - 懒加载
     lazy var username: MyTextField = {
-        let name = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 20, width: textFieldW, height: textFieldH))
+        let name = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 60 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
         //        name.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        name.layer.borderWidth = 1
         //name.textAlignment = NSTextAlignment.center
@@ -34,7 +34,7 @@ class FindPasswordTabViewController: UIViewController, IndicatorInfoProvider {
     }()
     
     lazy var mail: MyTextField = {
-        let mail = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 20 + textFieldH + viewSpace, width: textFieldW, height: textFieldH))
+        let mail = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 60 + textFieldH + viewSpace + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
         //        password.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        password.layer.borderWidth = 1
         //mail.textAlignment = NSTextAlignment.center
@@ -48,7 +48,7 @@ class FindPasswordTabViewController: UIViewController, IndicatorInfoProvider {
     }()
     
     lazy var phone: MyTextField = {
-        let phone = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 20 + textFieldH + viewSpace, width: textFieldW, height: textFieldH))
+        let phone = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 60 + textFieldH + viewSpace + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
         //        password.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        password.layer.borderWidth = 1
         //phone.textAlignment = NSTextAlignment.center
@@ -62,7 +62,7 @@ class FindPasswordTabViewController: UIViewController, IndicatorInfoProvider {
     }()
     
     lazy var authCode: MyTextField = {
-        let authCode = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 20 + textFieldH * 2 + viewSpace * 2, width: textFieldW / 2 - 10, height: textFieldH))
+        let authCode = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 60 + textFieldH * 2 + viewSpace * 2 + finalStatusBarH + finalNavigationBarH, width: textFieldW / 2 - 10, height: textFieldH))
         //        password.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        password.layer.borderWidth = 1
         //authCode.textAlignment = NSTextAlignment.center
@@ -77,7 +77,7 @@ class FindPasswordTabViewController: UIViewController, IndicatorInfoProvider {
     
     lazy var sendAuthCode: UIButton = {
         let authCode = UIButton(type: UIButtonType.custom)
-        authCode.frame = CGRect(x: finalScreenW / 2 + 10, y: 20 + textFieldH * 2 + viewSpace * 2, width: textFieldW / 2 - 10, height: textFieldH)
+        authCode.frame = CGRect(x: finalScreenW / 2 + 10, y: 60 + textFieldH * 2 + viewSpace * 2 + finalStatusBarH + finalNavigationBarH, width: textFieldW / 2 - 10, height: textFieldH)
         //        password.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        password.layer.borderWidth = 1
         authCode.titleLabel?.textAlignment = NSTextAlignment.center
@@ -102,7 +102,7 @@ class FindPasswordTabViewController: UIViewController, IndicatorInfoProvider {
     //    }()
     lazy var findButton: UIButton = {
         let button = UIButton(type: UIButtonType.system)
-        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: self.type == typePhone ? 20 + textFieldH * 3 + viewSpace * 3 : 20 + textFieldH * 2 + viewSpace * 2 , width: textFieldW, height: textFieldH)
+        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: self.type == typePhone ? 60 + textFieldH * 3 + viewSpace * 3 + finalStatusBarH + finalNavigationBarH: 60 + textFieldH * 2 + viewSpace * 2 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH)
         button.setTitleForAllStates("找回密码")
         button.titleLabel?.textAlignment = .center
         button.setTitleColorForAllStates(.white)

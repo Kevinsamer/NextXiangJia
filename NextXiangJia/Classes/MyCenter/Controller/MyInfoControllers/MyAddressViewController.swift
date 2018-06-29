@@ -9,11 +9,12 @@
 import UIKit
 private let addressCellID = "addressCellID"
 private var addressNums = 0
+private let newAddressButtonH:CGFloat = 40
 class MyAddressViewController: UIViewController {
     //MARK: - 懒加载
     lazy var newAddressButton: UIButton = {
         let button = UIButton(type: UIButtonType.custom)
-        button.frame = CGRect(x: 20, y: finalContentViewNoTabbarH - 60, width: finalScreenW - 40, height: 40)
+        button.frame = CGRect(x: 20, y: finalStatusBarH + YTools.getCurrentNavigationBarHeight(navCT: self.navigationController!) + finalContentViewNoTabbarH - newAddressButtonH, width: finalScreenW - 40, height: newAddressButtonH)
         button.setTitleForAllStates("＋ 新建地址")
         button.titleLabel?.textAlignment = .center
         button.setTitleColorForAllStates(.white)
@@ -24,14 +25,15 @@ class MyAddressViewController: UIViewController {
     }()
     lazy var addressCollectionView: UICollectionView = {
         var layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: finalScreenW, height: 140)
+        layout.itemSize = CGSize(width: finalScreenW, height: 150)
         layout.minimumLineSpacing = 5
-        //coll的高度为导航栏以下全部
-        let coll = UICollectionView(frame: CGRect.init(x: 0, y: 0, width: finalScreenW, height: UIDevice.current.isX() ? finalContentViewNoTabbarH + IphonexHomeIndicatorH : finalContentViewNoTabbarH ), collectionViewLayout: layout)
+        //coll的高度为导航栏以下新建按钮以上
+        let coll = UICollectionView(frame: CGRect.init(x: 0, y: YTools.getCurrentNavigationBarHeight(navCT: self.navigationController!) + finalStatusBarH, width: finalScreenW, height: finalContentViewNoTabbarH - newAddressButtonH), collectionViewLayout: layout)
         coll.backgroundColor = .white
         coll.isScrollEnabled = true
         coll.dataSource  = self
         coll.delegate = self
+        coll.contentInsetAdjustmentBehavior = .never
         coll.register(UINib.init(nibName: "AddressCell", bundle: nil), forCellWithReuseIdentifier: addressCellID)
         //coll.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return coll
@@ -96,14 +98,12 @@ extension MyAddressViewController {
 
 extension MyAddressViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return addressNums + 1
+        return addressNums
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = collectionView.dequeueReusableCell(withReuseIdentifier: addressCellID, for: indexPath)
-        if indexPath.item == addressNums {
-            cell.removeSubviews()
-        }
+        cell.backgroundColor = .white
         return cell
     }
     

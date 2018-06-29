@@ -418,7 +418,7 @@ extension HomeViewController{
         homeViewModel.requestBannerData {
             //请求结束后重载视图数据
             self.topBanner.reloadData()
-            print("加载banner数据")
+            print("加载banner数据 \(YTools.getCurrentNavigationBarHeight(navCT: self.navigationController!))")
         }
         
     }

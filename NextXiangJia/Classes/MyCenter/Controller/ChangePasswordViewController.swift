@@ -14,7 +14,7 @@ private let viewSpace :CGFloat = 20
 class ChangePasswordViewController: UIViewController {
     //MARK: - 懒加载
     lazy var oldPassword: MyTextField = {
-        let old = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100, width: textFieldW, height: textFieldH))
+        let old = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
         //        name.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        name.layer.borderWidth = 1
         //old.textAlignment = NSTextAlignment.center
@@ -28,7 +28,7 @@ class ChangePasswordViewController: UIViewController {
     }()
     
     lazy var newPassword: MyTextField = {
-        let new = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH + viewSpace, width: textFieldW, height: textFieldH))
+        let new = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH + viewSpace + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
         //        password.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        password.layer.borderWidth = 1
         //new.textAlignment = NSTextAlignment.center
@@ -41,7 +41,7 @@ class ChangePasswordViewController: UIViewController {
         return new
     }()
     lazy var newPasswordAgain: MyTextField = {
-        let newAgain = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 2 + viewSpace * 2, width: textFieldW, height: textFieldH))
+        let newAgain = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 2 + viewSpace * 2 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
         //        password.layer.borderColor = UIColor(named: "dark_gray")?.cgColor
         //        password.layer.borderWidth = 1
         //newAgain.textAlignment = NSTextAlignment.center
@@ -53,24 +53,24 @@ class ChangePasswordViewController: UIViewController {
         //newAgain.backgroundColor = UIColor.blue.lighten(by: 0.9)
         return newAgain
     }()
-    lazy var dividerLineOldPW: UIView = {
-        let view = UIView(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH, width: textFieldW, height: 1))
-        view.backgroundColor = UIColor(named: "dark_gray")
-        return view
-    }()
-    lazy var dividerLineNewPassword: UIView = {
-        let view = UIView(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 2 + viewSpace, width: textFieldW, height: 1))
-        view.backgroundColor = UIColor(named: "dark_gray")
-        return view
-    }()
-    lazy var dividerLineNewPasswordAgain: UIView = {
-        let view = UIView(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 3 + viewSpace * 2, width: textFieldW, height: 1))
-        view.backgroundColor = UIColor(named: "dark_gray")
-        return view
-    }()
+//    lazy var dividerLineOldPW: UIView = {
+//        let view = UIView(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH, width: textFieldW, height: 1))
+//        view.backgroundColor = UIColor(named: "dark_gray")
+//        return view
+//    }()
+//    lazy var dividerLineNewPassword: UIView = {
+//        let view = UIView(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 2 + viewSpace, width: textFieldW, height: 1))
+//        view.backgroundColor = UIColor(named: "dark_gray")
+//        return view
+//    }()
+//    lazy var dividerLineNewPasswordAgain: UIView = {
+//        let view = UIView(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 3 + viewSpace * 2, width: textFieldW, height: 1))
+//        view.backgroundColor = UIColor(named: "dark_gray")
+//        return view
+//    }()
     lazy var changeButton: UIButton = {
         let button = UIButton(type: UIButtonType.system)
-        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 3 + viewSpace * 3, width: textFieldW, height: textFieldH)
+        button.frame = CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + textFieldH * 3 + viewSpace * 3 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH)
         button.setTitleForAllStates("确认修改")
         button.titleLabel?.textAlignment = .center
         button.setTitleColorForAllStates(.white)

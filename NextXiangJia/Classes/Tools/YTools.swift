@@ -59,6 +59,16 @@ public class YTools{
         attributeText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.lightGray, range: NSRange(location:0,length:attributeText.length))
         return attributeText
     }
+    //获取当前navigationBar高度
+    public static func getCurrentNavigationBarHeight(navCT: UINavigationController) -> CGFloat{
+        return navCT.navigationBar.frame.height
+    }
+    
+    public static func myPrint(content: String, mode: Bool){
+        if mode {
+            print(content)
+        }
+    }
     
 }
 //MARK: - objc func

@@ -53,13 +53,14 @@ extension FindPasswordViewController {
     }
     
     private func setupBodyContent(){
-        buttonBarView.frame = CGRect(x: 0, y: 0, width: buttonBarView.frame.width, height: buttonBarView.frame.height)
+        buttonBarView.frame = CGRect(x: 0, y: finalStatusBarH + finalNavigationBarH, width: buttonBarView.frame.width, height: buttonBarView.frame.height)
         buttonBarView.selectedBar.backgroundColor = UIColor(named: "global_orange")
         buttonBarView.backgroundColor = UIColor(named: "global_orange")
         pagerBehaviour = .progressive(skipIntermediateViewControllers: true, elasticIndicatorLimit: true)
         //pagerBehaviour = .common(skipIntermediateViewControllers: false)
+        self.containerView.contentInsetAdjustmentBehavior = .never
+        //self.view.frame = CGRect(x: 0, y: 200, width: 100, height: 100)
     }
-    
-    
+
 }
 
