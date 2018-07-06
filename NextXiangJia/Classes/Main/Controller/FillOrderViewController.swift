@@ -505,15 +505,18 @@ extension FillOrderViewController: UICollectionViewDelegateFlowLayout,UICollecti
         
         switch indexPath.row {
         case 0:
+            cell.removeSubviews()
             cell.addSubview(nameAndPhoneLabel)
             cell.addSubview(addressLabel)
             cell.addSubview(moreAddressImageV)
             cell.addSubview(addressLine)
         case 1:
+            cell.removeSubviews()
             cell.addSubview(payLabel)
             cell.addSubview(chosenPayModeLabel)
             cell.addSubview(morePayModeImage)
         case 2:
+            cell.removeSubviews()
             cell.addSubview(goodsInfoTableView)
             sendModeView.addSubview(sendLabel)
             sendModeView.addSubview(chosensendModeLabel)
@@ -522,6 +525,7 @@ extension FillOrderViewController: UICollectionViewDelegateFlowLayout,UICollecti
             cell.addSubview(messageEditField)
             //cell.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
         case 3:
+            cell.removeSubviews()
             cell.addSubview(invoiceLabel)
             cell.addSubview(invoiceSwitch)
             cell.addSubview(neededInvoiceLabel)
@@ -531,6 +535,7 @@ extension FillOrderViewController: UICollectionViewDelegateFlowLayout,UICollecti
             vouchersView.addSubview(moreVouchersImage)
             cell.addSubview(vouchersView)
         case 4:
+            cell.removeSubviews()
             cell.addSubview(goodsPriceLabelL)
             cell.addSubview(goodsPriceLabel)
             cell.addSubview(vouchersPriceLabelL)
@@ -545,6 +550,7 @@ extension FillOrderViewController: UICollectionViewDelegateFlowLayout,UICollecti
             cell.addSubview(handlingFeePriceLabel)
             //cell.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         default:
+            //cell.removeSubviews()
             //cell.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
             break
         }
