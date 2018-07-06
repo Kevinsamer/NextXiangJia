@@ -224,7 +224,7 @@ extension NextShopCartViewController{
 //        cartTableView?.contentInsetAdjustmentBehavior = .never
         cartTableView?.delegate = self
         cartTableView?.dataSource = self
-        cartTableView?.allowsSelection = false
+//        cartTableView?.allowsSelection = false
         cartTableView?.backgroundColor = LZColorTool.colorFromRGB(235, G: 246, B: 248)
         cartTableView?.separatorStyle = UITableViewCellSeparatorStyle.none
         cartTableView?.rowHeight = KLZTableViewCellHeight
@@ -635,6 +635,10 @@ extension NextShopCartViewController : UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         
         return "删除"
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
     //ios11后cell右滑，代替editActionsForRowAt,可修改按钮样式
     //    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

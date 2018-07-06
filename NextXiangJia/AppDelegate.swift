@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = UIColor.init(named: "global_orange")
         UITabBar.appearance().backgroundColor = .white
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        IQKeyboardManager.shared.enable = true
         return true
     }
     

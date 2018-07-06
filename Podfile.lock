@@ -9,6 +9,7 @@ PODS:
   - FSPagerView (0.7.1)
   - ImageRow (3.1.0):
     - Eureka (~> 4.0)
+  - IQKeyboardManagerSwift (6.0.4)
   - Kingfisher (4.6.4)
   - ObjectMapper (3.2.0)
   - PullToRefreshKit (0.8.6)
@@ -44,6 +45,7 @@ DEPENDENCIES:
   - FontAwesome.swift
   - FSPagerView
   - ImageRow (~> 3.0)
+  - IQKeyboardManagerSwift
   - Kingfisher (~> 4.6.4)
   - PullToRefreshKit
   - R.swift
@@ -63,6 +65,7 @@ SPEC REPOS:
     - FontAwesome.swift
     - FSPagerView
     - ImageRow
+    - IQKeyboardManagerSwift
     - Kingfisher
     - ObjectMapper
     - PullToRefreshKit
@@ -92,6 +95,7 @@ SPEC CHECKSUMS:
   FontAwesome.swift: b4e4c8ccbbecb12f9b592bc533ff237af3706667
   FSPagerView: 958aba39684e1573755ddcfcc29f7eebb8413cee
   ImageRow: 1ea483078bfa3d880a7fc76fdfcddfd5f29a9e6b
+  IQKeyboardManagerSwift: 36dbe324b4f9793f5f41ba5227f3e7c76dfefd50
   Kingfisher: 68498a706e46c2a050b0c9572f100e5db407f6e0
   ObjectMapper: 5cccd2de6f253eda859df8116a5a554d9769e859
   PullToRefreshKit: 172df52ab9c6cb2c1d4b1872b49f448d6291523f
@@ -104,6 +108,6 @@ SPEC CHECKSUMS:
   Toast-Swift: ba0b01b095aada709d915f9beb1d38184a2721c3
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 46cb6a0a2ad6f39e4e5b76306c2d52b52b0ce254
+PODFILE CHECKSUM: 5e55004368d7fd80c0e2bad1cf7346596b03b638
 
 COCOAPODS: 1.5.0.beta.1

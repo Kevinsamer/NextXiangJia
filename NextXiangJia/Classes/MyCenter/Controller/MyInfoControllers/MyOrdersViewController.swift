@@ -47,10 +47,10 @@ extension MyOrdersViewController {
     }
    
     private func setupBodyContent(){
-        let label = UILabel(frame: CGRect(x: finalScreenW / 2 - 50, y: finalScreenH / 2 - 20, width: 100, height: 40))
-        label.textAlignment = .center
-        label.text = "MyOrdersPage"
-        self.view.addSubview(label)
-        self.view.backgroundColor = UIColor.random.lighten(by: 0.6)
+//        let label = UILabel(frame: CGRect(x: finalScreenW / 2 - 50, y: finalScreenH / 2 - 20, width: 100, height: 40))
+//        label.textAlignment = .center
+//        label.text = "MyOrdersPage"
+//        self.view.addSubview(label)
+//        self.view.backgroundColor = UIColor.random.lighten(by: 0.6)
     }
 }

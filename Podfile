@@ -16,6 +16,7 @@ pod "SnapKit"
 #View
 pod "PullToRefreshKit"
 pod "Toast-Swift", "~> 3.0.1"
+pod "IQKeyboardManagerSwift" #防止键盘遮挡
 #font
 pod "FontAwesome.swift"
 

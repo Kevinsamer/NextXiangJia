@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import FSPagerView
 import Toast_Swift
+import WebKit
 private let maxContentOfSetY: CGFloat = 40
 private let screenWidth = UIScreen.main.bounds.width
 private let tableCellID = "tableCellID"
@@ -209,13 +210,24 @@ class GoodViewController: GoodDetailBaseViewController {
         return activity
     }()
     
-    lazy var webView: UIWebView = {
-        let webView = UIWebView.init(frame: CGRect(x: 0, y: self.tableView.frame.maxY, width: self.view.frame.width, height: self.usableViewHeight!))
-        webView.delegate = self
+    lazy var wkWebView: WKWebView = {
+        var config = WKWebViewConfiguration()
+        
+        let webView = WKWebView(frame: CGRect(x: 0, y: self.tableView.frame.maxY, width: self.view.frame.width, height: self.usableViewHeight!), configuration: config)
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
         webView.scrollView.delegate = self
         webView.backgroundColor = UIColor.white
         return webView
     }()
+    
+//    lazy var webView: UIWebView = {
+//        let webView = UIWebView.init(frame: CGRect(x: 0, y: self.tableView.frame.maxY, width: self.view.frame.width, height: self.usableViewHeight!))
+//        webView.delegate = self
+//        webView.scrollView.delegate = self
+//        webView.backgroundColor = UIColor.white
+//        return webView
+//    }()
     
     lazy var tableView: UITableView = {
         let table = UITableView(frame: CGRect.init(x: 0, y: finalStatusBarH, width: finalScreenW, height: self.usableViewHeight!), style: UITableViewStyle.plain)
@@ -310,9 +322,9 @@ extension GoodViewController {
     }
     
     private func setWebView(){
-        self.view.addSubview(webView)
-        self.webView.addSubview(activity)
-        self.webView.addSubview(webHeaderView)
+        self.view.addSubview(wkWebView)
+        self.wkWebView.addSubview(activity)
+        self.wkWebView.addSubview(webHeaderView)
     }
     private func setTableView(){
         self.view.addSubview(tableView)
@@ -349,27 +361,27 @@ extension GoodViewController {
 extension GoodViewController {
     func goToWebDetail() {
         UIView.animate(withDuration: 0.3, animations: {[unowned self] in
-            self.webView.frame = CGRect(x: 0, y: finalStatusBarH, width: screenWidth, height: self.usableViewHeight!)
+            self.wkWebView.frame = CGRect(x: 0, y: finalStatusBarH, width: screenWidth, height: self.usableViewHeight!)
             self.tableView.frame = CGRect(x: 0, y: -self.usableViewHeight! - finalStatusBarH, width: screenWidth, height: self.usableViewHeight!)
             //self.webView.isHidden = false
-            self.webView.layer.opacity = 1
+            self.wkWebView.layer.opacity = 1
             
         }) { (finished) in
             guard !self.isLoadedWeb else {
                 return
             }
             let request = URLRequest(url: URL(string: "https://www.baidu.com")!)
-            self.webView.loadRequest(request)
+            self.wkWebView.load(request)
             self.isLoadedWeb = true
         }
     }
     
     func backToTableDetail() {
         UIView.animate(withDuration: 0.3, animations: {
-            self.webView.frame = CGRect(x: 0, y: self.usableViewHeight! + finalStatusBarH, width: screenWidth, height: self.usableViewHeight!)
+            self.wkWebView.frame = CGRect(x: 0, y: self.usableViewHeight! + finalStatusBarH, width: screenWidth, height: self.usableViewHeight!)
             self.tableView.frame = CGRect(x: 0, y: finalStatusBarH, width: screenWidth, height: self.usableViewHeight!)
             
-            self.webView.layer.opacity = 0
+            self.wkWebView.layer.opacity = 0
         }){(finished) in
             //self.tableView.scrollToTop()
         }
@@ -549,3 +561,24 @@ extension GoodViewController {
         }
     }
 }
+
+//MARK: - 遵守WKWebView协议
+extension GoodViewController : WKUIDelegate,WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        self.activity.isHidden = false
+        self.activity.startAnimating()
+        //开始加载时调用
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        //即将完成加载
+        self.activity.stopAnimating()
+    }
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        //加载失败时调用
+        self.activity.stopAnimating()
+    }
+}
+
+
+
