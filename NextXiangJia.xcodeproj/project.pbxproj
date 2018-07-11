@@ -134,6 +134,10 @@
 		0976F3D720EEF92A007A47A3 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0976F3A220EEF92A007A47A3 /* SegmentedControl.swift */; };
 		0976F3D820EEF92A007A47A3 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0976F3A320EEF92A007A47A3 /* TextField.swift */; };
 		0976F3DC20EF0318007A47A3 /* geolocation.png in Resources */ = {isa = PBXBuildFile; fileRef = 0976F3DB20EF0318007A47A3 /* geolocation.png */; };
+		0976F3E220F2EAE8007A47A3 /* MyOrdersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0976F3E120F2EAE8007A47A3 /* MyOrdersTableViewController.swift */; };
+		0976F3E520F341C0007A47A3 /* MyOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0976F3E320F341C0007A47A3 /* MyOrderTableViewCell.swift */; };
+		0976F3E620F341C0007A47A3 /* MyOrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0976F3E420F341C0007A47A3 /* MyOrderTableViewCell.xib */; };
+		0976F3E820F58FDD007A47A3 /* OrderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0976F3E720F58FDD007A47A3 /* OrderDetailViewController.swift */; };
 		0978EF8A20A17B53004BEACF /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978EF8820A17B53004BEACF /* AddressCell.swift */; };
 		0978EF8B20A17B53004BEACF /* AddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0978EF8920A17B53004BEACF /* AddressCell.xib */; };
 		0978EF8E20A282BB004BEACF /* AddNewAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978EF8D20A282BB004BEACF /* AddNewAddressViewController.swift */; };
@@ -328,6 +332,10 @@
 		0976F3A220EEF92A007A47A3 /* SegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		0976F3A320EEF92A007A47A3 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		0976F3DB20EF0318007A47A3 /* geolocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geolocation.png; sourceTree = "<group>"; };
+		0976F3E120F2EAE8007A47A3 /* MyOrdersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersTableViewController.swift; sourceTree = "<group>"; };
+		0976F3E320F341C0007A47A3 /* MyOrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderTableViewCell.swift; sourceTree = "<group>"; };
+		0976F3E420F341C0007A47A3 /* MyOrderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyOrderTableViewCell.xib; sourceTree = "<group>"; };
+		0976F3E720F58FDD007A47A3 /* OrderDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailViewController.swift; sourceTree = "<group>"; };
 		0978EF8820A17B53004BEACF /* AddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
 		0978EF8920A17B53004BEACF /* AddressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressCell.xib; sourceTree = "<group>"; };
 		0978EF8D20A282BB004BEACF /* AddNewAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressViewController.swift; sourceTree = "<group>"; };
@@ -671,6 +679,8 @@
 				0978EF9820A41B71004BEACF /* FindPasswordTabViewController.swift */,
 				0978EF9A20A528AE004BEACF /* MySuggesttionTabSubmitViewController.swift */,
 				0978EF9C20A52AA4004BEACF /* MySuggestionTabFeedViewController.swift */,
+				0976F3E320F341C0007A47A3 /* MyOrderTableViewCell.swift */,
+				0976F3E420F341C0007A47A3 /* MyOrderTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1063,7 +1073,9 @@
 		0978EF8C20A2826C004BEACF /* ThirdPages */ = {
 			isa = PBXGroup;
 			children = (
+				0976F3E120F2EAE8007A47A3 /* MyOrdersTableViewController.swift */,
 				0978EF8D20A282BB004BEACF /* AddNewAddressViewController.swift */,
+				0976F3E720F58FDD007A47A3 /* OrderDetailViewController.swift */,
 			);
 			path = ThirdPages;
 			sourceTree = "<group>";
@@ -1242,6 +1254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0976F3E620F341C0007A47A3 /* MyOrderTableViewCell.xib in Resources */,
 				0992E45620BC02D900B7902E /* cart_addBtn_highlight@2x.png in Resources */,
 				0976F3BD20EEF92A007A47A3 /* Countries.bundle in Resources */,
 				090269942040FCC7007FF5B9 /* Home.storyboard in Resources */,
@@ -1369,6 +1382,7 @@
 				090DDDEF2092F1A000A42E3F /* MyCommendViewController.swift in Sources */,
 				0904C3D020D207D3009A8282 /* MyNavigationController.swift in Sources */,
 				094352D620DB7EFA00D4C31A /* Header.swift in Sources */,
+				0976F3E220F2EAE8007A47A3 /* MyOrdersTableViewController.swift in Sources */,
 				0976F3A420EEF92A007A47A3 /* Array+Extensions.swift in Sources */,
 				0978EFA320A5933A004BEACF /* MyTextView.swift in Sources */,
 				090269B22043AEB9007FF5B9 /* PageTitleView.swift in Sources */,
@@ -1416,6 +1430,7 @@
 				094352CE20DB7D9B00D4C31A /* GoodsTypeModel.swift in Sources */,
 				09A396A720CE096D00B82970 /* SearchResultController.swift in Sources */,
 				0908C83D2060DAF100CED99E /* MyCenterViewController.swift in Sources */,
+				0976F3E820F58FDD007A47A3 /* OrderDetailViewController.swift in Sources */,
 				094352CD20DB7D9B00D4C31A /* GoodsPriceModel.swift in Sources */,
 				0976F3CE20EEF92A007A47A3 /* ItemWithPhoto.swift in Sources */,
 				094352D420DB7D9B00D4C31A /* TypeView.swift in Sources */,
@@ -1428,6 +1443,7 @@
 				0976F3D220EEF92A007A47A3 /* AttributedTextBlock.swift in Sources */,
 				0992E46F20C660B700B7902E /* NSDate-extension.swift in Sources */,
 				0978EF8E20A282BB004BEACF /* AddNewAddressViewController.swift in Sources */,
+				0976F3E520F341C0007A47A3 /* MyOrderTableViewCell.swift in Sources */,
 				0976F3AB20EEF92A007A47A3 /* UIApplication+Extensions.swift in Sources */,
 				090769A720ECAD8600E6FE93 /* MyAlertController.swift in Sources */,
 				0978EF9920A41B71004BEACF /* FindPasswordTabViewController.swift in Sources */,

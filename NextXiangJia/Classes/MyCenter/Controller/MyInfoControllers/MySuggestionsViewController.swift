@@ -59,7 +59,7 @@ extension MySuggestionsViewController {
         setupBodyContent()
     }
     private func setupBodyContent(){
-        buttonBarView.frame = CGRect(x: 0, y: 0, width: buttonBarView.frame.width, height: buttonBarView.frame.height)
+        buttonBarView.frame = CGRect(x: 0, y: finalStatusBarH + finalNavigationBarH, width: buttonBarView.frame.width, height: buttonBarView.frame.height)
         buttonBarView.selectedBar.backgroundColor = UIColor(named: "global_orange")
         buttonBarView.backgroundColor = UIColor(named: "global_orange")
         pagerBehaviour = .progressive(skipIntermediateViewControllers: true, elasticIndicatorLimit: true)

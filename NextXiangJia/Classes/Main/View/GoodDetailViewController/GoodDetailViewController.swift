@@ -174,7 +174,7 @@ extension GoodDetailViewController {
             }
         }
         
-        buttonBarView.frame = CGRect(x: 100, y: 0, width: finalScreenW /  2, height: finalNavigationBarH)
+        buttonBarView.frame = CGRect(x: finalScreenW / 4, y: 0, width: finalScreenW /  2, height: finalNavigationBarH)
         //buttonBarView.collectionViewLayout = UICollectionViewFlowLayout()
         //buttonBarView.centerX = (navigationController?.navigationBar.centerX)!
         buttonBarView.selectedBar.backgroundColor = .white
