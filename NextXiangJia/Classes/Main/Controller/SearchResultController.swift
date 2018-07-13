@@ -148,7 +148,7 @@ extension SearchResultController {
             }
             
             if let navigationbar = self.navigationController?.navigationBar {
-                navigationbar.barTintColor = UIColor(named: "navibar_bartint_orange")!
+                //navigationbar.barTintColor = UIColor(named: "navibar_bartint_orange")!
                 navigationbar.tintColor = .white
             }
             navigationItem.searchController = searchBarVC

@@ -81,7 +81,7 @@ class HomeViewController: UIViewController {
         collection.dataSource = self
         collection.delegate = self
         collection.register(UINib.init(nibName: "ItemCell", bundle: nil), forCellWithReuseIdentifier: itemCellID)
-        collection.register(UINib.init(nibName: "HeadView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
+        collection.register(UINib.init(nibName: "HomeCollHeadView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
         collection.backgroundColor = UIColor.init(named: "home_collectionview_bg")
         return collection
     }()

@@ -68,7 +68,8 @@ class MyNavigationController: UINavigationController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        YTools.setNavigationBarAndTabBar(navCT: (self.viewControllers.first?.navigationController)!, navItem: (self.viewControllers.first?.navigationItem)!)
+        navigationController?.navigationBar.topItem?.title = ""
+        //YTools.setNavigationBarAndTabBar(navCT: (self.viewControllers.first?.navigationController)!, navItem: (self.viewControllers.first?.navigationItem)!)
     }
     
 }
@@ -99,10 +100,15 @@ extension MyNavigationController {
         self.viewControllers.first?.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightBtn)
         //navigationItem.rightBarButtonItem = UIBarButtonItem.init(imageName: "home_top_search_right")
         
-        navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18)]
-        navigationBar.barTintColor = UIColor(named: "navibar_bartint_orange")
-        navigationBar.isTranslucent = true
-        
+//        navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18)]
+//        navigationBar.barTintColor = UIColor(named: "navibar_bartint_orange")
+//        navigationBar.isTranslucent = true
+//        navigationBar.shadowImage = UIImage()
+//        navigationBar.clipsToBounds = true
+        navigationController?.view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        for vc in self.viewControllers {
+            vc.navigationController?.navigationBar.topItem?.title = ""
+        }
     }
 }
 

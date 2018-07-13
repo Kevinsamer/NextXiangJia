@@ -18,10 +18,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+//        全局设置tabBarStyle
         UITabBar.appearance().tintColor = UIColor.init(named: "global_orange")
         UITabBar.appearance().backgroundColor = .white
+        UITabBar.appearance().clipsToBounds = true
+        //全局设置navigationBarStyle
+//        UINavigationBar.appearance().clipsToBounds = true
+        //UINavigationBar.appearance().barTintColor = UIColor(named: "navibar_bartint_orange")
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18)]
+        UINavigationBar.appearance().isTranslucent = true
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage.init(color: UIColor.init(named: "navibar_bartint_orange")!, size: CGSize(width: finalScreenW, height: finalNavigationBarH)), for: UIBarMetrics.default)
+//        UINavigationBar.appearance().topItem?.title = ""
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(-100, 0), for:UIBarMetrics.default)//设置偏移量来隐藏返回按钮文字,TODO：修改为基类中设置navigationController?.navigationBar.topItem?.title = ""
+        
+
+        //设置状态栏style
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        //输入框适应键盘位置
         IQKeyboardManager.shared.enable = true
+        //window?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
         return true
     }
     

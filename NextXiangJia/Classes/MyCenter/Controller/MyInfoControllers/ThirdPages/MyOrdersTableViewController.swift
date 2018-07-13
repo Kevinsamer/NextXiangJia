@@ -23,6 +23,7 @@ class MyOrdersTableViewController: UIViewController, IndicatorInfoProvider{
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+        
         return tableView
     }()
     
@@ -84,6 +85,7 @@ extension MyOrdersTableViewController{
         if self.orderNumbers == 0 {
             //无数据
             self.ordersTableView.addSubview(noOrderButton)
+            self.ordersTableView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }
     }
 }
@@ -97,7 +99,7 @@ extension MyOrdersTableViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tableViewCellID, for: indexPath) as! MyOrderTableViewCell
-        
+        cell.selectionStyle = .none
         //cell.backgroundColor = UIColor.random
         cell.goodsNum = Int.random(between: 5, and: 20)
         if itemInfo.title == "已完成" {
@@ -120,11 +122,14 @@ extension MyOrdersTableViewController:UITableViewDelegate,UITableViewDataSource{
     }
     
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
+//    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+//        return false
+//    }
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //点击事件
+        let vc = OrderDetailViewController()
+        self.navigationController?.show(vc, sender: self)
     }
 }

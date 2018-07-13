@@ -114,11 +114,13 @@ class GoodDetailViewController: ButtonBarPagerTabStripViewController {
 //        navigationItem.titleView = nil
         super.viewWillDisappear(animated)
         buttonBarView.isHidden = true
+        //self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         buttonBarView.isHidden = false
+        //self.tabBarController?.tabBar.isHidden = false
     }
     
     override func updateIndicator(for viewController: PagerTabStripViewController, fromIndex: Int, toIndex: Int, withProgressPercentage progressPercentage: CGFloat, indexWasChanged: Bool) {
@@ -188,7 +190,6 @@ extension GoodDetailViewController {
     }
     
     private func setNavigationBar(){
-        //YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, titleName: "商品详情", navItem: self.navigationItem)
         
     }
     

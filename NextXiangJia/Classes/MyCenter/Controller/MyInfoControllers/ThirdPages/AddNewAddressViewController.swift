@@ -8,14 +8,14 @@
 
 import UIKit
 import Eureka
-var name:String?
-var phoneNum:String?
-var address:(String,String,String)?
-var detailedAddress:String?
-var telNum:String?
-var zipCode:Int?
-class AddNewAddressViewController: FormViewController {
 
+class AddNewAddressViewController: FormViewController {
+    var name:String?
+    var phoneNum:String?
+    var address:(String,String,String)?
+    var detailedAddress:String?
+    var telNum:String?
+    var zipCode:Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,11 +83,11 @@ extension AddNewAddressViewController {
                 
             }).onCellSelection({ (cell, row) in
                 AreaPickView.showChooseCityView(selectCityHandle: { (province, city, town) in
-                    address = (province,city,town)
+                    self.address = (province,city,town)
                     row.value = "\(province) \(city) \(town) ＞"
 //                    row.title = "所在地区： \(province) \(city) \(town)"
                     row.updateCell()
-                    print(address)
+                    print(self.address)
                 })
             })
         <<< LabelRow(){
