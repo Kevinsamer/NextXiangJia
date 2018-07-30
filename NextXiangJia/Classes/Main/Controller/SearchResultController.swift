@@ -14,6 +14,8 @@ private var cellID = "cellID"
 private let listCellID = "listCellID"
 private let collCellID = "collCellID"
 private var keys = ""
+
+
 class SearchResultController: UICollectionViewController {
     
     override init(collectionViewLayout layout: UICollectionViewLayout) {
