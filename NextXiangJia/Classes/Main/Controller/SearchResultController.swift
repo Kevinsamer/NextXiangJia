@@ -75,8 +75,14 @@ class SearchResultController: UICollectionViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        //navigationController?.setNavigationBarHidden(false, animated: false)
         SwiftEventBus.unregister(self)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        navigationItem.hidesSearchBarWhenScrolling = true
+        super.viewDidAppear(animated)
+        
     }
 }
 
@@ -90,6 +96,7 @@ extension SearchResultController {
         setCollectionView()
         //3.设置searchBar
         setSearchBar()
+        self.definesPresentationContext = true
     }
     
     private func initData(){
@@ -122,19 +129,19 @@ extension SearchResultController {
     
     private func setSearchBar(){
         if #available(iOS 11.0, *) {
-            
             searchBarVC.delegate = self
-            let searchBar = searchBarVC.searchBar
-            searchBar.tintColor = UIColor.white
-            searchBar.barTintColor = UIColor.white
-            searchBar.delegate = self
-            searchBar.searchBarStyle = UISearchBarStyle.default
-            searchBar.barStyle = UIBarStyle.default
-            searchBar.autocapitalizationType = .words
-            searchBar.placeholder = "请输入搜索内容"
+            //let searchBar = searchBarVC.searchBar
+            searchBarVC.searchBar.tintColor = UIColor.black
+            searchBarVC.searchBar.backgroundColor = UIColor.init(named: "global_orange")
+            searchBarVC.searchBar.delegate = self
+            searchBarVC.searchBar.searchBarStyle = UISearchBarStyle.prominent
+            searchBarVC.searchBar.barStyle = UIBarStyle.black
+            searchBarVC.searchBar.autocapitalizationType = .words
+            searchBarVC.searchBar.placeholder = "请输入搜索内容"
+            //searchBar.sizeToFit()
             searchBarVC.searchBar.placeholder = keys
-            searchBar.setValue("取消", forKey: "_cancelButtonText")
-            if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
+            searchBarVC.searchBar.setValue("取消", forKey: "_cancelButtonText")
+            if let textfield = searchBarVC.searchBar.value(forKey: "searchField") as? UITextField {
                 textfield.textColor = UIColor.blue
                 if let backgroundview = textfield.subviews.first {
                     // Background color
@@ -153,6 +160,8 @@ extension SearchResultController {
             }
             navigationItem.searchController = searchBarVC
             navigationItem.hidesSearchBarWhenScrolling = false
+            navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
+            navigationItem.searchController?.isActive = true
         }
     }
 }
@@ -174,11 +183,11 @@ extension SearchResultController {
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         print(velocity.y)
-        if velocity.y > 0 {
-            navigationController?.setNavigationBarHidden(true, animated: true)
-        }else{
-            navigationController?.setNavigationBarHidden(false, animated: true)
-        }
+//        if velocity.y > 0 {
+//            navigationController?.setNavigationBarHidden(true, animated: true)
+//        }else{
+//            navigationController?.setNavigationBarHidden(false, animated: true)
+//        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
