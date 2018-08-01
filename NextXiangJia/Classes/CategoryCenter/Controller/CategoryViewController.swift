@@ -155,9 +155,12 @@ extension CategoryViewController:UICollectionViewDelegateFlowLayout,UICollection
         cell.contentView.bounds.size = CGSize(width: 180, height: 180)
         cell.contentView.layer.borderColor = UIColor.blue.cgColor
         cell.contentView.layer.borderWidth = 1
+        
         let text = UITextView(frame: CGRect(x: 0, y: 0, width: cell.frame.width, height: cell.frame.height))
         text.textAlignment = .center
         text.text = cellText[indexPath.row]
+        text.isEditable = false
+        text.isSelectable = false
         cell.addSubview(text)
         return cell
     }
