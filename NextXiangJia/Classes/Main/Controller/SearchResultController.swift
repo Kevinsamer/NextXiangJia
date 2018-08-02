@@ -17,7 +17,10 @@ private var keys = ""
 
 
 class SearchResultController: UICollectionViewController {
-    
+    private var navBarY:CGFloat?
+    private var searchBarY:CGFloat?
+    private var navigationBarLayer:CALayer?
+    private var searchBarLayer:CALayer?
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
     }
@@ -65,6 +68,38 @@ class SearchResultController: UICollectionViewController {
         return item
     }()
     
+    lazy var naviMissAnimate: CABasicAnimation = {
+        let ani = CABasicAnimation(keyPath: "position")
+        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY!))
+        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY! - finalNavigationBarH))
+        ani.duration = 0.5
+        return ani
+    }()
+    
+    lazy var naviShowAnimate: CABasicAnimation = {
+        let ani = CABasicAnimation(keyPath: "position")
+        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY! - finalNavigationBarH))
+        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY!))
+        ani.duration = 0.5
+        return ani
+    }()
+    
+    lazy var searchBarMissAnimate: CABasicAnimation = {
+        let ani = CABasicAnimation(keyPath: "position")
+        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY!))
+        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY! - finalNavigationBarH))
+        ani.duration = 0.5
+        return ani
+    }()
+    
+    lazy var searchBarShowAnimate: CABasicAnimation = {
+        let ani = CABasicAnimation(keyPath: "position")
+        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY! - finalNavigationBarH))
+        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY!))
+        ani.duration = 0.5
+        return ani
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -82,13 +117,24 @@ class SearchResultController: UICollectionViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        navigationItem.hidesSearchBarWhenScrolling = true
+        //navigationItem.hidesSearchBarWhenScrolling = true
         super.viewDidAppear(animated)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //通过DebugViewHierarchy可见searchBar底部灰色线条为_UIBarBackground下的第二个子空间，使用KVC获取其父控件_UIBarBackground后隐藏其第二个子空间即可消除底部灰线
+        for view in (self.navigationController?.navigationBar.subviews)! {
+            if view.isKind(of: NSClassFromString("_UIBarBackground")!){
+                view.subviews[1].isHidden = true
+            }
+        }
     }
 }
 
 extension SearchResultController {
+    
     private func setUI(){
         //0.初始化数据
         initData()
@@ -113,12 +159,15 @@ extension SearchResultController {
 //            self.navigationItem.title = keys
 //            print(keys)
 //        }
+        self.navBarY = self.navigationController?.navigationBar.layer.position.y
         
     }
     
     private func setNavigationBar(){
         navigationItem.rightBarButtonItem = rightItem
         navigationItem.title = "搜索结果"
+        navigationBarLayer = self.navigationController?.navigationBar.layer
+        //navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     }
     
     private func setCollectionView(){
@@ -142,6 +191,9 @@ extension SearchResultController {
             searchBarVC.searchBar.placeholder = "请输入搜索内容"
             //searchBar.sizeToFit()
             searchBarVC.searchBar.placeholder = keys
+            searchBarVC.searchBar.backgroundImage = UIImage()
+//            searchBarVC.searchBar.layer.borderWidth = 5
+//            searchBarVC.searchBar.layer.borderColor = UIColor.white.cgColor
             searchBarVC.searchBar.setValue("取消", forKey: "_cancelButtonText")
             if let textfield = searchBarVC.searchBar.value(forKey: "searchField") as? UITextField {
                 textfield.textColor = UIColor.blue
@@ -164,6 +216,8 @@ extension SearchResultController {
             navigationItem.hidesSearchBarWhenScrolling = false
             navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
             navigationItem.searchController?.isActive = true
+            self.searchBarY = self.navigationItem.searchController?.searchBar.layer.position.y
+            self.searchBarLayer = self.navigationItem.searchController?.searchBar.layer
         }
     }
 }
@@ -182,14 +236,37 @@ extension SearchResultController {
         let vc = GoodDetailViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
-    
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        print(velocity.y)
-//        if velocity.y > 0 {
-//            navigationController?.setNavigationBarHidden(true, animated: true)
-//        }else{
-//            navigationController?.setNavigationBarHidden(false, animated: true)
-//        }
+//        print(velocity.y)
+//        print(scrollView.contentOffset.y)
+        if velocity.y > 0 {
+            //隐藏搜索框
+            
+//            navigationBarLayer?.add(naviMissAnimate, forKey: "missNavi")
+//            searchBarLayer?.add(searchBarMissAnimate, forKey: "searchMiss")
+            UIView.animate(withDuration: 0.5, animations: {[unowned self] in
+                self.navigationBarLayer?.position.y = self.navBarY! - finalNavigationBarH
+                //self.searchBarLayer?.position.y = self.searchBarY! - finalNavigationBarH
+                self.navigationItem.hidesBackButton = true
+                self.navigationItem.title = ""
+                self.navigationItem.rightBarButtonItem?.customView?.isHidden = true
+            })
+            //navigationController?.setNavigationBarHidden(true, animated: true)
+        }else{
+            //显示
+            
+//            navigationBarLayer?.add(naviShowAnimate, forKey: "showNavi")
+//            searchBarLayer?.add(searchBarShowAnimate, forKey: "searchShow")
+            UIView.animate(withDuration: 0.5, animations: {[unowned self] in
+                self.navigationBarLayer?.position.y = self.navBarY!
+                //self.searchBarLayer?.position.y = self.searchBarY!
+                self.navigationItem.hidesBackButton = false
+                self.navigationItem.title = "搜索结果"
+                self.navigationItem.rightBarButtonItem?.customView?.isHidden = false
+            })
+            //navigationController?.setNavigationBarHidden(false, animated: true)
+
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
