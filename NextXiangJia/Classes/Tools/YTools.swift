@@ -88,6 +88,18 @@ public class YTools{
         attributedString.addAttributes([NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontNum).bold , NSAttributedStringKey.foregroundColor : UIColor.red], range: rangDecimal)
         return attributedString
     }
+    //将date转为2018-11-11 11:11:11类型的字符串
+    public static func dateToString(date:Date) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.string(from: date)
+    }
+    //字符串转data,失败返回1970.1.1
+    public static func stringToDate(str:String) -> Date{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.date(from: str) ?? Date(timeIntervalSince1970: 0)
+    }
     
 }
 //MARK: - objc func

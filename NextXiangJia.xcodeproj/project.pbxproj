@@ -82,6 +82,8 @@
 		094C407920AAC400001E5C77 /* SMSegmentAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C407520AAC3FF001E5C77 /* SMSegmentAppearance.swift */; };
 		094C407A20AAC400001E5C77 /* SMSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C407620AAC3FF001E5C77 /* SMSegmentView.swift */; };
 		094C407B20AAC400001E5C77 /* SMSegmentViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C407720AAC3FF001E5C77 /* SMSegmentViewConstants.swift */; };
+		096C42BF2112E09A00BBA4DE /* AccountLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096C42BE2112E09A00BBA4DE /* AccountLog.swift */; };
+		096C42C1211300D900BBA4DE /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096C42C0211300D900BBA4DE /* BaseModel.swift */; };
 		0976F3A420EEF92A007A47A3 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0976F35520EEF92A007A47A3 /* Array+Extensions.swift */; };
 		0976F3A520EEF92A007A47A3 /* Common+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0976F35620EEF92A007A47A3 /* Common+Extensions.swift */; };
 		0976F3A620EEF92A007A47A3 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0976F35720EEF92A007A47A3 /* Date+Extension.swift */; };
@@ -282,6 +284,8 @@
 		094C407520AAC3FF001E5C77 /* SMSegmentAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSegmentAppearance.swift; sourceTree = "<group>"; };
 		094C407620AAC3FF001E5C77 /* SMSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSegmentView.swift; sourceTree = "<group>"; };
 		094C407720AAC3FF001E5C77 /* SMSegmentViewConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSegmentViewConstants.swift; sourceTree = "<group>"; };
+		096C42BE2112E09A00BBA4DE /* AccountLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLog.swift; sourceTree = "<group>"; };
+		096C42C0211300D900BBA4DE /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		0976F35520EEF92A007A47A3 /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		0976F35620EEF92A007A47A3 /* Common+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Common+Extensions.swift"; sourceTree = "<group>"; };
 		0976F35720EEF92A007A47A3 /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -436,6 +440,7 @@
 		090269572040F710007FF5B9 /* NextXiangJia */ = {
 			isa = PBXGroup;
 			children = (
+				096C42BD2112E03100BBA4DE /* IwebShopModels */,
 				090269892040F921007FF5B9 /* Classes */,
 				090269582040F710007FF5B9 /* AppDelegate.swift */,
 				090269622040F710007FF5B9 /* Assets.xcassets */,
@@ -821,6 +826,15 @@
 				094C407720AAC3FF001E5C77 /* SMSegmentViewConstants.swift */,
 			);
 			path = SMSegmentView;
+			sourceTree = "<group>";
+		};
+		096C42BD2112E03100BBA4DE /* IwebShopModels */ = {
+			isa = PBXGroup;
+			children = (
+				096C42C0211300D900BBA4DE /* BaseModel.swift */,
+				096C42BE2112E09A00BBA4DE /* AccountLog.swift */,
+			);
+			path = IwebShopModels;
 			sourceTree = "<group>";
 		};
 		0976F35320EEF92A007A47A3 /* AlertAndPickers */ = {
@@ -1419,6 +1433,7 @@
 				090269B22043AEB9007FF5B9 /* PageTitleView.swift in Sources */,
 				0976F3BF20EEF92A007A47A3 /* LocaleStore.swift in Sources */,
 				0992E45D20BC02D900B7902E /* LZCartModel.swift in Sources */,
+				096C42BF2112E09A00BBA4DE /* AccountLog.swift in Sources */,
 				0976F3B620EEF92A007A47A3 /* ContactsPickerViewController.swift in Sources */,
 				0976F3CF20EEF92A007A47A3 /* LikeButtonCell.swift in Sources */,
 				09026A0F204546D8007FF5B9 /* UIColor-extension.swift in Sources */,
@@ -1512,6 +1527,7 @@
 				0992E46020BC02D900B7902E /* LZColorTool.swift in Sources */,
 				0976F3C920EEF92A007A47A3 /* Assets.swift in Sources */,
 				0976F3A820EEF92A007A47A3 /* Optional+Extensions.swift in Sources */,
+				096C42C1211300D900BBA4DE /* BaseModel.swift in Sources */,
 				0976F3BB20EEF92A007A47A3 /* ImagePickerViewController.swift in Sources */,
 				090DDE1D2093FCE900A42E3F /* LoginViewController.swift in Sources */,
 				0976F3D620EEF92A007A47A3 /* Label.swift in Sources */,

@@ -68,37 +68,37 @@ class SearchResultController: UICollectionViewController {
         return item
     }()
     
-    lazy var naviMissAnimate: CABasicAnimation = {
-        let ani = CABasicAnimation(keyPath: "position")
-        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY!))
-        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY! - finalNavigationBarH))
-        ani.duration = 0.5
-        return ani
-    }()
-    
-    lazy var naviShowAnimate: CABasicAnimation = {
-        let ani = CABasicAnimation(keyPath: "position")
-        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY! - finalNavigationBarH))
-        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY!))
-        ani.duration = 0.5
-        return ani
-    }()
-    
-    lazy var searchBarMissAnimate: CABasicAnimation = {
-        let ani = CABasicAnimation(keyPath: "position")
-        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY!))
-        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY! - finalNavigationBarH))
-        ani.duration = 0.5
-        return ani
-    }()
-    
-    lazy var searchBarShowAnimate: CABasicAnimation = {
-        let ani = CABasicAnimation(keyPath: "position")
-        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY! - finalNavigationBarH))
-        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY!))
-        ani.duration = 0.5
-        return ani
-    }()
+//    lazy var naviMissAnimate: CABasicAnimation = {
+//        let ani = CABasicAnimation(keyPath: "position")
+//        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY!))
+//        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY! - finalNavigationBarH))
+//        ani.duration = 0.5
+//        return ani
+//    }()
+//
+//    lazy var naviShowAnimate: CABasicAnimation = {
+//        let ani = CABasicAnimation(keyPath: "position")
+//        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY! - finalNavigationBarH))
+//        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY!))
+//        ani.duration = 0.5
+//        return ani
+//    }()
+//
+//    lazy var searchBarMissAnimate: CABasicAnimation = {
+//        let ani = CABasicAnimation(keyPath: "position")
+//        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY!))
+//        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY! - finalNavigationBarH))
+//        ani.duration = 0.5
+//        return ani
+//    }()
+//
+//    lazy var searchBarShowAnimate: CABasicAnimation = {
+//        let ani = CABasicAnimation(keyPath: "position")
+//        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY! - finalNavigationBarH))
+//        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY!))
+//        ani.duration = 0.5
+//        return ani
+//    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
