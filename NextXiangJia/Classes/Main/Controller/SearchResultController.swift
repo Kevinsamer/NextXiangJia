@@ -14,7 +14,7 @@ private var cellID = "cellID"
 private let listCellID = "listCellID"
 private let collCellID = "collCellID"
 private var keys = ""
-
+private var newKeys = ""
 
 class SearchResultController: UICollectionViewController {
     private var navBarY:CGFloat?
@@ -35,6 +35,15 @@ class SearchResultController: UICollectionViewController {
         
         return searchBarVC
     }()
+    private lazy var alphaView : UIControl = {
+        //UISearchBar的蒙层
+        let view = UIControl(frame: CGRect(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: finalContentViewNoTabbarH))
+        view.backgroundColor = .black
+        view.alpha = 0.3
+        view.addTarget(self, action: #selector(dismissAlphaView), for: .touchUpInside)
+        return view
+    }()
+    
     lazy var tableLayout: UICollectionViewFlowLayout = {
         //流式布局--selected
         let layout = UICollectionViewFlowLayout()
@@ -136,6 +145,7 @@ class SearchResultController: UICollectionViewController {
 extension SearchResultController {
     
     private func setUI(){
+        self.view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         //0.初始化数据
         initData()
         //1.设置navigationBar
@@ -144,7 +154,7 @@ extension SearchResultController {
         setCollectionView()
         //3.设置searchBar
         setSearchBar()
-        self.definesPresentationContext = true
+        //self.definesPresentationContext = true
     }
     
     private func initData(){
@@ -168,9 +178,14 @@ extension SearchResultController {
         navigationItem.title = "搜索结果"
         navigationBarLayer = self.navigationController?.navigationBar.layer
         //navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        if let navigationbar = self.navigationController?.navigationBar {
+            //navigationbar.barTintColor = UIColor(named: "navibar_bartint_orange")!
+            //navigationbar.tintColor = .white
+        }
     }
     
     private func setCollectionView(){
+        collectionView?.frame.size = CGSize(width: finalScreenW, height: finalScreenH - IphonexHomeIndicatorH)
         collectionView?.collectionViewLayout = collLayout
         //collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView?.register(UINib.init(nibName: "CollCell", bundle: nil), forCellWithReuseIdentifier: collCellID)
@@ -185,48 +200,77 @@ extension SearchResultController {
             searchBarVC.searchBar.tintColor = UIColor.black
             searchBarVC.searchBar.backgroundColor = UIColor.init(named: "global_orange")
             searchBarVC.searchBar.delegate = self
+            searchBarVC.searchResultsUpdater = self
+            searchBarVC.dimsBackgroundDuringPresentation = false
             searchBarVC.searchBar.searchBarStyle = UISearchBarStyle.prominent
-            searchBarVC.searchBar.barStyle = UIBarStyle.black
+            searchBarVC.searchBar.barStyle = UIBarStyle.default
             searchBarVC.searchBar.autocapitalizationType = .words
             searchBarVC.searchBar.placeholder = "请输入搜索内容"
-            //searchBar.sizeToFit()
             searchBarVC.searchBar.placeholder = keys
             searchBarVC.searchBar.backgroundImage = UIImage()
-//            searchBarVC.searchBar.layer.borderWidth = 5
-//            searchBarVC.searchBar.layer.borderColor = UIColor.white.cgColor
-            searchBarVC.searchBar.setValue("取消", forKey: "_cancelButtonText")
-            if let textfield = searchBarVC.searchBar.value(forKey: "searchField") as? UITextField {
-                textfield.textColor = UIColor.blue
+            searchBarVC.searchBar.showsCancelButton = true
+            let UIButton = searchBarVC.searchBar.value(forKey: "_cancelButton") as? UIButton
+            UIButton?.setTitle("取消", for: .normal)
+            UIButton?.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0),for: .normal)
+            if let textfield = searchBarVC.searchBar.value(forKey: "_searchField") as? UITextField {
+                textfield.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+                //textfield.setValue(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), forKeyPath: "_placeholderLabel.textColor")
                 if let backgroundview = textfield.subviews.first {
                     // Background color
                     backgroundview.backgroundColor = UIColor.white
-                    
+
                     // Rounded corner
                     backgroundview.layer.cornerRadius = 10
                     backgroundview.clipsToBounds = true
-                    
+
                 }
             }
             
-            if let navigationbar = self.navigationController?.navigationBar {
-                //navigationbar.barTintColor = UIColor(named: "navibar_bartint_orange")!
-                navigationbar.tintColor = .white
-            }
+            
             navigationItem.searchController = searchBarVC
             navigationItem.hidesSearchBarWhenScrolling = false
             navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
-            navigationItem.searchController?.isActive = true
+            //navigationItem.searchController?.isActive = true
             self.searchBarY = self.navigationItem.searchController?.searchBar.layer.position.y
             self.searchBarLayer = self.navigationItem.searchController?.searchBar.layer
         }
     }
 }
 
-extension SearchResultController : UISearchControllerDelegate{
+extension SearchResultController : UISearchControllerDelegate,UISearchResultsUpdating{
+    func updateSearchResults(for searchController: UISearchController) {
+        
+    }
+    
+    func willPresentSearchController(_ searchController: UISearchController) {
+        
+    }
     
 }
 
 extension SearchResultController : UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if newKeys != "" {
+            searchBar.text = ""
+            searchBar.placeholder = newKeys
+        }
+        dismissAlphaView()
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.setShowsCancelButton(true, animated: true)
+        self.view?.addSubview(alphaView)
+        return true
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        newKeys = searchText
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        dismissAlphaView()
+    }
     
 }
 
@@ -241,7 +285,6 @@ extension SearchResultController {
 //        print(scrollView.contentOffset.y)
         if velocity.y > 0 {
             //隐藏搜索框
-            
 //            navigationBarLayer?.add(naviMissAnimate, forKey: "missNavi")
 //            searchBarLayer?.add(searchBarMissAnimate, forKey: "searchMiss")
             UIView.animate(withDuration: 0.5, animations: {[unowned self] in
@@ -307,6 +350,12 @@ extension SearchResultController {
             collectionView?.reloadData()
         }
         
+    }
+    
+    @objc private func dismissAlphaView(){
+        alphaView.removeFromSuperview()
+        searchBarVC.searchBar.setShowsCancelButton(false, animated: true)
+        searchBarVC.searchBar.resignFirstResponder()
     }
 }
 
