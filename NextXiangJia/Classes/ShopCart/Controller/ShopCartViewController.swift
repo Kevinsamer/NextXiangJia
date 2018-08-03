@@ -631,6 +631,10 @@ extension ShopCartViewController : UITableViewDelegate,UITableViewDataSource{
 
         return "删除"
     }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
     //ios11后cell右滑，代替editActionsForRowAt,可修改按钮样式
 //    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 //        let action1 = UIContextualAction(style: .normal, title: "Mark1") { (action, view, handler) in

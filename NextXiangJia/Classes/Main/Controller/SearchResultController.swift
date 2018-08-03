@@ -37,7 +37,7 @@ class SearchResultController: UICollectionViewController {
     }()
     private lazy var alphaView : UIControl = {
         //UISearchBar的蒙层
-        let view = UIControl(frame: CGRect(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: finalContentViewNoTabbarH))
+        let view = UIControl(frame: CGRect(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: UIDevice.current.isX() ? finalScreenH - IphonexHomeIndicatorH : finalScreenH))
         view.backgroundColor = .black
         view.alpha = 0.3
         view.addTarget(self, action: #selector(dismissAlphaView), for: .touchUpInside)
@@ -185,7 +185,7 @@ extension SearchResultController {
     }
     
     private func setCollectionView(){
-        collectionView?.frame.size = CGSize(width: finalScreenW, height: finalScreenH - IphonexHomeIndicatorH)
+        collectionView?.frame.size = CGSize(width: finalScreenW, height: UIDevice.current.isX() ? finalScreenH - IphonexHomeIndicatorH : finalScreenH)
         collectionView?.collectionViewLayout = collLayout
         //collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView?.register(UINib.init(nibName: "CollCell", bundle: nil), forCellWithReuseIdentifier: collCellID)
