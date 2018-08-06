@@ -79,6 +79,7 @@
 		094352D620DB7EFA00D4C31A /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094352D520DB7EF900D4C31A /* Header.swift */; };
 		0943E10F2117D3AF0026A7AC /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E10E2117D3AF0026A7AC /* Admin.swift */; };
 		0943E1112117D7480026A7AC /* AdminRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E1102117D7480026A7AC /* AdminRole.swift */; };
+		0943E1132117E1550026A7AC /* AdManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E1122117E1550026A7AC /* AdManage.swift */; };
 		094919A2209B032600E82D0A /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094919A1209B032600E82D0A /* ChangePasswordViewController.swift */; };
 		094C407820AAC400001E5C77 /* SMSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C407420AAC3FF001E5C77 /* SMSegment.swift */; };
 		094C407920AAC400001E5C77 /* SMSegmentAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C407520AAC3FF001E5C77 /* SMSegmentAppearance.swift */; };
@@ -284,6 +285,7 @@
 		094352D520DB7EF900D4C31A /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		0943E10E2117D3AF0026A7AC /* Admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
 		0943E1102117D7480026A7AC /* AdminRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminRole.swift; sourceTree = "<group>"; };
+		0943E1122117E1550026A7AC /* AdManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManage.swift; sourceTree = "<group>"; };
 		094919A1209B032600E82D0A /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		094C407420AAC3FF001E5C77 /* SMSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSegment.swift; sourceTree = "<group>"; };
 		094C407520AAC3FF001E5C77 /* SMSegmentAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSegmentAppearance.swift; sourceTree = "<group>"; };
@@ -842,6 +844,7 @@
 				096C42C2211304E600BBA4DE /* UserAddress.swift */,
 				0943E10E2117D3AF0026A7AC /* Admin.swift */,
 				0943E1102117D7480026A7AC /* AdminRole.swift */,
+				0943E1122117E1550026A7AC /* AdManage.swift */,
 			);
 			path = IwebShopModels;
 			sourceTree = "<group>";
@@ -1466,6 +1469,7 @@
 				094352D020DB7D9B00D4C31A /* ChoosTypeTableViewCell.swift in Sources */,
 				0976F3BA20EEF92A007A47A3 /* DatePickerViewController.swift in Sources */,
 				09E37274209BF43800F6E8B3 /* AuthCodeView.swift in Sources */,
+				0943E1132117E1550026A7AC /* AdManage.swift in Sources */,
 				090DDDDF2092EE4500A42E3F /* MyMessageViewController.swift in Sources */,
 				0976F3B220EEF92A007A47A3 /* UITextView+Extensions.swift in Sources */,
 				090DDDE72092F04700A42E3F /* MyAddressViewController.swift in Sources */,
