@@ -81,6 +81,7 @@
 		0943E1112117D7480026A7AC /* AdminRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E1102117D7480026A7AC /* AdminRole.swift */; };
 		0943E1132117E1550026A7AC /* AdManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E1122117E1550026A7AC /* AdManage.swift */; };
 		0943E1152117E39F0026A7AC /* AdPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E1142117E39F0026A7AC /* AdPosition.swift */; };
+		0943E1172117E4C20026A7AC /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E1162117E4C20026A7AC /* Announcement.swift */; };
 		094919A2209B032600E82D0A /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094919A1209B032600E82D0A /* ChangePasswordViewController.swift */; };
 		094C407820AAC400001E5C77 /* SMSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C407420AAC3FF001E5C77 /* SMSegment.swift */; };
 		094C407920AAC400001E5C77 /* SMSegmentAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C407520AAC3FF001E5C77 /* SMSegmentAppearance.swift */; };
@@ -288,6 +289,7 @@
 		0943E1102117D7480026A7AC /* AdminRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminRole.swift; sourceTree = "<group>"; };
 		0943E1122117E1550026A7AC /* AdManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManage.swift; sourceTree = "<group>"; };
 		0943E1142117E39F0026A7AC /* AdPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPosition.swift; sourceTree = "<group>"; };
+		0943E1162117E4C20026A7AC /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		094919A1209B032600E82D0A /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		094C407420AAC3FF001E5C77 /* SMSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSegment.swift; sourceTree = "<group>"; };
 		094C407520AAC3FF001E5C77 /* SMSegmentAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSegmentAppearance.swift; sourceTree = "<group>"; };
@@ -848,6 +850,7 @@
 				0943E1102117D7480026A7AC /* AdminRole.swift */,
 				0943E1122117E1550026A7AC /* AdManage.swift */,
 				0943E1142117E39F0026A7AC /* AdPosition.swift */,
+				0943E1162117E4C20026A7AC /* Announcement.swift */,
 			);
 			path = IwebShopModels;
 			sourceTree = "<group>";
@@ -1493,6 +1496,7 @@
 				0908C83D2060DAF100CED99E /* MyCenterViewController.swift in Sources */,
 				0976F3E820F58FDD007A47A3 /* OrderDetailViewController.swift in Sources */,
 				094352CD20DB7D9B00D4C31A /* GoodsPriceModel.swift in Sources */,
+				0943E1172117E4C20026A7AC /* Announcement.swift in Sources */,
 				0976F3CE20EEF92A007A47A3 /* ItemWithPhoto.swift in Sources */,
 				094352D420DB7D9B00D4C31A /* TypeView.swift in Sources */,
 				0976F3A620EEF92A007A47A3 /* Date+Extension.swift in Sources */,
