@@ -9,6 +9,7 @@
 import UIKit
 import FontAwesome_swift
 private let leftWidth:CGFloat = 100
+private let headViewH:CGFloat = 30
 private var categoryNum = 10
 private var lineNum = 3
 private let MyCellID = "MyCellID"
@@ -25,16 +26,17 @@ class CategoryViewController: UIViewController {
         layout.headerReferenceSize = CGSize(width: 100, height: 10)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         layout.itemSize = CGSize(width: (finalScreenW - leftWidth - 40) / 3, height: 60)
-        let coll = UICollectionView(frame: CGRect(x: leftWidth, y: 0, width: finalScreenW - leftWidth, height: finalContentViewHaveTabbarH), collectionViewLayout: layout)
+        layout.headerReferenceSize = CGSize(width: finalScreenW - leftWidth, height: headViewH)
+        let coll = UICollectionView(frame: CGRect(x: leftWidth, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW - leftWidth, height: finalContentViewHaveTabbarH), collectionViewLayout: layout)
         coll.dataSource = self
         coll.delegate = self
         //coll.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         coll.alwaysBounceVertical = true
-        coll.register(UINib.init(), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
+        //coll.register(UINib.init(), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
         //coll.cancelInteractiveMovement()
-        coll.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCellID")
-        coll.backgroundColor = .white
-        
+        coll.register(UICollectionViewCell.self, forCellWithReuseIdentifier: MyCellID)
+        coll.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        coll.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
         return coll
     }()
     lazy var leftScrollView: UIScrollView = {
@@ -152,15 +154,16 @@ extension CategoryViewController:UICollectionViewDelegateFlowLayout,UICollection
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCellID, for: indexPath)
-        cell.contentView.bounds.size = CGSize(width: 180, height: 180)
-        cell.contentView.layer.borderColor = UIColor.blue.cgColor
-        cell.contentView.layer.borderWidth = 1
-        
+//        cell.contentView.bounds.size = CGSize(width: 180, height: 180)
+//        cell.contentView.layer.borderColor = UIColor.blue.cgColor
+//        cell.contentView.layer.borderWidth = 1
+        //cell.backgroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)
         let text = UITextView(frame: CGRect(x: 0, y: 0, width: cell.frame.width, height: cell.frame.height))
         text.textAlignment = .center
         text.text = cellText[indexPath.row]
         text.isEditable = false
         text.isSelectable = false
+        text.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
         cell.addSubview(text)
         return cell
     }
@@ -174,7 +177,23 @@ extension CategoryViewController:UICollectionViewDelegateFlowLayout,UICollection
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let head = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID, for: indexPath)
+        let headText = UITextField(frame: CGRect(x: 0, y: 0, width: 100, height: headViewH))
+        headText.text = "ABC"
+        headText.attributedText = headText.text?.bold
+        headText.textAlignment = .center
+        headText.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        headText.font = UIFont.systemFont(ofSize: 18)
+        head.addSubview(headText)
+        return head
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cell.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
     }
 }
 
