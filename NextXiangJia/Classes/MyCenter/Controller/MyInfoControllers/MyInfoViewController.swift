@@ -120,7 +120,7 @@ extension MyInfoViewController {
         <<< ButtonRow("confirm"){
             $0.title = "确认"
             }.onCellSelection({ (cell, row) in
-                var nameRow:TextRow = self.form.rowBy(tag: "username")!
+                let nameRow:TextRow = self.form.rowBy(tag: "username")!
 //                var sexRow:PickerInputRow<String> = self.form.rowBy(tag: "sex")!
 //                var dateRow:DateRow = self.form.rowBy(tag: "birthday")!
 //                var phoneRow:PhoneRow = self.form.rowBy(tag: "phone")!
@@ -128,9 +128,9 @@ extension MyInfoViewController {
 //                var zipCodeRow:IntRow = self.form.rowBy(tag: "zipCode")!
 //                var qqRow:IntRow = self.form.rowBy(tag: "qq")!
 //                var emailRow:EmailRow = self.form.rowBy(tag: "email")!
-                var icon : ImageRow = self.form.rowBy(tag: "icon")!
+                let icon : ImageRow = self.form.rowBy(tag: "icon")!
                 let values = self.form.values()
-                print("\(values)--\(icon.value)")
+                print("\(values)--\(icon.value ?? UIImage.init(named: "my_head")!)--\(nameRow.value ?? "no name")")
                 
         }).cellSetup({ (cell, row) in
             cell.backgroundColor = UIColor(named: "save_blue")

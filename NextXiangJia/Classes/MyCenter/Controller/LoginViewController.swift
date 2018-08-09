@@ -206,13 +206,13 @@ extension LoginViewController: UITextFieldDelegate{
 extension LoginViewController {
     @objc func registerClicked(){
         print("register")
-        var vc = RegistViewController()
+        let vc = RegistViewController()
         self.navigationController?.show(vc, sender: self)
     }
     
     @objc func forgetPasswordClicked(){
         print("changePassword")
-        var vc = FindPasswordViewController()
+        let vc = FindPasswordViewController()
         self.navigationController?.show(vc, sender: self)
     }
     @objc func loginButtonClicked(){

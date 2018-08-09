@@ -21,7 +21,7 @@ class LZCartModel: NSObject {
     
     public func showInfo(){
         if testMode{
-            print("name:\(name) + num:\(number)")
+            print("name:\(name ?? "nil name") + num:\(number)")
         }
     }
     

@@ -23,18 +23,18 @@ enum TitleImageStyly{
 extension UIButton {
     
     func setButtonTitleImageStyle(padding:CGFloat, style:TitleImageStyly){
-        var padding:CGFloat = padding
+        let padding:CGFloat = padding
         if self.imageView?.image != nil && self.titleLabel?.text != nil {
             //先还原
             self.titleEdgeInsets = UIEdgeInsets.zero;
             self.imageEdgeInsets = UIEdgeInsets.zero;
             
-            var imageRect:CGRect = self.imageView!.frame;
-            var titleRect:CGRect = self.titleLabel!.frame;
+            let imageRect:CGRect = self.imageView!.frame;
+            let titleRect:CGRect = self.titleLabel!.frame;
             
-            var totalHeight:CGFloat = imageRect.size.height + padding + titleRect.size.height;
-            var selfHeight:CGFloat = self.frame.size.height;
-            var selfWidth:CGFloat = self.frame.size.width;
+            let totalHeight:CGFloat = imageRect.size.height + padding + titleRect.size.height;
+            let selfHeight:CGFloat = self.frame.size.height;
+            let selfWidth:CGFloat = self.frame.size.width;
             
             switch style{
             case .ButtonImageTitleStyleLeft :

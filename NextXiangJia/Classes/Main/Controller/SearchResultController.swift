@@ -9,7 +9,8 @@
 import UIKit
 import SwiftEventBus
 private var collectionItemW = ( finalScreenW - 3 ) / 2
-private var collectionItemH = UIDevice.current.isX() ? collectionItemW * 10 / 8 : collectionItemW * 10 / 9
+//private var collectionItemH = UIDevice.current.isX() ? collectionItemW * 10 / 8 : collectionItemW * 10 / 9
+private var collectionItemH:CGFloat = 230
 private var cellID = "cellID"
 private let listCellID = "listCellID"
 private let collCellID = "collCellID"
@@ -178,7 +179,7 @@ extension SearchResultController {
         navigationItem.title = "搜索结果"
         navigationBarLayer = self.navigationController?.navigationBar.layer
         //navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        if let navigationbar = self.navigationController?.navigationBar {
+        if (self.navigationController?.navigationBar) != nil {
             //navigationbar.barTintColor = UIColor(named: "navibar_bartint_orange")!
             //navigationbar.tintColor = .white
         }

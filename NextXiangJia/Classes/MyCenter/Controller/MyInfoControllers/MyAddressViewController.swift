@@ -102,7 +102,7 @@ extension MyAddressViewController : UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: addressCellID, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: addressCellID, for: indexPath)
         cell.backgroundColor = .white
         return cell
     }
@@ -113,7 +113,7 @@ extension MyAddressViewController : UICollectionViewDelegate, UICollectionViewDa
 extension MyAddressViewController {
     @objc func addNewAddress(){
         //TODO HERE
-        var vc = AddNewAddressViewController()
+        let vc = AddNewAddressViewController()
         self.navigationController?.show(vc, sender: self)
     }
 }

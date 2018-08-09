@@ -205,7 +205,7 @@ extension MyCenterViewController :UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyInfoCellID, for: indexPath) as! MyCenterCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyInfoCellID, for: indexPath) as! MyCenterCell
         cell.layer.borderColor = UIColor(named: "line_gray")?.cgColor
         cell.layer.borderWidth = 0.5
         cell.backgroundColor = .white

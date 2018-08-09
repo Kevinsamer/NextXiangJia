@@ -30,7 +30,7 @@ private var collectionItemW = ( finalScreenW - 9 ) / 2
 private var collectionItemNumbers :CGFloat = 18
 private var collectionItemH = collectionItemW * 6 / 5
 private var collectionViewH = collectionItemNumbers / 2 * collectionItemH + 3 * (collectionItemNumbers / 2 - 1) + 40 // 3*3(行高)=9，40=headViewH  //- finalStatusBarH - finalNavigationBarH - finalTabBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH : 0)
-private var categoryDHHeadH : CGFloat = 40
+private var categoryDHHeadH : CGFloat = 60
 private var categoryDHViewH : CGFloat = 120
 private var tipInfoViewH : CGFloat = 150 //实际为190，自带20的marginTop和20的marginBottom
 private let itemCellID = "itemCellID"
@@ -54,7 +54,18 @@ class HomeViewController: UIViewController {
     private lazy var categoryDHHeadView : UIView = {
         //导航分类headView
         let view = UIView(frame: CGRect(x: 0, y: bannerH + fourBtnH + collectionViewH, width: finalScreenW, height: categoryDHHeadH))
-        view.backgroundColor = .purple
+        let icon = UILabel(frame: CGRect(x: 20, y: 10, width: 40, height: 40))
+        icon.font = UIFont.fontAwesome(ofSize: 30)
+        icon.text = String.fontAwesomeIcon(name: .list)
+        icon.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+        
+        let text = UILabel(frame: CGRect(x: 70, y: 10, width: 200, height: 40))
+        text.font = UIFont.systemFont(ofSize: 22)
+        text.text = "畅销商品分类"
+        view.addSubview(text)
+        view.addSubview(icon)
+        
+        //view.backgroundColor = .purple
         return view
     }()
     private lazy var categoryDHView : UIView = {
@@ -261,6 +272,7 @@ class HomeViewController: UIViewController {
 // MARK: - Set UI
 extension HomeViewController{
     private func setUI(){
+        self.view.backgroundColor = UIColor.init(named: "home_collectionview_bg")
         //不需要设置Scrollview的内边距
         //automaticallyAdjustsScrollViewInsets = false
         //1.设置导航栏

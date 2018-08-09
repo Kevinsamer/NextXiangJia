@@ -87,7 +87,7 @@ extension AddNewAddressViewController {
                     row.value = "\(province) \(city) \(town) ＞"
 //                    row.title = "所在地区： \(province) \(city) \(town)"
                     row.updateCell()
-                    print(self.address)
+                    print(self.address ?? ("province","city","town"))
                 })
             })
         <<< LabelRow(){

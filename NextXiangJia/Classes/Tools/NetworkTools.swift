@@ -22,7 +22,7 @@ class NetworkTools {
         Alamofire.request(urlString, method: method, parameters: parameters).responseJSON { (response) in
             guard let result = response.result.value else {
                 //3.错误处理
-                print("error:\(response.result.error)")
+                print("error:\(response.result.error ?? "出现错误" as! Error )")
                 return
             }
             //4.结果返回
