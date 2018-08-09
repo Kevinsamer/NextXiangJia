@@ -48,7 +48,7 @@ class MyCenterViewController: UIViewController {
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 40
         imageView.layer.borderColor = UIColor(named: "head_view_border_color")?.cgColor
-        imageView.layer.borderWidth = 5
+        imageView.layer.borderWidth = 2
         imageView.backgroundColor = .white
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(clickToLogin(sender: )))
         imageView.addGestureRecognizer(tapGesture)
