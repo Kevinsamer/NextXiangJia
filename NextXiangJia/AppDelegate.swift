@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage.init(color: UIColor.init(named: "navibar_bartint_orange")!, size: CGSize(width: finalScreenW, height: finalNavigationBarH)), for: UIBarMetrics.default)
 //        UINavigationBar.appearance().topItem?.title = ""
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(-100, 0), for:UIBarMetrics.default)//设置偏移量来隐藏返回按钮文字,TODO：修改为基类中设置navigationController?.navigationBar.topItem?.title = ""
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(-200, 0), for:UIBarMetrics.default)//设置偏移量来隐藏返回按钮文字,TODO：修改为基类中设置navigationController?.navigationBar.topItem?.title = ""
         
 
         //设置状态栏style
