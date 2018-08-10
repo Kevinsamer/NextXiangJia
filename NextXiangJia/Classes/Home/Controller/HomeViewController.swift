@@ -29,14 +29,14 @@ private var fourBtnH:CGFloat = 100
 private var collectionItemW = ( finalScreenW - 9 ) / 2
 private var collectionItemNumbers :CGFloat = 18
 private var collectionItemH = collectionItemW * 6 / 5
-private var collectionViewH = collectionItemNumbers / 2 * collectionItemH + 3 * (collectionItemNumbers / 2 - 1) + 40 // 3*3(行高)=9，40=headViewH  //- finalStatusBarH - finalNavigationBarH - finalTabBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH : 0)
+private var collectionViewH = collectionItemNumbers / 2 * collectionItemH + 3 * (collectionItemNumbers / 2 - 1) + 40 + 2 // 3*3(行高)=9，40=headViewH ,最后的2是coll底部的线条 //- finalStatusBarH - finalNavigationBarH - finalTabBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH : 0)
 private var categoryDHHeadH : CGFloat = 60
 private var categoryDHViewH : CGFloat = 120
-private var tipInfoViewH : CGFloat = 150 //实际为190，自带20的marginTop和20的marginBottom
+private var tipInfoViewH : CGFloat = 240
 private let itemCellID = "itemCellID"
 private let headID = "headID"
 
-private var scrollViewContentSizeH:CGFloat = bannerH + fourBtnH + collectionViewH + categoryDHHeadH + categoryDHViewH + tipInfoViewH + 20 + 20
+private var scrollViewContentSizeH:CGFloat = bannerH + fourBtnH + collectionViewH + tipInfoViewH + 20 + 20
 //private var finalContentViewH = UIDevice.current.isX() ? finalScreenH - finalStatusBarH - finalNavigationBarH - finalTabBarH - IphonexHomeIndicator : finalScreenH - finalStatusBarH - finalNavigationBarH - finalTabBarH
 class HomeViewController: UIViewController {
     // MARK: - 懒加载属性
@@ -44,11 +44,48 @@ class HomeViewController: UIViewController {
 
     private lazy var tipInfoView : UIView = {
         //tip信息view
-        let view = UIView(frame: CGRect(x: 20, y: bannerH + fourBtnH + collectionViewH + categoryDHHeadH + categoryDHViewH + 20, width: finalScreenW - 40, height: tipInfoViewH))
+        let view = UIView(frame: CGRect(x: 20, y: bannerH + fourBtnH + collectionViewH + 20, width: finalScreenW - 40, height: tipInfoViewH))
         view.layer.borderColor = UIColor(named: "light_gray")?.cgColor
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 15
-        view.backgroundColor = UIColor.brown
+        //view.backgroundColor = UIColor.brown
+        
+        let truck = UILabel(frame: CGRect(x: 10, y: 10, width: 60, height: 60))
+        truck.text = String.fontAwesomeIcon(name: .truck)
+        truck.font = UIFont.fontAwesome(ofSize: 50)
+        truck.textAlignment = .center
+        let mianfei = UILabel(frame: CGRect(x: 70, y: 10, width: 250, height: 40))
+        mianfei.text = "免费送货与退货"
+        mianfei.font = UIFont.systemFont(ofSize: 30)
+        let suoyou = UILabel(frame: CGRect(x: 70, y: 50, width: 250, height: 20))
+        suoyou.text = "所有订单超过200免费送货。"
+        suoyou.font = UIFont.systemFont(ofSize: 15)
+        view.addSubviews([truck,mianfei,suoyou])
+        
+        let rmb = UILabel(frame: CGRect(x: 10, y: 90, width: 60, height: 60))
+        rmb.text = String.fontAwesomeIcon(name: .rmb)
+        rmb.font = UIFont.fontAwesome(ofSize: 50)
+        rmb.textAlignment = .center
+        let tuikuan = UILabel(frame: CGRect(x: 70, y: 90, width: 250, height: 40))
+        tuikuan.text = "退款保证"
+        tuikuan.font = UIFont.systemFont(ofSize: 30)
+        let baifenbai = UILabel(frame: CGRect(x: 70, y: 130, width: 250, height: 20))
+        baifenbai.text = "100%退款保证。"
+        baifenbai.font = UIFont.systemFont(ofSize: 15)
+        view.addSubviews([rmb,tuikuan,baifenbai])
+        
+        let phone = UILabel(frame: CGRect(x: 10, y: 170, width: 60, height: 60))
+        phone.text = String.fontAwesomeIcon(name: .phone)
+        phone.font = UIFont.fontAwesome(ofSize: 50)
+        phone.textAlignment = .center
+        let zaixian = UILabel(frame: CGRect(x: 70, y: 170, width: 250, height: 40))
+        zaixian.text = "在线支持24/7"
+        zaixian.font = UIFont.systemFont(ofSize: 30)
+        let qi24 = UILabel(frame: CGRect(x: 70, y: 210, width: 250, height: 20))
+        qi24.text = "客服7*24小时在线"
+        qi24.font = UIFont.systemFont(ofSize: 15)
+        view.addSubviews([phone,zaixian,qi24])
+        
         return view
     }()
     private lazy var categoryDHHeadView : UIView = {
@@ -94,6 +131,7 @@ class HomeViewController: UIViewController {
         collection.register(UINib.init(nibName: "ItemCell", bundle: nil), forCellWithReuseIdentifier: itemCellID)
         collection.register(UINib.init(nibName: "HomeCollHeadView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
         collection.backgroundColor = UIColor.init(named: "home_collectionview_bg")
+//        collection.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         return collection
     }()
     
@@ -272,7 +310,7 @@ class HomeViewController: UIViewController {
 // MARK: - Set UI
 extension HomeViewController{
     private func setUI(){
-        self.view.backgroundColor = UIColor.init(named: "home_collectionview_bg")
+        //self.view.backgroundColor = UIColor.init(named: "home_collectionview_bg")
         //不需要设置Scrollview的内边距
         //automaticallyAdjustsScrollViewInsets = false
         //1.设置导航栏
@@ -286,9 +324,9 @@ extension HomeViewController{
         //5.设置collectionView展示推荐
         setupCollectionView()
         //6.设置分类导航head
-        setupCategoryDHHeadView()
+        //setupCategoryDHHeadView()
         //7.设置分类导航view
-        setupCategoryDHView()
+        //setupCategoryDHView()
         //8.设置tip信息View
         setupTipInfoView()
     }
