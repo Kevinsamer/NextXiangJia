@@ -45,8 +45,8 @@ class HomeViewController: UIViewController {
     private lazy var tipInfoView : UIView = {
         //tip信息view
         let view = UIView(frame: CGRect(x: 20, y: bannerH + fourBtnH + collectionViewH + 20, width: finalScreenW - 40, height: tipInfoViewH))
-        view.layer.borderColor = UIColor(named: "light_gray")?.cgColor
-        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.init(named: "home_collectionview_bg")?.cgColor
+        view.layer.borderWidth = 2
         view.layer.cornerRadius = 15
         //view.backgroundColor = UIColor.brown
         
@@ -162,7 +162,6 @@ class HomeViewController: UIViewController {
         viewPager.isInfinite = true
         //设置转场的模式
         //viewPager.transformer = FSPagerViewTransformer(type: FSPagerViewTransformerType.overlap)
-        
         return viewPager
     }()
     
@@ -398,6 +397,9 @@ extension HomeViewController: FSPagerViewDataSource,FSPagerViewDelegate{
         print(index)
     }
     
+    func pagerView(_ pagerView: FSPagerView, shouldHighlightItemAt index: Int) -> Bool {
+        return false
+    }
 }
 //MARK: - 添加Gesture 和 target
 extension HomeViewController{

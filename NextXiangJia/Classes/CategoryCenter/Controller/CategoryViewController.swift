@@ -121,11 +121,17 @@ extension CategoryViewController {
         //不需要滑动到页面中间的segmentView的个数
         let extrasNum = (finalContentViewHaveTabbarH / 50 / 2).int
         if segment.selectedSegmentIndex > extrasNum && segment.selectedSegmentIndex < Int(categoryText.count) - extrasNum - 1 {
-            leftScrollView.setContentOffset(CGPoint.init(x: 0, y: leftWidth / 2 * CGFloat(segment.selectedSegmentIndex - extrasNum)), animated: true)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.leftScrollView.setContentOffset(CGPoint.init(x: 0, y: leftWidth / 2 * CGFloat(segment.selectedSegmentIndex - extrasNum)), animated: false)
+            })
         }else if segment.selectedSegmentIndex <= extrasNum {
-            leftScrollView.setContentOffset(CGPoint.init(x: 0, y: 0), animated: true)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.leftScrollView.setContentOffset(CGPoint.init(x: 0, y: 0), animated: false)
+            })
         }else {
-            leftScrollView.setContentOffset(CGPoint.init(x: 0, y: leftScrollView.contentSize.height - finalContentViewHaveTabbarH), animated: true)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.leftScrollView.setContentOffset(CGPoint.init(x: 0, y: self.leftScrollView.contentSize.height - finalContentViewHaveTabbarH), animated: false)
+            })
         }
         
         refreshCollData(category: categoryText[segment.selectedSegmentIndex])
