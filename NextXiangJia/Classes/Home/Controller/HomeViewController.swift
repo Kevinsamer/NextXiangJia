@@ -472,6 +472,13 @@ extension HomeViewController{
             //请求结束后重载视图数据
             self.topBanner.reloadData()
             print("加载banner数据 \(YTools.getCurrentNavigationBarHeight(navCT: self.navigationController!))")
+            for tag in self.homeViewModel.tagGroup {
+                print(tag.tag_name)
+                for room in tag.rooms {
+                    print(room.room_name)
+                }
+                print("-------")
+            }
         }
         
     }

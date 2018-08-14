@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MyCollectionViewCell" customModule="NextXiangJia" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="235"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="235"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="40fe711f9b754b596159f3a6.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="FYi-A7-umV">
+                        <rect key="frame" x="20" y="20" width="110" height="110"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="110" id="Thn-MT-p9O"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="实打实大多无王大伟多哇大无大" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qAo-RU-hta">
+                        <rect key="frame" x="20" y="140" width="110" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="o8K-Ab-DhC"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NYJ-Z6-LkW">
+                        <rect key="frame" x="20" y="185" width="110" height="30"/>
+                        <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="yq9-kT-Akn"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name=".PingFangSC-Regular" family=".PingFang SC" pointSize="15"/>
+                        <state key="normal" title="取消收藏">
+                            <color key="titleColor" red="0.43529412150000002" green="0.4431372583" blue="0.47450980539999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </button>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="NYJ-Z6-LkW" secondAttribute="trailing" constant="20" id="5Ct-G6-q8o"/>
+                <constraint firstItem="NYJ-Z6-LkW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="6xs-bs-vfv"/>
+                <constraint firstAttribute="trailing" secondItem="FYi-A7-umV" secondAttribute="trailing" constant="20" id="Ift-Fd-Dp3"/>
+                <constraint firstAttribute="trailing" secondItem="qAo-RU-hta" secondAttribute="trailing" constant="20" id="PYu-Ag-CXV"/>
+                <constraint firstItem="qAo-RU-hta" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="YnX-uq-bwc"/>
+                <constraint firstItem="qAo-RU-hta" firstAttribute="top" secondItem="FYi-A7-umV" secondAttribute="bottom" constant="10" id="b8O-P5-yVs"/>
+                <constraint firstItem="FYi-A7-umV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="e47-pq-h0A"/>
+                <constraint firstItem="NYJ-Z6-LkW" firstAttribute="top" secondItem="qAo-RU-hta" secondAttribute="bottom" constant="10" id="egk-Ta-QsO"/>
+                <constraint firstItem="FYi-A7-umV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="20" id="kbh-0t-iRp"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="150" height="235"/>
+            <connections>
+                <outlet property="CancelButton" destination="NYJ-Z6-LkW" id="YiO-ni-jgQ"/>
+                <outlet property="GoodsNameLabel" destination="qAo-RU-hta" id="oPh-aM-90K"/>
+                <outlet property="cellImageView" destination="FYi-A7-umV" id="Tkr-ej-XAx"/>
+            </connections>
+            <point key="canvasLocation" x="-135" y="34.5"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="40fe711f9b754b596159f3a6.jpg" width="600" height="450"/>
+    </resources>
+</document>

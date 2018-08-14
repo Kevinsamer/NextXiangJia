@@ -9,7 +9,7 @@
 import UIKit
 
 class HomeViewModel {
-    private lazy var tagGroup : [TagData] = [TagData]()
+    lazy var tagGroup : [TagData] = [TagData]()
     
 }
 
@@ -37,13 +37,14 @@ extension HomeViewModel {
                 let trump = TagData(dict: tag)
                 self.tagGroup.append(trump)
             }
-            for tag in self.tagGroup {
-                print(tag.tag_name)
-                for room in tag.rooms {
-                    print(room.room_name)
-                }
-                print("--------")
-            }
+//            for tag in self.tagGroup {
+//                print(tag.tag_name)
+//                for room in tag.rooms {
+//                    print(room.room_name)
+//                }
+//                print("--------")
+//            }
+            
             //所有数据请求完毕后回调
             finishCallback()
         }

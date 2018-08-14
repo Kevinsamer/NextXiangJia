@@ -287,6 +287,7 @@ extension ShopCartViewController{
         sender.numberOfTouchesRequired = 1
         if sender.direction == UISwipeGestureRecognizerDirection.down {
             backgroundView.removeFromSuperview()
+            cartTableView?.refreshControl?.isHidden = false
             cartTableView?.refreshControl?.beginRefreshing()
             refreshCartTable()
             print("downSwipe")

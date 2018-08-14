@@ -193,6 +193,9 @@
 		09D1AE2E209A94B9004C4DA4 /* UIButton-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */; };
 		09E37272209BEC1400F6E8B3 /* RegistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37271209BEC1400F6E8B3 /* RegistViewController.swift */; };
 		09E37274209BF43800F6E8B3 /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37273209BF43800F6E8B3 /* AuthCodeView.swift */; };
+		09E9643C212121DE0095180C /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E9643A212121DE0095180C /* MyCollectionViewCell.swift */; };
+		09E9643D212121DE0095180C /* MyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09E9643B212121DE0095180C /* MyCollectionViewCell.xib */; };
+		09E9643F21225DDD0095180C /* MyCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E9643E21225DDD0095180C /* MyCollectionModel.swift */; };
 		09F9EE41207DF257007D18D0 /* YTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9EE40207DF257007D18D0 /* YTools.swift */; };
 		09F9EE43207DF666007D18D0 /* UIDevice-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9EE42207DF666007D18D0 /* UIDevice-extension.swift */; };
 		9E340DCE7978C5BF01FF375E /* Pods_NextXiangJia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62448A9C6DC1FFF9D62BEE99 /* Pods_NextXiangJia.framework */; };
@@ -408,6 +411,9 @@
 		09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-extension.swift"; sourceTree = "<group>"; };
 		09E37271209BEC1400F6E8B3 /* RegistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistViewController.swift; sourceTree = "<group>"; };
 		09E37273209BF43800F6E8B3 /* AuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeView.swift; sourceTree = "<group>"; };
+		09E9643A212121DE0095180C /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
+		09E9643B212121DE0095180C /* MyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyCollectionViewCell.xib; sourceTree = "<group>"; };
+		09E9643E21225DDD0095180C /* MyCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionModel.swift; sourceTree = "<group>"; };
 		09F9EE40207DF257007D18D0 /* YTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTools.swift; sourceTree = "<group>"; };
 		09F9EE42207DF666007D18D0 /* UIDevice-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice-extension.swift"; sourceTree = "<group>"; };
 		62448A9C6DC1FFF9D62BEE99 /* Pods_NextXiangJia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NextXiangJia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -701,6 +707,7 @@
 		0908C8432060DBD500CED99E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				09E9643E21225DDD0095180C /* MyCollectionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -708,6 +715,7 @@
 		0908C8442060DBDB00CED99E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				09E96439212121510095180C /* MyCollectionCell */,
 				093B387120F838A40063E2F5 /* OrderDetailFooterView */,
 				093B387020F837370063E2F5 /* MyOrderTableVIewCell */,
 				093B386F20F836D80063E2F5 /* MyAddressVCCell */,
@@ -1211,6 +1219,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		09E96439212121510095180C /* MyCollectionCell */ = {
+			isa = PBXGroup;
+			children = (
+				09E9643A212121DE0095180C /* MyCollectionViewCell.swift */,
+				09E9643B212121DE0095180C /* MyCollectionViewCell.xib */,
+			);
+			path = MyCollectionCell;
+			sourceTree = "<group>";
+		};
 		C3CBB7762EC03486BCCED70C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1363,6 +1380,7 @@
 				090269972040FD33007FF5B9 /* ShopCart.storyboard in Resources */,
 				0904C37B20CFC0DE009A8282 /* ListCell.xib in Resources */,
 				0902695E2040F710007FF5B9 /* Main.storyboard in Resources */,
+				09E9643D212121DE0095180C /* MyCollectionViewCell.xib in Resources */,
 				0992E45520BC02D900B7902E /* back_button@2x.png in Resources */,
 				0992E45720BC02D900B7902E /* cart_addBtn_nomal@2x.png in Resources */,
 			);
@@ -1524,6 +1542,7 @@
 				094352D420DB7D9B00D4C31A /* TypeView.swift in Sources */,
 				0943E1192117E52E0026A7AC /* Areas.swift in Sources */,
 				0976F3A620EEF92A007A47A3 /* Date+Extension.swift in Sources */,
+				09E9643C212121DE0095180C /* MyCollectionViewCell.swift in Sources */,
 				0976F3B920EEF92A007A47A3 /* ContactCell.swift in Sources */,
 				0976F3D520EEF92A007A47A3 /* GradientSlider.swift in Sources */,
 				0982A22E20E224EA00D9890B /* NextShopCartViewController.swift in Sources */,
@@ -1546,6 +1565,7 @@
 				090DDDF12092F20300A42E3F /* MyMemberViewController.swift in Sources */,
 				0992E46120BC02D900B7902E /* LZConfigFile.swift in Sources */,
 				0976F3D420EEF92A007A47A3 /* Button.swift in Sources */,
+				09E9643F21225DDD0095180C /* MyCollectionModel.swift in Sources */,
 				094352D320DB7D9B00D4C31A /* GoodsinfoView.swift in Sources */,
 				0976F3AE20EEF92A007A47A3 /* UIImageView+Extensions.swift in Sources */,
 				090DDDD72092C63600A42E3F /* MyRefundApplicationViewController.swift in Sources */,

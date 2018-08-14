@@ -65,6 +65,7 @@ extension MySuggestionsViewController {
         pagerBehaviour = .progressive(skipIntermediateViewControllers: true, elasticIndicatorLimit: true)
         //pagerBehaviour = .common(skipIntermediateViewControllers: false)
         //containerView.frame = self.view.frame
+        containerView.contentInsetAdjustmentBehavior = .never
         //在子页面中修改
     }
 }
