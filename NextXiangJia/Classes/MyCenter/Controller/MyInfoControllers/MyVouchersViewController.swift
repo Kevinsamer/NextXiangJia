@@ -9,6 +9,13 @@
 import UIKit
 
 class MyVouchersViewController: UIViewController {
+    //MARK: - 懒加载
+    lazy var noDataLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: finalScreenH / 2 - 20, width: finalScreenW, height: 40))
+        label.textAlignment = .center
+        label.text = "暂无代金券"
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,18 +46,15 @@ class MyVouchersViewController: UIViewController {
 extension MyVouchersViewController {
     private func setUI(){
         //1.设置navagationBar
-        //1.设置navigationBar tabBar
-//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "我的代金券", navItem:self.navigationItem)
         navigationItem.title = "我的代金券"
         //2.设置bodyContent
-        setupBodyContent()
+        self.view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        setupNoDataView()
     }
     
-    private func setupBodyContent(){
-        let label = UILabel(frame: CGRect(x: finalScreenW / 2 - 50, y: finalScreenH / 2 - 20, width: 100, height: 40))
-        label.textAlignment = .center
-        label.text = "MyVouchersPage"
-        self.view.addSubview(label)
-        self.view.backgroundColor = UIColor.random.lighten(by: 0.6)
+    private func setupNoDataView(){
+        
+        self.view.addSubview(noDataLabel)
+        
     }
 }

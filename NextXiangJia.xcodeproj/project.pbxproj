@@ -735,7 +735,7 @@
 				0908C83C2060DAF100CED99E /* MyCenterViewController.swift */,
 				09E37271209BEC1400F6E8B3 /* RegistViewController.swift */,
 				090DDE1C2093FCE800A42E3F /* LoginViewController.swift */,
-				094919A1209B032600E82D0A /* ChangePasswordViewController.swift */,
+				0978EF9620A3D65D004BEACF /* FindPasswordViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -773,13 +773,13 @@
 				090DDDD42092C57700A42E3F /* MyVouchersViewController.swift */,
 				090DDDD62092C63600A42E3F /* MyRefundApplicationViewController.swift */,
 				090DDDD82092C96100A42E3F /* MySuggestionsViewController.swift */,
-				0978EF9620A3D65D004BEACF /* FindPasswordViewController.swift */,
 				090DDDDA2092EC7F00A42E3F /* MyAdvisoryViewController.swift */,
 				090DDDDC2092EDF600A42E3F /* MyEvaluationViewController.swift */,
 				090DDDDE2092EE4500A42E3F /* MyMessageViewController.swift */,
 				090DDDE02092EE9A00A42E3F /* MyCollectionViewController.swift */,
 				090DDDE22092EF2400A42E3F /* MyBalanceViewController.swift */,
 				090DDDE42092EFBA00A42E3F /* MyRechargeOnlineViewController.swift */,
+				094919A1209B032600E82D0A /* ChangePasswordViewController.swift */,
 				090DDDE62092F04700A42E3F /* MyAddressViewController.swift */,
 				090DDDE82092F09000A42E3F /* MyInfoViewController.swift */,
 				090DDDEC2092F14D00A42E3F /* MyInvoiceManageViewController.swift */,

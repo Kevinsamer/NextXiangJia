@@ -24,7 +24,7 @@ class MySuggesttionTabSubmitViewController: UIViewController, IndicatorInfoProvi
         title.delegate = self
         title.layer.borderColor = UIColor.gray.lighten(by: 0.4).cgColor
         title.layer.borderWidth = 0.5
-        title.backgroundColor = UIColor.random
+        title.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
         title.leftView?.size = CGSize(width: 15, height: textFieldH)
         return title
     }()
@@ -39,7 +39,7 @@ class MySuggesttionTabSubmitViewController: UIViewController, IndicatorInfoProvi
         content.layer.borderColor = UIColor.gray.lighten(by: 0.4).cgColor
         content.layer.borderWidth = 0.5
         content.placeholder = "建议内容"
-        content.backgroundColor = UIColor.random
+        content.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
         return content
     }()
     
@@ -113,6 +113,6 @@ extension MySuggesttionTabSubmitViewController : UITextFieldDelegate,UITextViewD
 
 extension MySuggesttionTabSubmitViewController{
     @objc func submitButtonClicked(){
-        YTools.myPrint(content: "确认提交", mode: testMode)
+        YTools.myPrint(content: "确认提交: title = \(suggestionTitle.text ?? "title为空")   content = \(suggestionContent.text ?? "content为空")", mode: testMode)
     }
 }

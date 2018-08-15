@@ -9,6 +9,15 @@
 import UIKit
 import XLPagerTabStrip
 class MySuggestionTabFeedViewController: UIViewController, IndicatorInfoProvider{
+    //MARK: - 懒加载
+    lazy var noDataLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: finalScreenH / 2 - 20, width: finalScreenW, height: 40))
+        label.text = "暂无建议信息"
+        label.textAlignment = .center
+        return label
+    }()
+    
+    
     init(itemInfo: IndicatorInfo) {
         self.itemInfo = itemInfo
         super.init(nibName: nil, bundle: nil)
@@ -56,6 +65,11 @@ class MySuggestionTabFeedViewController: UIViewController, IndicatorInfoProvider
 //MARK: - setui
 extension MySuggestionTabFeedViewController{
     private func setUI(){
-        self.view.backgroundColor = UIColor.random.lighten()
+        self.view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        setNoDataLabel()
+    }
+    
+    private func setNoDataLabel(){
+        self.view.addSubview(noDataLabel)
     }
 }
