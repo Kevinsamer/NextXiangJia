@@ -36,28 +36,28 @@ class TiXianViewController: UIViewController {
     }()
     
     lazy var leftView: UIView = {
-        let view = UIView(frame: CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>))
-        return <#value#>
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: 10))
+        return view
     }()
     
-    lazy var nameTextField: UITextField = {
-        let text = UITextField(frame: CGRect(x: 15, y: 40, width: finalScreenW - 30, height: 50))
+    lazy var nameTextField: MyTextField = {
+        let text = MyTextField(frame: CGRect(x: 15, y: 40, width: finalScreenW - 30, height: 50))
         text.layer.borderWidth = 1
         text.layer.borderColor = #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9254901961, alpha: 1)
         text.placeholder = "收款人姓名"
         return text
     }()
     
-    lazy var numTextField: UITextField = {
-        let text = UITextField(frame: CGRect(x: 15, y: 110, width: finalScreenW - 30, height: 50))
+    lazy var numTextField: MyTextField = {
+        let text = MyTextField(frame: CGRect(x: 15, y: 110, width: finalScreenW - 30, height: 50))
         text.layer.borderWidth = 1
         text.layer.borderColor = #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9254901961, alpha: 1)
         text.placeholder = "提现金额"
         return text
     }()
     
-    lazy var otherTextField: UITextField = {
-        let text = UITextField(frame: CGRect(x: 15, y: 180, width: finalScreenW - 30, height: 50))
+    lazy var otherTextField: MyTextField = {
+        let text = MyTextField(frame: CGRect(x: 15, y: 180, width: finalScreenW - 30, height: 50))
         text.layer.borderWidth = 1
         text.layer.borderColor = #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9254901961, alpha: 1)
         text.placeholder = "备注信息"
