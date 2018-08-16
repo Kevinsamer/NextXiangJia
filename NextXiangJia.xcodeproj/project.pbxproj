@@ -196,6 +196,7 @@
 		09E9643C212121DE0095180C /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E9643A212121DE0095180C /* MyCollectionViewCell.swift */; };
 		09E9643D212121DE0095180C /* MyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09E9643B212121DE0095180C /* MyCollectionViewCell.xib */; };
 		09E9643F21225DDD0095180C /* MyCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E9643E21225DDD0095180C /* MyCollectionModel.swift */; };
+		09E96441212518590095180C /* TiXianViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E96440212518590095180C /* TiXianViewController.swift */; };
 		09F9EE41207DF257007D18D0 /* YTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9EE40207DF257007D18D0 /* YTools.swift */; };
 		09F9EE43207DF666007D18D0 /* UIDevice-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9EE42207DF666007D18D0 /* UIDevice-extension.swift */; };
 		9E340DCE7978C5BF01FF375E /* Pods_NextXiangJia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62448A9C6DC1FFF9D62BEE99 /* Pods_NextXiangJia.framework */; };
@@ -414,6 +415,7 @@
 		09E9643A212121DE0095180C /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
 		09E9643B212121DE0095180C /* MyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyCollectionViewCell.xib; sourceTree = "<group>"; };
 		09E9643E21225DDD0095180C /* MyCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionModel.swift; sourceTree = "<group>"; };
+		09E96440212518590095180C /* TiXianViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiXianViewController.swift; sourceTree = "<group>"; };
 		09F9EE40207DF257007D18D0 /* YTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YTools.swift; sourceTree = "<group>"; };
 		09F9EE42207DF666007D18D0 /* UIDevice-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice-extension.swift"; sourceTree = "<group>"; };
 		62448A9C6DC1FFF9D62BEE99 /* Pods_NextXiangJia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NextXiangJia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1167,6 +1169,7 @@
 				0978EF8D20A282BB004BEACF /* AddNewAddressViewController.swift */,
 				0976F3E120F2EAE8007A47A3 /* MyOrdersTableViewController.swift */,
 				0976F3E720F58FDD007A47A3 /* OrderDetailViewController.swift */,
+				09E96440212518590095180C /* TiXianViewController.swift */,
 			);
 			path = ThirdPages;
 			sourceTree = "<group>";
@@ -1485,6 +1488,7 @@
 				0904C3D020D207D3009A8282 /* MyNavigationController.swift in Sources */,
 				094352D620DB7EFA00D4C31A /* Header.swift in Sources */,
 				0976F3E220F2EAE8007A47A3 /* MyOrdersTableViewController.swift in Sources */,
+				09E96441212518590095180C /* TiXianViewController.swift in Sources */,
 				0976F3A420EEF92A007A47A3 /* Array+Extensions.swift in Sources */,
 				0978EFA320A5933A004BEACF /* MyTextView.swift in Sources */,
 				090269B22043AEB9007FF5B9 /* PageTitleView.swift in Sources */,
