@@ -85,7 +85,7 @@ extension MyBalanceViewController {
         //5.设置底部view
         setupBottomButton()
         
-        YTools.myPrint(content: "\(finalStatusBarH)", mode: testMode)
+//        YTools.myPrint(content: "\(finalStatusBarH)", mode: testMode)
     }
     
     private func initData(){
