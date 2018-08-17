@@ -1,0 +1,2 @@
+# NextXiangJia
+使用pod下载ImageRow之后修改pod/ImageRow/ImageRow.swift中的按键名字符串以适配本地语言
