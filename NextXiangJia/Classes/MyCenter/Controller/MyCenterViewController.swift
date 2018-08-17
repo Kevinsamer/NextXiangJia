@@ -20,8 +20,8 @@ private let headToBodyH : CGFloat = 20
 private let bodyViewH : CGFloat = 505
 private let headLabelW : CGFloat = finalScreenW / 3 - 20
 private let headLabelH : CGFloat = 20
-private let fa:[FontAwesome] = [.trophy,.tags,.reply,.file,.comment,.comments,.bell,.heart,.money,.signIn,.mapMarker,.table,.key,.ticket,.twitter,.sitemap,.creditCard]
-private let faText = ["我的积分","我的代金券","退款申请","站点建议","商品咨询","商品评价","短信息","收藏夹","账户余额","在线充值","地址管理","个人资料","修改密码","发票管理","我的推介","我的下线成员","我的佣金"]
+private let fa:[FontAwesome] = [.trophy,.tags,.reply,.file,.comment,.comments,.bell,.heart,.money,.signIn,.mapMarker,.table,.key]
+private let faText = ["我的积分","我的代金券","退款申请","站点建议","商品咨询","商品评价","短信息","收藏夹","账户余额","在线充值","地址管理","个人资料","修改密码"]
 private let rootScrollViewH : CGFloat = headViewUsedH + headToBodyH + bodyViewH
 class MyCenterViewController: UIViewController {
     //MARK: - sb拖拽控件
@@ -201,7 +201,7 @@ extension MyCenterViewController{
 //MARK: - collection->dataSource, delegate
 extension MyCenterViewController :UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 18
+        return 14
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -209,7 +209,7 @@ extension MyCenterViewController :UICollectionViewDataSource, UICollectionViewDe
         cell.layer.borderColor = UIColor(named: "line_gray")?.cgColor
         cell.layer.borderWidth = 0.5
         cell.backgroundColor = .white
-        for index in 1...17 {
+        for index in 1...13 {
             if indexPath.row == index {
                 cell.labelText?.text = faText[index - 1]
                 cell.labelFA?.text = String.fontAwesomeIcon(name: fa[index - 1])
@@ -320,22 +320,22 @@ extension MyCenterViewController :UICollectionViewDataSource, UICollectionViewDe
             print("修改密码")
             let changePasswordVC = ChangePasswordViewController()
             pushToVC(vc: changePasswordVC)
-        case 14:
-            print("发票管理")
-            let invoiceManage = MyInvoiceManageViewController()
-            pushToVC(vc: invoiceManage)
-        case 15:
-            print("我的推介")
-            let commendVc = MyCommendViewController()
-            pushToVC(vc: commendVc)
-        case 16:
-            print("我的下线成员")
-            let myMemberVC = MyMemberViewController()
-            pushToVC(vc: myMemberVC)
-        case 17:
-            print("我的佣金")
-            let commissionVC = MyCommissionViewController()
-            pushToVC(vc: commissionVC)
+//        case 14:
+//            print("发票管理")
+//            let invoiceManage = MyInvoiceManageViewController()
+//            pushToVC(vc: invoiceManage)
+//        case 15:
+//            print("我的推介")
+//            let commendVc = MyCommendViewController()
+//            pushToVC(vc: commendVc)
+//        case 16:
+//            print("我的下线成员")
+//            let myMemberVC = MyMemberViewController()
+//            pushToVC(vc: myMemberVC)
+//        case 17:
+//            print("我的佣金")
+//            let commissionVC = MyCommissionViewController()
+//            pushToVC(vc: commissionVC)
         default:
             break
         }

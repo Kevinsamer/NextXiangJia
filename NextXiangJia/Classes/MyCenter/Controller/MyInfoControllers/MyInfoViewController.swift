@@ -130,13 +130,13 @@ extension MyInfoViewController {
             $0.title = "确认"
             }.onCellSelection({ (cell, row) in
                 let nameRow:TextRow = self.form.rowBy(tag: "username")!
-                let sexRow:PickerInputRow<String> = self.form.rowBy(tag: "sex")!
-                let dateRow:DateRow = self.form.rowBy(tag: "birthday")!
-                let phoneRow:PhoneRow = self.form.rowBy(tag: "phone")!
-                let telRow:PhoneRow = self.form.rowBy(tag: "tel")!
-                let zipCodeRow:IntRow = self.form.rowBy(tag: "zipCode")!
-                let qqRow:IntRow = self.form.rowBy(tag: "qq")!
-                let emailRow:EmailRow = self.form.rowBy(tag: "email")!
+//                let sexRow:PickerInputRow<String> = self.form.rowBy(tag: "sex")!
+//                let dateRow:DateRow = self.form.rowBy(tag: "birthday")!
+//                let phoneRow:PhoneRow = self.form.rowBy(tag: "phone")!
+//                let telRow:PhoneRow = self.form.rowBy(tag: "tel")!
+//                let zipCodeRow:IntRow = self.form.rowBy(tag: "zipCode")!
+//                let qqRow:IntRow = self.form.rowBy(tag: "qq")!
+//                let emailRow:EmailRow = self.form.rowBy(tag: "email")!
                 let icon : ImageRow = self.form.rowBy(tag: "icon")!
                 let values = self.form.values()
                 print("\(values)--\(icon.value ?? UIImage.init(named: "my_head")!)--\(nameRow.value ?? "no name")")
