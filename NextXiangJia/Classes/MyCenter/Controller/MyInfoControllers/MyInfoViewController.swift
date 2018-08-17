@@ -56,8 +56,10 @@ extension MyInfoViewController {
         form +++ Section()
         <<< ImageRow("icon") { row in
             row.title = "头像"
+            row.value = UIImage(named: "my_head")!
+            //row.placeholderImage = UIImage(named: "my_head")!
             row.sourceTypes = [.PhotoLibrary, .Camera]
-            row.clearAction = .yes(style: UIAlertActionStyle.destructive)
+            row.clearAction =  .no
             }.cellUpdate { cell, row in
                 cell.accessoryView?.layer.cornerRadius = 20
                 cell.accessoryView?.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
@@ -82,9 +84,16 @@ extension MyInfoViewController {
         }
         <<< DateRow("birthday"){
             $0.title = "生日"
+            $0.cell.datePicker.locale = Locale.init(identifier: "zh_CN")
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            $0.dateFormatter = dateFormatter
             $0.value = Date(timeIntervalSinceReferenceDate: 0)
             //$0.tag = "date"
-        }
+            
+            }.cellUpdate({ (cell, row) in
+                
+            })
         <<< PhoneRow("phone"){
             $0.title = "手机"
             $0.placeholder = "请输入手机号"
@@ -121,13 +130,13 @@ extension MyInfoViewController {
             $0.title = "确认"
             }.onCellSelection({ (cell, row) in
                 let nameRow:TextRow = self.form.rowBy(tag: "username")!
-//                var sexRow:PickerInputRow<String> = self.form.rowBy(tag: "sex")!
-//                var dateRow:DateRow = self.form.rowBy(tag: "birthday")!
-//                var phoneRow:PhoneRow = self.form.rowBy(tag: "phone")!
-//                var telRow:PhoneRow = self.form.rowBy(tag: "tel")!
-//                var zipCodeRow:IntRow = self.form.rowBy(tag: "zipCode")!
-//                var qqRow:IntRow = self.form.rowBy(tag: "qq")!
-//                var emailRow:EmailRow = self.form.rowBy(tag: "email")!
+                let sexRow:PickerInputRow<String> = self.form.rowBy(tag: "sex")!
+                let dateRow:DateRow = self.form.rowBy(tag: "birthday")!
+                let phoneRow:PhoneRow = self.form.rowBy(tag: "phone")!
+                let telRow:PhoneRow = self.form.rowBy(tag: "tel")!
+                let zipCodeRow:IntRow = self.form.rowBy(tag: "zipCode")!
+                let qqRow:IntRow = self.form.rowBy(tag: "qq")!
+                let emailRow:EmailRow = self.form.rowBy(tag: "email")!
                 let icon : ImageRow = self.form.rowBy(tag: "icon")!
                 let values = self.form.values()
                 print("\(values)--\(icon.value ?? UIImage.init(named: "my_head")!)--\(nameRow.value ?? "no name")")
