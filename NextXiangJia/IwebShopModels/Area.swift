@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Areas:BaseModel {
+class Area:BaseModel {
     @objc var area_id:String = ""//地区id
     @objc var parent_id:Int = -1//上一级的id值
     @objc var area_name:String = ""//地区名称

@@ -9,7 +9,7 @@
 import UIKit
 import JavaScriptCore
 
-final class AreaPickView: UIView {
+final class AreaPickView: UIControl {
     let pickerViewBtnW: CGFloat = 50.0
     let pickerViewBtnH: CGFloat = 30.0
     typealias SelectCityHandle = ((String, String, String) -> ())?
@@ -33,7 +33,7 @@ final class AreaPickView: UIView {
         self.cityDataLevel = level
         self.defaultAddress = defaultAddress
         self.selectCityHandle = selectCityHandle
-        
+        self.addTarget(self, action: #selector(cancelBtnClick), for: .touchUpInside)
         backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
         cityArray = dataArray.first?.children
@@ -70,7 +70,8 @@ final class AreaPickView: UIView {
         let size = pickerView.bounds.size
         
         pickerView.frame = CGRect(x: 0, y: pickerViewBtnH, width: SJScreeW, height: size.height)
-        optionView.frame = CGRect(x: 0, y: SJScreeH - size.height, width: SJScreeW, height: size.height)
+//        optionView.frame = CGRect(x: 0, y: SJScreeH - size.height, width: SJScreeW, height: size.height)
+        optionView.frame = CGRect(x: 0, y: SJScreeH, width: SJScreeW, height: size.height)
         cancelBtn.frame = CGRect(x: pickerView.x, y: pickerView.y - pickerViewBtnH, width: pickerViewBtnW, height: pickerViewBtnH)
         doneBtn.frame = CGRect(x: pickerView.maxX - pickerViewBtnW, y: cancelBtn.y, width: pickerViewBtnW, height: pickerViewBtnH)
         
@@ -83,7 +84,13 @@ final class AreaPickView: UIView {
     
     
     @objc private func cancelBtnClick(){
-        removeFromSuperview()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.optionView.frame.origin.y += self.optionView.size.height
+        }) { (complie) in
+            self.removeFromSuperview()
+        }
+        
+        
     }
     @objc private func doneBtnClick(){
         if let block = selectCityHandle{
@@ -107,6 +114,9 @@ final class AreaPickView: UIView {
         let view = AreaPickView(level: level, defaultAddress: defaultAddress, selectCityHandle: selectCityHandle)
 
         SJKeyWindow?.addSubview(view)
+        UIView.animate(withDuration: 0.4) {
+            view.subviews[0].frame.origin.y -= view.subviews[0].size.height
+        }
     
         
     }
@@ -216,6 +226,7 @@ extension AreaPickView: UIPickerViewDelegate,UIPickerViewDataSource{
             if pickerView.numberOfComponents == 3{
                 townArray = cityArray![0].children
                 pickerView.reloadComponent(2)
+                pickerView.selectRow(0, inComponent: 2, animated: true)
             }
         }
         

@@ -9,10 +9,15 @@
 import UIKit
 
 class AddressCell: UICollectionViewCell {
-
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var phoneLabel: UILabel!
+    @IBOutlet var addressLabel: UILabel!
+    @IBOutlet var editAddressButton: UIButton!
+    @IBOutlet var delAddressButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
 
 }

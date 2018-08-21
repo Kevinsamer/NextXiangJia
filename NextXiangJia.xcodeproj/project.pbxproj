@@ -82,7 +82,7 @@
 		0943E1132117E1550026A7AC /* AdManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E1122117E1550026A7AC /* AdManage.swift */; };
 		0943E1152117E39F0026A7AC /* AdPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E1142117E39F0026A7AC /* AdPosition.swift */; };
 		0943E1172117E4C20026A7AC /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E1162117E4C20026A7AC /* Announcement.swift */; };
-		0943E1192117E52E0026A7AC /* Areas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E1182117E52E0026A7AC /* Areas.swift */; };
+		0943E1192117E52E0026A7AC /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E1182117E52E0026A7AC /* Area.swift */; };
 		0943E11B2117E69B0026A7AC /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E11A2117E69B0026A7AC /* Article.swift */; };
 		0943E11D2117E8730026A7AC /* ArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E11C2117E8730026A7AC /* ArticleCategory.swift */; };
 		0943E11F2117E9EA0026A7AC /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0943E11E2117E9EA0026A7AC /* Attribute.swift */; };
@@ -301,7 +301,7 @@
 		0943E1122117E1550026A7AC /* AdManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManage.swift; sourceTree = "<group>"; };
 		0943E1142117E39F0026A7AC /* AdPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPosition.swift; sourceTree = "<group>"; };
 		0943E1162117E4C20026A7AC /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
-		0943E1182117E52E0026A7AC /* Areas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Areas.swift; sourceTree = "<group>"; };
+		0943E1182117E52E0026A7AC /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
 		0943E11A2117E69B0026A7AC /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		0943E11C2117E8730026A7AC /* ArticleCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCategory.swift; sourceTree = "<group>"; };
 		0943E11E2117E9EA0026A7AC /* Attribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
@@ -875,7 +875,7 @@
 				0943E1122117E1550026A7AC /* AdManage.swift */,
 				0943E1142117E39F0026A7AC /* AdPosition.swift */,
 				0943E1162117E4C20026A7AC /* Announcement.swift */,
-				0943E1182117E52E0026A7AC /* Areas.swift */,
+				0943E1182117E52E0026A7AC /* Area.swift */,
 				0943E11A2117E69B0026A7AC /* Article.swift */,
 				0943E11C2117E8730026A7AC /* ArticleCategory.swift */,
 				0943E11E2117E9EA0026A7AC /* Attribute.swift */,
@@ -1544,7 +1544,7 @@
 				0943E1172117E4C20026A7AC /* Announcement.swift in Sources */,
 				0976F3CE20EEF92A007A47A3 /* ItemWithPhoto.swift in Sources */,
 				094352D420DB7D9B00D4C31A /* TypeView.swift in Sources */,
-				0943E1192117E52E0026A7AC /* Areas.swift in Sources */,
+				0943E1192117E52E0026A7AC /* Area.swift in Sources */,
 				0976F3A620EEF92A007A47A3 /* Date+Extension.swift in Sources */,
 				09E9643C212121DE0095180C /* MyCollectionViewCell.swift in Sources */,
 				0976F3B920EEF92A007A47A3 /* ContactCell.swift in Sources */,

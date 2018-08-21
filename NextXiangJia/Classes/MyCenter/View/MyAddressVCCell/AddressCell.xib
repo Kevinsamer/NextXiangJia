@@ -128,6 +128,13 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="400" height="149"/>
+            <connections>
+                <outlet property="addressLabel" destination="bWq-os-PiZ" id="gOV-x4-LKk"/>
+                <outlet property="delAddressButton" destination="ywT-ss-u8f" id="w6N-ih-fFI"/>
+                <outlet property="editAddressButton" destination="rb2-4D-WFd" id="OST-dr-fGO"/>
+                <outlet property="nameLabel" destination="pgV-A0-b0N" id="hY1-OJ-ySZ"/>
+                <outlet property="phoneLabel" destination="5A3-Uc-XhB" id="F84-eB-OfF"/>
+            </connections>
             <point key="canvasLocation" x="-1" y="92.5"/>
         </collectionViewCell>
     </objects>
