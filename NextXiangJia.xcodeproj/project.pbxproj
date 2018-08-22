@@ -1181,9 +1181,9 @@
 		0978EF8F20A2DE5D004BEACF /* AreaPickerView */ = {
 			isa = PBXGroup;
 			children = (
-				09298D44212D03D50015CE6B /* MyAreaPickerView.swift */,
 				09298D42212D03690015CE6B /* iwebshop_areas.txt */,
 				0978EF9020A2DE5D004BEACF /* address.txt */,
+				09298D44212D03D50015CE6B /* MyAreaPickerView.swift */,
 				09298D40212C4B160015CE6B /* AreaPickView.swift */,
 				0978EF9220A2DE5D004BEACF /* Extention.swift */,
 			);
