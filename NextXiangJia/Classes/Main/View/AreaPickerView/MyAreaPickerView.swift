@@ -18,7 +18,7 @@ class MyAreaPickerView: UIControl {
     var selectProvince:Area?
     var selectCity:Area?
     var selectTwon:Area?
-    static let pickerView = MyAreaPickerView()
+    
     typealias SelectCityHandle = ((Area, Area, Area) -> ())?
     
     private var selectCityHandle: SelectCityHandle
@@ -53,7 +53,7 @@ class MyAreaPickerView: UIControl {
     
     lazy var picker: UIPickerView = {
         let pick = UIPickerView(frame: CGRect(x: 0, y: 50, width: UIScreen.main.bounds.width, height: 300))
-        pick.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        pick.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         pick.delegate = self
         pick.dataSource = self
         return pick
@@ -61,12 +61,13 @@ class MyAreaPickerView: UIControl {
     
     lazy var popView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: 350))
-        view.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         return view
     }()
     
-    init() {
+    init(selectCityHandle: SelectCityHandle) {
         super.init(frame: UIScreen.main.bounds)
+        self.selectCityHandle = selectCityHandle
         backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1).withAlphaComponent(0.5)
         addTarget(self, action: #selector(cancelBtnClick), for: .touchUpInside)
         initData()
@@ -117,8 +118,8 @@ extension MyAreaPickerView{
 //        }
 //    }
     
-    static func showAreaPickerView() {
-        
+    static func showAreaPickerView(selectCityHandle: SelectCityHandle) {
+        let pickerView = MyAreaPickerView(selectCityHandle: selectCityHandle)
         KeyWindow?.addSubview(pickerView)
         UIView.animate(withDuration: 0.2) {
             pickerView.popView.frame.origin.y -= 350
@@ -146,16 +147,16 @@ extension MyAreaPickerView{
             selectProvince = provinces[picker.selectedRow(inComponent: 0)]
             if citys.count != 0 {
                 selectCity = citys[picker.selectedRow(inComponent: 1)]
-            }
+            }else{ selectCity = Area() }
             if towns.count != 0 {
                 selectTwon = towns[picker.selectedRow(inComponent: 2)]
-            }
-            print("\(selectProvince?.area_name ?? "")+\(selectCity?.area_name ?? "")+\(selectTwon?.area_name ?? "")")
+            }else{ selectTwon = Area() }
+            //print("\(selectProvince?.area_name ?? "")+\(selectCity?.area_name ?? "")+\(selectTwon?.area_name ?? "")")
             block(selectProvince!, selectCity!, selectTwon!)
-            
+            selectCityHandle = nil
             selectProvince = nil
-            selectCity = nil
-            selectTwon = nil
+            selectCity = Area()
+            selectTwon = Area()
             cancelBtnClick()
         }
     }
@@ -227,6 +228,35 @@ extension MyAreaPickerView:UIPickerViewDelegate, UIPickerViewDataSource {
             pickerView.reloadComponent(2)
             pickerView.selectRow(0, inComponent: 2, animated: true)
         }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        return finalScreenW * 0.3
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        var pickerLabel = view as? UILabel
+        if pickerLabel == nil {
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.thin)
+            pickerLabel?.adjustsFontSizeToFitWidth = true
+            pickerLabel?.textAlignment = .center
+            pickerLabel?.numberOfLines = 0
+            pickerLabel?.backgroundColor = YTools.randomColorIn(colors: [#colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1),#colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1),#colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1),#colorLiteral(red: 0.8446564078, green: 0.5145705342, blue: 1, alpha: 1),#colorLiteral(red: 1, green: 0.1857388616, blue: 0.5733950138, alpha: 1)])
+            
+        }
+        if component == 0 {
+            pickerLabel?.text = provinces[row].area_name
+        }else if component == 1, citys.count != 0 {
+            pickerLabel?.text = citys[row].area_name
+        }else if component == 2, towns.count != 0 {
+            pickerLabel?.text = towns[row].area_name
+        }
+        return pickerLabel!
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 50
     }
     
 }

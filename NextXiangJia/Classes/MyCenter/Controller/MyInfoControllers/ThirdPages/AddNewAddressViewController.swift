@@ -12,7 +12,7 @@ import Eureka
 class AddNewAddressViewController: FormViewController {
     var name:String?
     var phoneNum:String?
-    var address:(String,String,String)?
+    var address:(Area,Area,Area)?
     var detailedAddress:String?
     var telNum:String?
     var zipCode:Int?
@@ -89,7 +89,12 @@ extension AddNewAddressViewController {
 //                    row.updateCell()
 //                    print(self.address ?? ("province","city","town"))
 //                })
-                MyAreaPickerView.showAreaPickerView()
+                MyAreaPickerView.showAreaPickerView(selectCityHandle: { (province, city, town) in
+                    self.address = (province, city, town)
+                    row.value = "\(province.area_name) \(city.area_name) \(town.area_name)"
+                    row.updateCell()
+                    YTools.myPrint(content: "\(province.area_name) \(city.area_name) \(town.area_name)", mode: true)
+                })
             })
         <<< LabelRow(){
             $0.title = "详细地址"

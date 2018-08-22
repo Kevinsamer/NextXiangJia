@@ -101,6 +101,10 @@ public class YTools{
         return dateFormatter.date(from: str) ?? Date(timeIntervalSince1970: 0)
     }
     
+    public static func randomColorIn(colors colorArray:[UIColor]) -> UIColor{
+        return colorArray[Int.random(between: 0, and: colorArray.count - 1)].withAlphaComponent(0.3)
+    }
+    
 }
 //MARK: - objc func
 extension YTools{
