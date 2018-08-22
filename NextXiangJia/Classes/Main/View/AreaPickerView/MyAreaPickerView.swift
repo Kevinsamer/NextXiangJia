@@ -11,9 +11,7 @@ let KeyWindow = UIApplication.shared.keyWindow ?? (UIApplication.shared.delegate
 let pickerViewBtnW: CGFloat = 100.0
 let pickerViewBtnH: CGFloat = 50.0
 class MyAreaPickerView: UIControl {
-    lazy var areas:[Area] = {
-        return MyAreaPickerView.getDataFromTxt()!
-    }()
+    var areas:[Area] = Areas
     var provinces:[Area] = [Area]()
     var citys:[Area] = [Area]()
     var towns:[Area] = [Area]()
@@ -21,6 +19,9 @@ class MyAreaPickerView: UIControl {
     var selectCity:Area?
     var selectTwon:Area?
     static let pickerView = MyAreaPickerView()
+    typealias SelectCityHandle = ((Area, Area, Area) -> ())?
+    
+    private var selectCityHandle: SelectCityHandle
     
     lazy var doneButton: UIButton = {
         let button = UIButton(type: UIButtonType.system)
@@ -141,18 +142,22 @@ extension MyAreaPickerView{
     }
     
     @objc func doneBtnClick(){
-        selectProvince = provinces[picker.selectedRow(inComponent: 0)]
-        if citys.count != 0 {
-            selectCity = citys[picker.selectedRow(inComponent: 1)]
+        if let block = selectCityHandle {
+            selectProvince = provinces[picker.selectedRow(inComponent: 0)]
+            if citys.count != 0 {
+                selectCity = citys[picker.selectedRow(inComponent: 1)]
+            }
+            if towns.count != 0 {
+                selectTwon = towns[picker.selectedRow(inComponent: 2)]
+            }
+            print("\(selectProvince?.area_name ?? "")+\(selectCity?.area_name ?? "")+\(selectTwon?.area_name ?? "")")
+            block(selectProvince!, selectCity!, selectTwon!)
+            
+            selectProvince = nil
+            selectCity = nil
+            selectTwon = nil
+            cancelBtnClick()
         }
-        if towns.count != 0 {
-            selectTwon = towns[picker.selectedRow(inComponent: 2)]
-        }
-        print("\(selectProvince?.area_name ?? "")+\(selectCity?.area_name ?? "")+\(selectTwon?.area_name ?? "")")
-        selectProvince = nil
-        selectCity = nil
-        selectTwon = nil
-        cancelBtnClick()
     }
     
     @objc func cancelBtnClick(){

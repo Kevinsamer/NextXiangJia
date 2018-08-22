@@ -58,9 +58,9 @@
 		090DDDF12092F20300A42E3F /* MyMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDDF02092F20300A42E3F /* MyMemberViewController.swift */; };
 		090DDDF32092F30400A42E3F /* MyCommissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDDF22092F30400A42E3F /* MyCommissionViewController.swift */; };
 		090DDE1D2093FCE900A42E3F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDE1C2093FCE800A42E3F /* LoginViewController.swift */; };
-		09298D35212BBA0D0015CE6B /* iwebshop_areas.txt in Resources */ = {isa = PBXBuildFile; fileRef = 09298D34212BBA0D0015CE6B /* iwebshop_areas.txt */; };
-		09298D3B212C49C70015CE6B /* MyAreaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D3A212C49C70015CE6B /* MyAreaPickerView.swift */; };
 		09298D41212C4B160015CE6B /* AreaPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D40212C4B160015CE6B /* AreaPickView.swift */; };
+		09298D43212D036A0015CE6B /* iwebshop_areas.txt in Resources */ = {isa = PBXBuildFile; fileRef = 09298D42212D03690015CE6B /* iwebshop_areas.txt */; };
+		09298D45212D03D60015CE6B /* MyAreaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D44212D03D50015CE6B /* MyAreaPickerView.swift */; };
 		093B386D20F833E80063E2F5 /* HomeCollHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093B386B20F833E80063E2F5 /* HomeCollHeadView.swift */; };
 		093B386E20F833E80063E2F5 /* HomeCollHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 093B386C20F833E80063E2F5 /* HomeCollHeadView.xib */; };
 		093B387320F83DDF0063E2F5 /* OrderDetailFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093B387220F83DDF0063E2F5 /* OrderDetailFooterView.swift */; };
@@ -279,9 +279,9 @@
 		090DDDF02092F20300A42E3F /* MyMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMemberViewController.swift; sourceTree = "<group>"; };
 		090DDDF22092F30400A42E3F /* MyCommissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommissionViewController.swift; sourceTree = "<group>"; };
 		090DDE1C2093FCE800A42E3F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		09298D34212BBA0D0015CE6B /* iwebshop_areas.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = iwebshop_areas.txt; path = ../../../../../../../iwebshop_areas.txt; sourceTree = "<group>"; };
-		09298D3A212C49C70015CE6B /* MyAreaPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAreaPickerView.swift; path = ../../../../../../GetArea/GetArea/MyAreaPickerView.swift; sourceTree = "<group>"; };
 		09298D40212C4B160015CE6B /* AreaPickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaPickView.swift; sourceTree = "<group>"; };
+		09298D42212D03690015CE6B /* iwebshop_areas.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iwebshop_areas.txt; sourceTree = "<group>"; };
+		09298D44212D03D50015CE6B /* MyAreaPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAreaPickerView.swift; sourceTree = "<group>"; };
 		093B386B20F833E80063E2F5 /* HomeCollHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollHeadView.swift; sourceTree = "<group>"; };
 		093B386C20F833E80063E2F5 /* HomeCollHeadView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollHeadView.xib; sourceTree = "<group>"; };
 		093B387220F83DDF0063E2F5 /* OrderDetailFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailFooterView.swift; sourceTree = "<group>"; };
@@ -1181,9 +1181,9 @@
 		0978EF8F20A2DE5D004BEACF /* AreaPickerView */ = {
 			isa = PBXGroup;
 			children = (
-				09298D34212BBA0D0015CE6B /* iwebshop_areas.txt */,
+				09298D44212D03D50015CE6B /* MyAreaPickerView.swift */,
+				09298D42212D03690015CE6B /* iwebshop_areas.txt */,
 				0978EF9020A2DE5D004BEACF /* address.txt */,
-				09298D3A212C49C70015CE6B /* MyAreaPickerView.swift */,
 				09298D40212C4B160015CE6B /* AreaPickView.swift */,
 				0978EF9220A2DE5D004BEACF /* Extention.swift */,
 			);
@@ -1391,7 +1391,7 @@
 				0902695E2040F710007FF5B9 /* Main.storyboard in Resources */,
 				09E9643D212121DE0095180C /* MyCollectionViewCell.xib in Resources */,
 				0992E45520BC02D900B7902E /* back_button@2x.png in Resources */,
-				09298D35212BBA0D0015CE6B /* iwebshop_areas.txt in Resources */,
+				09298D43212D036A0015CE6B /* iwebshop_areas.txt in Resources */,
 				0992E45720BC02D900B7902E /* cart_addBtn_nomal@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1493,7 +1493,7 @@
 				0976F3B820EEF92A007A47A3 /* Contact.swift in Sources */,
 				090DDDEF2092F1A000A42E3F /* MyCommendViewController.swift in Sources */,
 				0904C3D020D207D3009A8282 /* MyNavigationController.swift in Sources */,
-				09298D3B212C49C70015CE6B /* MyAreaPickerView.swift in Sources */,
+				09298D45212D03D60015CE6B /* MyAreaPickerView.swift in Sources */,
 				094352D620DB7EFA00D4C31A /* Header.swift in Sources */,
 				0976F3E220F2EAE8007A47A3 /* MyOrdersTableViewController.swift in Sources */,
 				09E96441212518590095180C /* TiXianViewController.swift in Sources */,
