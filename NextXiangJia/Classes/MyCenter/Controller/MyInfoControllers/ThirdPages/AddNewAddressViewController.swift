@@ -82,13 +82,14 @@ extension AddNewAddressViewController {
                 //cell.addSubview(right)
                 
             }).onCellSelection({ (cell, row) in
-                AreaPickView.showChooseCityView(selectCityHandle: { (province, city, town) in
-                    self.address = (province,city,town)
-                    row.value = "\(province) \(city) \(town) ＞"
-//                    row.title = "所在地区： \(province) \(city) \(town)"
-                    row.updateCell()
-                    print(self.address ?? ("province","city","town"))
-                })
+//                AreaPickView.showChooseCityView(selectCityHandle: { (province, city, town) in
+//                    self.address = (province,city,town)
+//                    row.value = "\(province) \(city) \(town) ＞"
+////                    row.title = "所在地区： \(province) \(city) \(town)"
+//                    row.updateCell()
+//                    print(self.address ?? ("province","city","town"))
+//                })
+                MyAreaPickerView.showAreaPickerView()
             })
         <<< LabelRow(){
             $0.title = "详细地址"

@@ -58,6 +58,9 @@
 		090DDDF12092F20300A42E3F /* MyMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDDF02092F20300A42E3F /* MyMemberViewController.swift */; };
 		090DDDF32092F30400A42E3F /* MyCommissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDDF22092F30400A42E3F /* MyCommissionViewController.swift */; };
 		090DDE1D2093FCE900A42E3F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDE1C2093FCE800A42E3F /* LoginViewController.swift */; };
+		09298D35212BBA0D0015CE6B /* iwebshop_areas.txt in Resources */ = {isa = PBXBuildFile; fileRef = 09298D34212BBA0D0015CE6B /* iwebshop_areas.txt */; };
+		09298D3B212C49C70015CE6B /* MyAreaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D3A212C49C70015CE6B /* MyAreaPickerView.swift */; };
+		09298D41212C4B160015CE6B /* AreaPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D40212C4B160015CE6B /* AreaPickView.swift */; };
 		093B386D20F833E80063E2F5 /* HomeCollHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093B386B20F833E80063E2F5 /* HomeCollHeadView.swift */; };
 		093B386E20F833E80063E2F5 /* HomeCollHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 093B386C20F833E80063E2F5 /* HomeCollHeadView.xib */; };
 		093B387320F83DDF0063E2F5 /* OrderDetailFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093B387220F83DDF0063E2F5 /* OrderDetailFooterView.swift */; };
@@ -159,7 +162,6 @@
 		0978EF8B20A17B53004BEACF /* AddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0978EF8920A17B53004BEACF /* AddressCell.xib */; };
 		0978EF8E20A282BB004BEACF /* AddNewAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978EF8D20A282BB004BEACF /* AddNewAddressViewController.swift */; };
 		0978EF9320A2DE5D004BEACF /* address.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0978EF9020A2DE5D004BEACF /* address.txt */; };
-		0978EF9420A2DE5D004BEACF /* AreaPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978EF9120A2DE5D004BEACF /* AreaPickView.swift */; };
 		0978EF9520A2DE5D004BEACF /* Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978EF9220A2DE5D004BEACF /* Extention.swift */; };
 		0978EF9720A3D65D004BEACF /* FindPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978EF9620A3D65D004BEACF /* FindPasswordViewController.swift */; };
 		0978EF9920A41B71004BEACF /* FindPasswordTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978EF9820A41B71004BEACF /* FindPasswordTabViewController.swift */; };
@@ -277,6 +279,9 @@
 		090DDDF02092F20300A42E3F /* MyMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMemberViewController.swift; sourceTree = "<group>"; };
 		090DDDF22092F30400A42E3F /* MyCommissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommissionViewController.swift; sourceTree = "<group>"; };
 		090DDE1C2093FCE800A42E3F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		09298D34212BBA0D0015CE6B /* iwebshop_areas.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = iwebshop_areas.txt; path = ../../../../../../../iwebshop_areas.txt; sourceTree = "<group>"; };
+		09298D3A212C49C70015CE6B /* MyAreaPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAreaPickerView.swift; path = ../../../../../../GetArea/GetArea/MyAreaPickerView.swift; sourceTree = "<group>"; };
+		09298D40212C4B160015CE6B /* AreaPickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaPickView.swift; sourceTree = "<group>"; };
 		093B386B20F833E80063E2F5 /* HomeCollHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollHeadView.swift; sourceTree = "<group>"; };
 		093B386C20F833E80063E2F5 /* HomeCollHeadView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollHeadView.xib; sourceTree = "<group>"; };
 		093B387220F83DDF0063E2F5 /* OrderDetailFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailFooterView.swift; sourceTree = "<group>"; };
@@ -378,7 +383,6 @@
 		0978EF8920A17B53004BEACF /* AddressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressCell.xib; sourceTree = "<group>"; };
 		0978EF8D20A282BB004BEACF /* AddNewAddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAddressViewController.swift; sourceTree = "<group>"; };
 		0978EF9020A2DE5D004BEACF /* address.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = address.txt; sourceTree = "<group>"; };
-		0978EF9120A2DE5D004BEACF /* AreaPickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaPickView.swift; sourceTree = "<group>"; };
 		0978EF9220A2DE5D004BEACF /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
 		0978EF9620A3D65D004BEACF /* FindPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordViewController.swift; sourceTree = "<group>"; };
 		0978EF9820A41B71004BEACF /* FindPasswordTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordTabViewController.swift; sourceTree = "<group>"; };
@@ -1177,8 +1181,10 @@
 		0978EF8F20A2DE5D004BEACF /* AreaPickerView */ = {
 			isa = PBXGroup;
 			children = (
+				09298D34212BBA0D0015CE6B /* iwebshop_areas.txt */,
 				0978EF9020A2DE5D004BEACF /* address.txt */,
-				0978EF9120A2DE5D004BEACF /* AreaPickView.swift */,
+				09298D3A212C49C70015CE6B /* MyAreaPickerView.swift */,
+				09298D40212C4B160015CE6B /* AreaPickView.swift */,
 				0978EF9220A2DE5D004BEACF /* Extention.swift */,
 			);
 			path = AreaPickerView;
@@ -1385,6 +1391,7 @@
 				0902695E2040F710007FF5B9 /* Main.storyboard in Resources */,
 				09E9643D212121DE0095180C /* MyCollectionViewCell.xib in Resources */,
 				0992E45520BC02D900B7902E /* back_button@2x.png in Resources */,
+				09298D35212BBA0D0015CE6B /* iwebshop_areas.txt in Resources */,
 				0992E45720BC02D900B7902E /* cart_addBtn_nomal@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1486,6 +1493,7 @@
 				0976F3B820EEF92A007A47A3 /* Contact.swift in Sources */,
 				090DDDEF2092F1A000A42E3F /* MyCommendViewController.swift in Sources */,
 				0904C3D020D207D3009A8282 /* MyNavigationController.swift in Sources */,
+				09298D3B212C49C70015CE6B /* MyAreaPickerView.swift in Sources */,
 				094352D620DB7EFA00D4C31A /* Header.swift in Sources */,
 				0976F3E220F2EAE8007A47A3 /* MyOrdersTableViewController.swift in Sources */,
 				09E96441212518590095180C /* TiXianViewController.swift in Sources */,
@@ -1524,6 +1532,7 @@
 				0976F3B220EEF92A007A47A3 /* UITextView+Extensions.swift in Sources */,
 				090DDDE72092F04700A42E3F /* MyAddressViewController.swift in Sources */,
 				0976F3B420EEF92A007A47A3 /* UIViewController+Extensions.swift in Sources */,
+				09298D41212C4B160015CE6B /* AreaPickView.swift in Sources */,
 				090DDDDD2092EDF600A42E3F /* MyEvaluationViewController.swift in Sources */,
 				0976F3C820EEF92A007A47A3 /* Location.swift in Sources */,
 				0943E1232117F44D0026A7AC /* Brand.swift in Sources */,
@@ -1618,7 +1627,6 @@
 				0976F3D720EEF92A007A47A3 /* SegmentedControl.swift in Sources */,
 				09F9EE41207DF257007D18D0 /* YTools.swift in Sources */,
 				0992E47120C6738500B7902E /* TagData.swift in Sources */,
-				0978EF9420A2DE5D004BEACF /* AreaPickView.swift in Sources */,
 				0943528D20D3AB5300D4C31A /* GoodViewController.swift in Sources */,
 				0976F3D120EEF92A007A47A3 /* TwoTextFieldsViewController.swift in Sources */,
 				0904C37820CFC0DE009A8282 /* CollCell.swift in Sources */,

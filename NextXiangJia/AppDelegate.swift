@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 import IQKeyboardManagerSwift
-
+var Areas:[Area] = [Area]()
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
  
@@ -40,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         //window?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
+        Areas = MyAreaPickerView.getDataFromTxt()!
+        //TODO:数据回调
         return true
     }
     
