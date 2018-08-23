@@ -18,8 +18,8 @@ class TagData: NSObject {
     @objc var push_vertical_screen : Int = 0
     @objc var push_nearby : Int = 0
     @objc var room_list : [[String : NSObject]]?
-        {
-        didSet{
+    {
+    didSet{
             guard let roomLists = room_list else { return }
             for dict in roomLists {
                 rooms.append(RoomData(dict: dict))

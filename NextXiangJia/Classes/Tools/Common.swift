@@ -28,5 +28,3 @@ public var showSearchButton = true//某些页面是否显示搜索按钮
 public var searchBarState = 2
 public var loginState:Bool = false//登录状态
 
-//let Areas = MyAreaPickerView.getDataFromTxt()!
-

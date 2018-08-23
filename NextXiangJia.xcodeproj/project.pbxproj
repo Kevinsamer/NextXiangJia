@@ -61,6 +61,11 @@
 		09298D41212C4B160015CE6B /* AreaPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D40212C4B160015CE6B /* AreaPickView.swift */; };
 		09298D43212D036A0015CE6B /* iwebshop_areas.txt in Resources */ = {isa = PBXBuildFile; fileRef = 09298D42212D03690015CE6B /* iwebshop_areas.txt */; };
 		09298D45212D03D60015CE6B /* MyAreaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D44212D03D50015CE6B /* MyAreaPickerView.swift */; };
+		09298D47212D4DCE0015CE6B /* HomeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D46212D4DCE0015CE6B /* HomeData.swift */; };
+		09298D49212D62C10015CE6B /* BannerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D48212D62C10015CE6B /* BannerInfo.swift */; };
+		09298D4B212E3C5A0015CE6B /* ChannelInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D4A212E3C5A0015CE6B /* ChannelInfo.swift */; };
+		09298D4D212E3D560015CE6B /* RecommendInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D4C212E3D560015CE6B /* RecommendInfo.swift */; };
+		09298D4F212E3E2E0015CE6B /* HotInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D4E212E3E2E0015CE6B /* HotInfo.swift */; };
 		093B386D20F833E80063E2F5 /* HomeCollHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093B386B20F833E80063E2F5 /* HomeCollHeadView.swift */; };
 		093B386E20F833E80063E2F5 /* HomeCollHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 093B386C20F833E80063E2F5 /* HomeCollHeadView.xib */; };
 		093B387320F83DDF0063E2F5 /* OrderDetailFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093B387220F83DDF0063E2F5 /* OrderDetailFooterView.swift */; };
@@ -282,6 +287,11 @@
 		09298D40212C4B160015CE6B /* AreaPickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaPickView.swift; sourceTree = "<group>"; };
 		09298D42212D03690015CE6B /* iwebshop_areas.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iwebshop_areas.txt; sourceTree = "<group>"; };
 		09298D44212D03D50015CE6B /* MyAreaPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAreaPickerView.swift; sourceTree = "<group>"; };
+		09298D46212D4DCE0015CE6B /* HomeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeData.swift; sourceTree = "<group>"; };
+		09298D48212D62C10015CE6B /* BannerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerInfo.swift; sourceTree = "<group>"; };
+		09298D4A212E3C5A0015CE6B /* ChannelInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelInfo.swift; sourceTree = "<group>"; };
+		09298D4C212E3D560015CE6B /* RecommendInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendInfo.swift; sourceTree = "<group>"; };
+		09298D4E212E3E2E0015CE6B /* HotInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotInfo.swift; sourceTree = "<group>"; };
 		093B386B20F833E80063E2F5 /* HomeCollHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollHeadView.swift; sourceTree = "<group>"; };
 		093B386C20F833E80063E2F5 /* HomeCollHeadView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeCollHeadView.xib; sourceTree = "<group>"; };
 		093B387220F83DDF0063E2F5 /* OrderDetailFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailFooterView.swift; sourceTree = "<group>"; };
@@ -598,6 +608,11 @@
 			children = (
 				0992E47020C6738500B7902E /* TagData.swift */,
 				0992E47220C6762900B7902E /* RoomData.swift */,
+				09298D46212D4DCE0015CE6B /* HomeData.swift */,
+				09298D48212D62C10015CE6B /* BannerInfo.swift */,
+				09298D4A212E3C5A0015CE6B /* ChannelInfo.swift */,
+				09298D4C212E3D560015CE6B /* RecommendInfo.swift */,
+				09298D4E212E3E2E0015CE6B /* HotInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1493,6 +1508,7 @@
 				0976F3B820EEF92A007A47A3 /* Contact.swift in Sources */,
 				090DDDEF2092F1A000A42E3F /* MyCommendViewController.swift in Sources */,
 				0904C3D020D207D3009A8282 /* MyNavigationController.swift in Sources */,
+				09298D4F212E3E2E0015CE6B /* HotInfo.swift in Sources */,
 				09298D45212D03D60015CE6B /* MyAreaPickerView.swift in Sources */,
 				094352D620DB7EFA00D4C31A /* Header.swift in Sources */,
 				0976F3E220F2EAE8007A47A3 /* MyOrdersTableViewController.swift in Sources */,
@@ -1518,6 +1534,7 @@
 				090DDDDB2092EC7F00A42E3F /* MyAdvisoryViewController.swift in Sources */,
 				090269612040F710007FF5B9 /* NextXiangJia.xcdatamodeld in Sources */,
 				0978EF9720A3D65D004BEACF /* FindPasswordViewController.swift in Sources */,
+				09298D47212D4DCE0015CE6B /* HomeData.swift in Sources */,
 				090269592040F710007FF5B9 /* AppDelegate.swift in Sources */,
 				0976F3C120EEF92A007A47A3 /* CountryCell.swift in Sources */,
 				094352D120DB7D9B00D4C31A /* ChoseGoodsTypeAlert.swift in Sources */,
@@ -1542,6 +1559,7 @@
 				0976F3B120EEF92A007A47A3 /* UITextField+Extensions.swift in Sources */,
 				0976F3B720EEF92A007A47A3 /* Contacts.swift in Sources */,
 				0976F3C320EEF92A007A47A3 /* PhoneCodeCell.swift in Sources */,
+				09298D49212D62C10015CE6B /* BannerInfo.swift in Sources */,
 				09E37272209BEC1400F6E8B3 /* RegistViewController.swift in Sources */,
 				0908C83B2060DAB700CED99E /* ShopCartViewController.swift in Sources */,
 				0976F3B020EEF92A007A47A3 /* UISegmentedControl+Extensions.swift in Sources */,
@@ -1588,6 +1606,7 @@
 				0976F3CA20EEF92A007A47A3 /* PhotoLibraryPickerViewController.swift in Sources */,
 				094C407B20AAC400001E5C77 /* SMSegmentViewConstants.swift in Sources */,
 				0982A23420E5D6E600D9890B /* FillOrderViewController.swift in Sources */,
+				09298D4B212E3C5A0015CE6B /* ChannelInfo.swift in Sources */,
 				09F9EE43207DF666007D18D0 /* UIDevice-extension.swift in Sources */,
 				0976F3C420EEF92A007A47A3 /* LocationPickerViewController.swift in Sources */,
 				090DDDE32092EF2400A42E3F /* MyBalanceViewController.swift in Sources */,
@@ -1631,6 +1650,7 @@
 				0976F3D120EEF92A007A47A3 /* TwoTextFieldsViewController.swift in Sources */,
 				0904C37820CFC0DE009A8282 /* CollCell.swift in Sources */,
 				094C407820AAC400001E5C77 /* SMSegment.swift in Sources */,
+				09298D4D212E3D560015CE6B /* RecommendInfo.swift in Sources */,
 				09D1AE2E209A94B9004C4DA4 /* UIButton-extension.swift in Sources */,
 				0978EF9520A2DE5D004BEACF /* Extention.swift in Sources */,
 				094C407920AAC400001E5C77 /* SMSegmentAppearance.swift in Sources */,

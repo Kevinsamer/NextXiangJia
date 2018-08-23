@@ -19,8 +19,7 @@ import SnapKit
 private let searchBarH:CGFloat = 64
 //banner attribute
 private let bannerCellID = "bannerCellID"
-private var bannerNumbers = 5
-private var bannerImages = [""]
+private var banners:[BannerInfo] = [BannerInfo]()
 private var bannerH:CGFloat = 150
 //fourBtn attribute
 private var fourBtnW = finalScreenW / 4
@@ -155,7 +154,7 @@ class HomeViewController: UIViewController {
         viewPager.delegate = self
         viewPager.register(FSPagerViewCell.self, forCellWithReuseIdentifier: bannerCellID)
         //设置自动翻页事件间隔，默认值为0（不自动翻页）
-        viewPager.automaticSlidingInterval = 1.0
+        viewPager.automaticSlidingInterval = 3.0
         //设置页面之间的间隔距离
         viewPager.interitemSpacing = 0.0
         //设置可以无限翻页，默认值为false，false时从尾部向前滚动到头部再继续循环滚动，true时可以无限滚动
@@ -169,7 +168,7 @@ class HomeViewController: UIViewController {
         //banner的下标控制器
         let pageControl = FSPageControl(frame: CGRect(x: 0, y: 120, width: finalScreenW, height: 30))
         //设置下标的个数
-        pageControl.numberOfPages = bannerNumbers
+        pageControl.numberOfPages = banners.count
         //设置下标位置
         pageControl.contentHorizontalAlignment = .center
         //设置下标指示器图片（选中状态和普通状态）
@@ -378,14 +377,15 @@ extension HomeViewController{
 extension HomeViewController: FSPagerViewDataSource,FSPagerViewDelegate{
     //item数量
     func numberOfItems(in pagerView: FSPagerView) -> Int {
-        return bannerNumbers
+        return banners.count
     }
     //数据填充回调
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         let cell = topBanner.dequeueReusableCell(withReuseIdentifier: bannerCellID, at: index)
-        cell.imageView?.image = UIImage.init(named: "\(bannerImages[index])")
+        cell.imageView?.kf.setImage(with: URL(string: BASE_URL + banners[index].img))
+//        cell.imageView?.image = UIImage.init(named: "\(bannerImages[index])")
         //cell.contentView.layer.shadowRadius = 0 //去除cell四周阴影
-        cell.textLabel?.text = "title\(index)"
+        cell.textLabel?.text = banners[index].name
         return cell
     }
     //下标同步
@@ -461,30 +461,16 @@ extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegat
 //MARK: - 初始化数据
 extension HomeViewController{
     private func initData(){
-        //1.初始化banner数据
-        initBannerData()
-        //2.初始化collection数据
-        initCollectionData()
+        //1.初始化home数据
+        initHomeData()
     }
-    private func initBannerData(){
-        bannerImages = ["1","2","3","4","5"]//测试数据
-        homeViewModel.requestBannerData {
-            //请求结束后重载视图数据
-            self.topBanner.reloadData()
-            print("加载banner数据 \(YTools.getCurrentNavigationBarHeight(navCT: self.navigationController!))")
-            for tag in self.homeViewModel.tagGroup {
-                print(tag.tag_name)
-                for room in tag.rooms {
-                    print(room.room_name)
-                }
-                print("----\(YTools.dateToString(date: Date(timeIntervalSince1970: 1534901323)))---")
-                
+    private func initHomeData(){
+        homeViewModel.requestHomeData {
+            for banner in (self.homeViewModel.homeDataGroup?.banners)! {
+                banners.append(banner)
             }
+            self.topBanner.reloadData()
         }
-        
-    }
-    private func initCollectionData(){
-        homeViewModel.requestCollectionData()
     }
 }
 

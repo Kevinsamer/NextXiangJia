@@ -9,6 +9,9 @@
 import UIKit
 import Alamofire
 
+let BASE_URL = "http://192.168.108.223/"
+let HOMEDATA_URL = BASE_URL + "app/home"
+
 enum MethodType {
     case GET
     case POST
@@ -29,4 +32,5 @@ class NetworkTools {
             finishCallback(result as Any)
         }
     }
+    
 }

@@ -10,6 +10,7 @@ import UIKit
 
 class HomeViewModel {
     lazy var tagGroup : [TagData] = [TagData]()
+    var homeDataGroup : HomeData?
     
 }
 
@@ -32,25 +33,31 @@ extension HomeViewModel {
             guard let tags = resultDict["data"] as? [[String : NSObject]] else {
                 return
             }
-            print(tags)
+            //print(tags)
             for tag in tags {
                 let trump = TagData(dict: tag)
                 self.tagGroup.append(trump)
             }
-//            for tag in self.tagGroup {
-//                print(tag.tag_name)
-//                for room in tag.rooms {
-//                    print(room.room_name)
-//                }
-//                print("--------")
-//            }
-            
             //所有数据请求完毕后回调
             finishCallback()
         }
     }
     
-    func requestCollectionData(){
+    func requestHomeData(finishCallback : @escaping () -> ()){
+        NetworkTools.requestData(type: .GET, urlString: HOMEDATA_URL) { (result) in
+            //print(result)
+            guard let resultDict = result as? [String : NSObject] else { return }
+            guard let resultCode = resultDict["code"] as? Int else { return }
+            if resultCode == 200 {
+                guard let homeDatas = resultDict["result"] as? [String:NSObject] else { return }
+                print(homeDatas.count)
+                self.homeDataGroup = HomeData(dict: homeDatas)
+                finishCallback()
+            }else if resultCode == 201 {
+                
+            }
+        }
         
+
     }
 }
