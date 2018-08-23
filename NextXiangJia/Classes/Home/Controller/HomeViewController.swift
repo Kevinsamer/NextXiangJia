@@ -19,7 +19,9 @@ import SnapKit
 private let searchBarH:CGFloat = 64
 //banner attribute
 private let bannerCellID = "bannerCellID"
-private var banners:[BannerInfo] = [BannerInfo]()
+private var banners:[BannerInfo] = [BannerInfo]()//banner数组
+private var recommends:[RecommendInfo] = [RecommendInfo]()//推荐商品数组
+private var hots:[HotInfo] = [HotInfo]()//热门商品数组
 private var bannerH:CGFloat = 150
 //fourBtn attribute
 private var fourBtnW = finalScreenW / 4
@@ -27,7 +29,7 @@ private var fourBtnH:CGFloat = 100
 //collection attribute
 private var collectionItemW = ( finalScreenW - 9 ) / 2
 private var collectionItemNumbers :CGFloat = 18
-private var collectionItemH = collectionItemW * 6 / 5
+private var collectionItemH:CGFloat = 290
 private var collectionViewH = collectionItemNumbers / 2 * collectionItemH + 3 * (collectionItemNumbers / 2 - 1) + 40 + 2 // 3*3(行高)=9，40=headViewH ,最后的2是coll底部的线条 //- finalStatusBarH - finalNavigationBarH - finalTabBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH : 0)
 private var categoryDHHeadH : CGFloat = 60
 private var categoryDHViewH : CGFloat = 120
@@ -431,11 +433,15 @@ extension HomeViewController{
 //MARK: - 设置collectionView的数据源和代理
 extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Int(collectionItemNumbers)
+        if section == 0 {
+            return recommends.count
+        }else {
+            return hots.count
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: itemCellID, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: itemCellID, for: indexPath) as! ItemCell
         
         return cell
     }
@@ -443,15 +449,15 @@ extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegat
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = GoodDetailViewController()
         navigationController?.show(vc, sender: self)
-        //navigationController?.present(vc, animated: true, completion: nil)
+        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let head = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headID, for: indexPath)
+        let head = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headID, for: indexPath) as! HomeCollHeadView
         
         return head
     }
@@ -469,7 +475,15 @@ extension HomeViewController{
             for banner in (self.homeViewModel.homeDataGroup?.banners)! {
                 banners.append(banner)
             }
+            for recommend in (self.homeViewModel.homeDataGroup?.recommends)! {
+                recommends.append(recommend)
+            }
+            for hot in (self.homeViewModel.homeDataGroup?.hots)! {
+                hots.append(hot)
+            }
+            self.topBannerControl.numberOfPages = banners.count
             self.topBanner.reloadData()
+            self.collections.reloadData()
         }
     }
 }

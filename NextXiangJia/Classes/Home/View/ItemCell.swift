@@ -7,12 +7,19 @@
 //
 
 import UIKit
-
+import FontAwesome_swift
 class ItemCell: UICollectionViewCell {
     
     //MARK: - 控件属性
     @IBOutlet var itemImageView: UIImageView!
     @IBOutlet var itemTextLabel: UILabel!
+    
+    @IBOutlet var marketPrice: UILabel!
+    @IBOutlet var sellPrice: UILabel!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+    }
     
     //MARK: - 定义Model
     //var goods : GoodsGroup? {
