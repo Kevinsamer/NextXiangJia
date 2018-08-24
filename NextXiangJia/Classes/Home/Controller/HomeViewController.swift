@@ -27,10 +27,10 @@ private var bannerH:CGFloat = 150
 private var fourBtnW = finalScreenW / 4
 private var fourBtnH:CGFloat = 100
 //collection attribute
-private var collectionItemW = ( finalScreenW - 9 ) / 2
+private var collectionItemW = ( finalScreenW - 1 ) / 2
 private var collectionItemNumbers :CGFloat = 18
 private var collectionItemH:CGFloat = 290
-private var collectionViewH = collectionItemNumbers / 2 * collectionItemH + 3 * (collectionItemNumbers / 2 - 1) + 40 + 2 // 3*3(行高)=9，40=headViewH ,最后的2是coll底部的线条 //- finalStatusBarH - finalNavigationBarH - finalTabBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH : 0)
+private var collectionViewH = finalContentViewHaveTabbarH
 private var categoryDHHeadH : CGFloat = 60
 private var categoryDHViewH : CGFloat = 120
 private var tipInfoViewH : CGFloat = 240
@@ -45,11 +45,11 @@ class HomeViewController: UIViewController {
 
     private lazy var tipInfoView : UIView = {
         //tip信息view
-        let view = UIView(frame: CGRect(x: 20, y: bannerH + fourBtnH + collectionViewH + 20, width: finalScreenW - 40, height: tipInfoViewH))
+        let view = UIView(frame: CGRect(x: 20, y: 20 + collections.collectionViewLayout.collectionViewContentSize.height, width: finalScreenW - 40, height: tipInfoViewH))
         view.layer.borderColor = UIColor.init(named: "home_collectionview_bg")?.cgColor
         view.layer.borderWidth = 2
         view.layer.cornerRadius = 15
-        //view.backgroundColor = UIColor.brown
+        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         let truck = UILabel(frame: CGRect(x: 10, y: 10, width: 60, height: 60))
         truck.text = String.fontAwesomeIcon(name: .truck)
@@ -119,19 +119,20 @@ class HomeViewController: UIViewController {
     private lazy var collections:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: collectionItemW, height: collectionItemH)
-        layout.minimumLineSpacing = 3
-        layout.minimumInteritemSpacing = 3
+        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 1
         layout.headerReferenceSize = CGSize(width: finalScreenW, height: 40)
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 3)
+        //layout.sectionInset = UIEdgeInsets(top: fourBtnH, left: 0, bottom: 0, right: 0)
         
-        let collection = UICollectionView(frame: CGRect.init(x: 0, y: bannerH + fourBtnH, width: finalScreenW, height: collectionViewH), collectionViewLayout: layout)
-        collection.bounces = false
-        collection.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        let collection = UICollectionView(frame: CGRect.init(x: 0, y: finalNavigationBarH + finalStatusBarH, width: finalScreenW, height: collectionViewH), collectionViewLayout: layout)
+        collection.alwaysBounceVertical = true
+        //collection.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collection.dataSource = self
         collection.delegate = self
         collection.register(UINib.init(nibName: "ItemCell", bundle: nil), forCellWithReuseIdentifier: itemCellID)
         collection.register(UINib.init(nibName: "HomeCollHeadView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
         collection.backgroundColor = UIColor.init(named: "home_collectionview_bg")
+        collection.contentInset = UIEdgeInsets(top: fourBtnH + bannerH, left: 0, bottom: tipInfoViewH + 40, right: 0)
 //        collection.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         return collection
     }()
@@ -151,7 +152,7 @@ class HomeViewController: UIViewController {
     private lazy var topBanner:FSPagerView = {
         //顶部banner
         let viewPager = FSPagerView()
-        viewPager.frame = CGRect(x: 0, y: 0, width: finalScreenW, height: 150)
+        viewPager.frame = CGRect(x: 0, y: -bannerH - fourBtnH, width: finalScreenW, height: bannerH)
         viewPager.dataSource = self
         viewPager.delegate = self
         viewPager.register(FSPagerViewCell.self, forCellWithReuseIdentifier: bannerCellID)
@@ -168,7 +169,7 @@ class HomeViewController: UIViewController {
     
     private lazy var topBannerControl:FSPageControl = {
         //banner的下标控制器
-        let pageControl = FSPageControl(frame: CGRect(x: 0, y: 120, width: finalScreenW, height: 30))
+        let pageControl = FSPageControl(frame: CGRect(x: 0, y: 120 - fourBtnH - bannerH, width: finalScreenW, height: 30))
         //设置下标的个数
         pageControl.numberOfPages = banners.count
         //设置下标位置
@@ -192,8 +193,8 @@ class HomeViewController: UIViewController {
     }()
     //4个导航btn
     private lazy var homeFourBtnCategory:UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 150, width: fourBtnW, height: fourBtnH))
-        //view.backgroundColor = UIColor.random.lighten(by: 0.5)
+        let view = UIView(frame: CGRect(x: 0, y: -fourBtnH, width: fourBtnW, height: fourBtnH))
+        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         let circle = CircleLabel(frame: CGRect(x: fourBtnW / 2 - 25, y: 10, width: 50, height: 50))
         circle.useTextColor = false
         circle.textColor = .white
@@ -213,8 +214,8 @@ class HomeViewController: UIViewController {
         return view
     }()
     private lazy var homeFourBtnShopCart:UIView = {
-        let view = UIView(frame: CGRect(x: 0 + fourBtnW, y: 150, width: fourBtnW, height: fourBtnH))
-        //view.backgroundColor = UIColor.random.lighten(by: 0.5)
+        let view = UIView(frame: CGRect(x: 0 + fourBtnW, y: -fourBtnH, width: fourBtnW, height: fourBtnH))
+        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         let circle = CircleLabel(frame: CGRect(x: fourBtnW / 2 - 25, y: 10, width: 50, height: 50))
         circle.useTextColor = false
         circle.textColor = .white
@@ -234,8 +235,8 @@ class HomeViewController: UIViewController {
         return view
     }()
     private lazy var homeFourBtnTodayTuangou:UIView = {
-        let view = UIView(frame: CGRect(x: 0 + fourBtnW * 2, y: 150, width: fourBtnW, height: fourBtnH))
-        //view.backgroundColor = UIColor.random.lighten(by: 0.5)
+        let view = UIView(frame: CGRect(x: 0 + fourBtnW * 2, y: -fourBtnH, width: fourBtnW, height: fourBtnH))
+        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         let circle = CircleLabel(frame: CGRect(x: fourBtnW / 2 - 25, y: 10, width: 50, height: 50))
         circle.useTextColor = false
         circle.textColor = .white
@@ -255,8 +256,8 @@ class HomeViewController: UIViewController {
         return view
     }()
     private lazy var homeFourBtnMyCollection:UIView = {
-        let view = UIView(frame: CGRect(x: 0 + fourBtnW * 3, y: 150, width: fourBtnW, height: fourBtnH))
-        //view.backgroundColor = UIColor.random.lighten(by: 0.5)
+        let view = UIView(frame: CGRect(x: 0 + fourBtnW * 3, y: -fourBtnH, width: fourBtnW, height: fourBtnH))
+        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         let circle = CircleLabel(frame: CGRect(x: fourBtnW / 2 - 25, y: 10, width: 50, height: 50))
         circle.useTextColor = false
         circle.textColor = .white
@@ -322,7 +323,7 @@ extension HomeViewController{
         //4.设置4个圆形button
         setupFourButton()
         //5.设置collectionView展示推荐
-        setupCollectionView()
+        //setupCollectionView()
         //6.设置分类导航head
         //setupCategoryDHHeadView()
         //7.设置分类导航view
@@ -332,7 +333,7 @@ extension HomeViewController{
     }
     
     private func setupTipInfoView(){
-        rootScrollView.addSubview(tipInfoView)
+        collections.addSubview(tipInfoView)
     }
     
     private func setupCategoryDHView(){
@@ -343,22 +344,18 @@ extension HomeViewController{
         rootScrollView.addSubview(categoryDHHeadView)
     }
     
-    private func setupCollectionView(){
-        rootScrollView.addSubview(collections)
-    }
-    
     private func setupFourButton(){
         //1.banner下依次添加4个View作为Gesture的触发View
-        rootScrollView.addSubview(homeFourBtnCategory)
-        rootScrollView.addSubview(homeFourBtnShopCart)
-        rootScrollView.addSubview(homeFourBtnTodayTuangou)
-        rootScrollView.addSubview(homeFourBtnMyCollection)
+        collections.addSubview(homeFourBtnCategory)
+        collections.addSubview(homeFourBtnShopCart)
+        collections.addSubview(homeFourBtnTodayTuangou)
+        collections.addSubview(homeFourBtnMyCollection)
         //2.添加Gesture事件
         addFourBtnGesture()
     }
     
     private func addScrollerView(){
-        self.view.addSubview(rootScrollView)
+        self.view.addSubview(collections)
 //        rootScrollView.snp.makeConstraints({ (make) in
 //            //make.width.equalTo(finalScreenW)
 //            make.bottom.top.left.right.equalToSuperview()
@@ -367,8 +364,8 @@ extension HomeViewController{
     }
     
     private func setupADBanner(){
-        rootScrollView.addSubview(topBanner)
-        rootScrollView.addSubview(topBannerControl)
+        collections.addSubview(topBanner)
+        collections.addSubview(topBannerControl)
     }
     
     private func setupNavigationBar(){
@@ -442,7 +439,19 @@ extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegat
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: itemCellID, for: indexPath) as! ItemCell
-        
+        if indexPath.section == 0 {
+            let recommendGoods = recommends[indexPath.row]
+            cell.itemImageView.kf.setImage(with: URL.init(string: BASE_URL + recommendGoods.img), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+            cell.itemTextLabel.text = recommendGoods.name
+            cell.marketPrice.attributedText = YTools.textAddMiddleLine(text: "￥" + recommendGoods.market_price)
+            cell.sellPrice.text = "￥" + recommendGoods.sell_price
+        }else if indexPath.section == 1 {
+            let hotGoods = hots[indexPath.row]
+            cell.itemImageView.kf.setImage(with: URL.init(string: BASE_URL + hotGoods.img), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+            cell.itemTextLabel.text = hotGoods.name
+            cell.marketPrice.attributedText = YTools.textAddMiddleLine(text: "￥" + hotGoods.market_price)
+            cell.sellPrice.text = "￥" + hotGoods.sell_price
+        }
         return cell
     }
     //cell点击事件
@@ -458,7 +467,16 @@ extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let head = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headID, for: indexPath) as! HomeCollHeadView
-        
+        head.headTitleFALabel.font = UIFont.fontAwesome(ofSize: 22)
+        head.headTitleFALabel.textAlignment = .left
+        head.headTitleLabel.textAlignment = .left
+        if indexPath.section == 0 {
+            head.headTitleLabel.text = "推荐商品"
+            head.headTitleFALabel.text = String.fontAwesomeIcon(name: .gift)
+        }else {
+            head.headTitleLabel.text = "最热商品"
+            head.headTitleFALabel.text = String.fontAwesomeIcon(name: .fire)
+        }
         return head
     }
 
@@ -481,9 +499,14 @@ extension HomeViewController{
             for hot in (self.homeViewModel.homeDataGroup?.hots)! {
                 hots.append(hot)
             }
-            self.topBannerControl.numberOfPages = banners.count
-            self.topBanner.reloadData()
-            self.collections.reloadData()
+            
+            DispatchQueue.main.async(execute: {
+                self.collections.reloadData()
+                self.topBannerControl.numberOfPages = banners.count
+                self.topBanner.reloadData()
+                self.tipInfoView.frame = CGRect(x: 20, y: 20 + self.collections.collectionViewLayout.collectionViewContentSize.height, width: finalScreenW - 40, height: tipInfoViewH)
+            })
+            
         }
     }
 }
