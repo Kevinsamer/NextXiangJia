@@ -37,7 +37,7 @@ private var tipInfoViewH : CGFloat = 240
 private let itemCellID = "itemCellID"
 private let headID = "headID"
 
-private var scrollViewContentSizeH:CGFloat = bannerH + fourBtnH + collectionViewH + tipInfoViewH + 20 + 20
+//private var scrollViewContentSizeH:CGFloat = bannerH + fourBtnH + collectionViewH + tipInfoViewH + 20 + 20
 //private var finalContentViewH = UIDevice.current.isX() ? finalScreenH - finalStatusBarH - finalNavigationBarH - finalTabBarH - IphonexHomeIndicator : finalScreenH - finalStatusBarH - finalNavigationBarH - finalTabBarH
 class HomeViewController: UIViewController {
     // MARK: - 懒加载属性
@@ -136,18 +136,18 @@ class HomeViewController: UIViewController {
 //        collection.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         return collection
     }()
-    
-    private lazy var rootScrollView:UIScrollView = {
-        //scrollView所有view的父view
-        let scroll = UIScrollView(frame: CGRect(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: finalContentViewHaveTabbarH))
-        scroll.backgroundColor = .white
-        scroll.contentSize = CGSize(width: finalScreenW, height: scrollViewContentSizeH)
-        scroll.isScrollEnabled = true
-        scroll.contentInsetAdjustmentBehavior = .never
-        scroll.showsVerticalScrollIndicator = testMode//debug时开启滚动条,release时隐藏
-        scroll.alwaysBounceVertical = true
-        return scroll
-    }()
+   
+//    private lazy var rootScrollView:UIScrollView = {
+//        //scrollView所有view的父view
+//        let scroll = UIScrollView(frame: CGRect(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: finalContentViewHaveTabbarH))
+//        scroll.backgroundColor = .white
+//        scroll.contentSize = CGSize(width: finalScreenW, height: scrollViewContentSizeH)
+//        scroll.isScrollEnabled = true
+//        scroll.contentInsetAdjustmentBehavior = .never
+//        scroll.showsVerticalScrollIndicator = testMode//debug时开启滚动条,release时隐藏
+//        scroll.alwaysBounceVertical = true
+//        return scroll
+//    }()
     
     private lazy var topBanner:FSPagerView = {
         //顶部banner
@@ -169,7 +169,7 @@ class HomeViewController: UIViewController {
     
     private lazy var topBannerControl:FSPageControl = {
         //banner的下标控制器
-        let pageControl = FSPageControl(frame: CGRect(x: 0, y: 120 - fourBtnH - bannerH, width: finalScreenW, height: 30))
+        let pageControl = FSPageControl(frame: CGRect(x: 0, y: 100 - fourBtnH - bannerH, width: finalScreenW - 5, height: 30))
         //设置下标的个数
         pageControl.numberOfPages = banners.count
         //设置下标位置
@@ -317,7 +317,7 @@ extension HomeViewController{
         //1.设置导航栏
         setupNavigationBar()
         //2.导航栏下添加scrollerView
-        addScrollerView()
+        setupCollectionView()
         //3.设置ADBanner
         setupADBanner()
         //4.设置4个圆形button
@@ -336,13 +336,13 @@ extension HomeViewController{
         collections.addSubview(tipInfoView)
     }
     
-    private func setupCategoryDHView(){
-        rootScrollView.addSubview(categoryDHView)
-    }
-    
-    private func setupCategoryDHHeadView(){
-        rootScrollView.addSubview(categoryDHHeadView)
-    }
+//    private func setupCategoryDHView(){
+//        rootScrollView.addSubview(categoryDHView)
+//    }
+//
+//    private func setupCategoryDHHeadView(){
+//        rootScrollView.addSubview(categoryDHHeadView)
+//    }
     
     private func setupFourButton(){
         //1.banner下依次添加4个View作为Gesture的触发View
@@ -354,7 +354,7 @@ extension HomeViewController{
         addFourBtnGesture()
     }
     
-    private func addScrollerView(){
+    private func setupCollectionView(){
         self.view.addSubview(collections)
 //        rootScrollView.snp.makeConstraints({ (make) in
 //            //make.width.equalTo(finalScreenW)
@@ -385,6 +385,7 @@ extension HomeViewController: FSPagerViewDataSource,FSPagerViewDelegate{
 //        cell.imageView?.image = UIImage.init(named: "\(bannerImages[index])")
         //cell.contentView.layer.shadowRadius = 0 //去除cell四周阴影
         cell.textLabel?.text = banners[index].name
+//        cell.textLabel?.textAlignment = .center
         return cell
     }
     //下标同步
