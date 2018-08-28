@@ -11,6 +11,8 @@ import SnapKit
 import FSPagerView
 import Toast_Swift
 import WebKit
+import SwiftEventBus
+import Kingfisher
 private let maxContentOfSetY: CGFloat = 40
 private let screenWidth = UIScreen.main.bounds.width
 private let tableCellID = "tableCellID"
@@ -38,10 +40,20 @@ private let firstCellH: CGFloat = bannerH + goodsInfoViewH + goodsChosenInfoView
 class GoodViewController: GoodDetailBaseViewController {
     var screenHeight : CGFloat?
     var usableViewHeight : CGFloat?
-    var bannerImages : [String]?
+    var bannerImages : [GoodsPhoto]?
     var model : GoodsModel = GoodsModel()
     var isLoadedWeb = false
     var viewLayer = CALayer()//底层view的动画layer
+    override var goodsInfo: GoodInfo? {
+        didSet{
+            self.goodNameLabel.text = goodsInfo?.name
+            bannerImages = goodsInfo?.photos
+            goodBannerPageControll.numberOfPages = (goodsInfo?.photos.count)!
+            goodBanner.reloadData()
+            priceLabel.attributedText = goodPriceString((goodsInfo?.sell_price) ?? "\(0.00)", (goodsInfo?.market_price) ?? "\(0.00)")
+            
+        }
+    }
     //MARK: - 懒加载
     
     //UIWindows动画，实现选择规格时的凹陷折叠效果
@@ -165,7 +177,7 @@ class GoodViewController: GoodDetailBaseViewController {
         viewPager.delegate = self
         viewPager.register(FSPagerViewCell.self, forCellWithReuseIdentifier: bannerCellID)
         //设置自动翻页事件间隔，默认值为0（不自动翻页）
-        viewPager.automaticSlidingInterval = 0
+        viewPager.automaticSlidingInterval = 5
         //设置页面之间的间隔距离
         viewPager.interitemSpacing = 0.0
         //设置可以无限翻页，默认值为false，false时从尾部向前滚动到头部再继续循环滚动，true时可以无限滚动
@@ -210,15 +222,29 @@ class GoodViewController: GoodDetailBaseViewController {
         return activity
     }()
     
+    lazy var webProgressView: UIProgressView = {
+        let progress = UIProgressView(frame: CGRect(x: 0, y: 0, width: wkWebView.frame.width, height: 10))
+        progress.progressViewStyle = UIProgressViewStyle.bar
+        return progress
+    }()
+    
     lazy var wkWebView: WKWebView = {
         var config = WKWebViewConfiguration()
-        
+        config.preferences.javaScriptEnabled = true
         let webView = WKWebView(frame: CGRect(x: 0, y: self.tableView.frame.maxY, width: self.view.frame.width, height: self.usableViewHeight!), configuration: config)
         webView.uiDelegate = self
         webView.navigationDelegate = self
         webView.scrollView.delegate = self
         webView.backgroundColor = UIColor.white
+        
+//        webView.isHidden = true
         return webView
+    }()
+    
+    lazy var webAlphaView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: wkWebView.frame.width, height: wkWebView.frame.height))
+        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        return view
     }()
     
 //    lazy var webView: UIWebView = {
@@ -243,7 +269,7 @@ class GoodViewController: GoodDetailBaseViewController {
     lazy var webHeaderView: UILabel = {[unowned self] in
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: 40))
         label.textAlignment = .center
-        label.text = "继续拖动，查看商品详情"
+        label.text = "继续拖动，查看图文详情"
         label.font = UIFont.systemFont(ofSize: 13)
         label.alpha = 0
         return label
@@ -253,15 +279,50 @@ class GoodViewController: GoodDetailBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         screenHeight = self.view.frame.height
-        usableViewHeight = self.view.frame.height - finalStatusBarH - finalNavigationBarH - bottomBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH : 0)
+        usableViewHeight = self.view.frame.height - finalStatusBarH - finalNavigationBarH - bottomBarH
         // Do any additional setup after loading the view.
         //print("screenH:\(screenHeight)---usableH:\(usableViewHeight)")
         setUI()
+        wkWebView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.new, context: nil)
+        
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        print(self.goodsInfo?.name)
+//        self.goodNameLabel.text = self.goodsInfo?.name
+//        self.bannerImages = self.goodsInfo?.photos
+//        self.goodBanner.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        SwiftEventBus.unregister(self)
+    }
+    
+    deinit {
+        self.wkWebView.removeObserver(self, forKeyPath: "estimatedProgress")
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "estimatedProgress" {
+            self.webProgressView.progress = Float(self.wkWebView.estimatedProgress)
+            if self.wkWebView.estimatedProgress == 1.0 {
+                wkJS()
+                //预留出执行js语句的时间，js语句运行结束后延迟0.4s显示webview
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.4, execute: {
+//                    self.wkWebView.isHidden = false
+                    self.activity.stopAnimating()
+                    self.webProgressView.removeFromSuperview()
+                    self.webAlphaView.removeFromSuperview()
+                })
+            }
+        }
     }
     
 }
@@ -317,18 +378,51 @@ extension GoodViewController {
             model.sizeAttribute.add(type)
         }
         
-        bannerImages = ["1","2","3","4","5"]
+        bannerImages = [GoodsPhoto(dict: ["String" : "1" as NSObject])]
         bannerNumbers = (bannerImages?.count)!
     }
     
     private func setWebView(){
         self.view.addSubview(wkWebView)
+        self.wkWebView.addSubview(webAlphaView)
+        self.wkWebView.addSubview(webProgressView)
         self.wkWebView.addSubview(activity)
         self.wkWebView.addSubview(webHeaderView)
     }
     private func setTableView(){
         self.view.addSubview(tableView)
         //tableView.reloadData()
+    }
+    //js脚本，调整界面内容，只显示图文详情
+    private func wkJS(){
+        //隐藏商品信息
+        wkWebView.evaluateJavaScript("document.getElementsByClassName('goods_info')[0].style.display='none'", completionHandler: { (nullAble, errors) in
+            //            print(errors)
+        })
+        //隐藏轮播图
+        wkWebView.evaluateJavaScript("document.getElementsByClassName('goods_photo')[0].style.display='none'", completionHandler: { (nullAble, errors) in
+            //            print(errors)
+        })
+        //隐藏客服button
+        wkWebView.evaluateJavaScript("document.getElementsByClassName('layer-3')[0].style.display='none'", completionHandler: { (nullAble, errors) in
+            //            print(errors)
+        })
+        //隐藏tabbar
+        wkWebView.evaluateJavaScript("document.getElementById('layout_bottom')[0].style.display='none'", completionHandler: { (nullAble, errors) in
+            //            print(errors)
+        })
+        wkWebView.evaluateJavaScript("document.getElementsByClassName('btn_bottom_goods')[0].style.display='none'", completionHandler: { (nullAble, errors) in
+            //            print(errors)
+        })
+        //隐藏商品详情评论咨询按钮
+        wkWebView.evaluateJavaScript("document.getElementsByClassName('pro_tab')[0].style.display='none'", completionHandler: { (nullAble, errors) in
+            //            print(errors)
+        })
+        //隐藏顶部导航栏
+        wkWebView.evaluateJavaScript("document.getElementsByClassName('header fixed top z2')[0].style.display='none'", completionHandler: { (nullAble, errors) in
+            //            print(errors)
+        })
+        
     }
 }
 
@@ -338,7 +432,8 @@ extension GoodViewController {
         let text = "￥" + newPrice + "     ￥" + oldPrice
         let attributedString = NSMutableAttributedString.init(string: text)
         let rang1 = (text as NSString).range(of: "￥" + newPrice)
-        let rang2 = (text as NSString).range(of: "￥" + oldPrice)
+        //当新旧价格一样时会出现rang2覆盖rang1样式的bug，通过在rang2的字符串前添加一个空格来规避这个情况
+        let rang2 = (text as NSString).range(of: " ￥" + oldPrice)
         attributedString.addAttributes([NSAttributedStringKey.foregroundColor : UIColor.red , NSAttributedStringKey.font : UIFont.systemFont(ofSize: 20).bold], range: rang1)
         attributedString.addAttributes([NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16) , NSAttributedStringKey.baselineOffset : 0 , NSAttributedStringKey.strikethroughStyle : 2 , NSAttributedStringKey.foregroundColor : UIColor.lightGray], range: rang2)
         //        attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.black, range: rang1)
@@ -370,7 +465,7 @@ extension GoodViewController {
             guard !self.isLoadedWeb else {
                 return
             }
-            let request = URLRequest(url: URL(string: "https://www.baidu.com")!)
+            let request = URLRequest(url: URL(string: BASE_URL + "site/products/id/\((self.goodsInfo?.goods_id) ?? 0)")!)
             self.wkWebView.load(request)
             self.isLoadedWeb = true
         }
@@ -392,9 +487,9 @@ extension GoodViewController {
         self.webHeaderView.center = CGPoint(x: screenWidth/2, y: -offSetY/2)
         
         if -offSetY > maxContentOfSetY {
-            self.webHeaderView.text = "释放，返回宝贝详情"
+            self.webHeaderView.text = "释放，返回商品详情"
         } else {
-            self.webHeaderView.text = "下拉，返回宝贝详情"
+            self.webHeaderView.text = "下拉，返回商品详情"
         }
     }
 }
@@ -495,12 +590,12 @@ extension GoodViewController: UIWebViewDelegate {
 extension GoodViewController: FSPagerViewDataSource,FSPagerViewDelegate{
     //item数量
     func numberOfItems(in pagerView: FSPagerView) -> Int {
-        return bannerNumbers
+        return (bannerImages?.count)!
     }
     //数据填充回调
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         let cell = pagerView.dequeueReusableCell(withReuseIdentifier: bannerCellID, at: index)
-        cell.imageView?.image = UIImage.init(named: "\(bannerImages![index])")
+        cell.imageView?.kf.setImage(with: URL.init(string: BASE_URL + bannerImages![index].img))
         cell.contentView.layer.shadowRadius = 0 //去除下标指示器阴影
         //cell.textLabel?.text = "title\(index)"
         return cell
@@ -565,18 +660,31 @@ extension GoodViewController {
 //MARK: - 遵守WKWebView协议
 extension GoodViewController : WKUIDelegate,WKNavigationDelegate {
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        
         self.activity.isHidden = false
         self.activity.startAnimating()
+//        webView.layer.isHidden = true
         //开始加载时调用
+        
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         //即将完成加载
-        self.activity.stopAnimating()
+        //禁用长按功能
+        self.wkWebView.evaluateJavaScript("document.documentElement.style.webkitTouchCallout='none';", completionHandler: { (nullAble, errors) in
+//                        print(errors)
+        })
+        self.wkWebView.evaluateJavaScript("document.documentElement.style.webkitUserSelect='none';", completionHandler: { (nullAble, errors) in
+            //                        print(errors)
+        })
     }
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         //加载失败时调用
         self.activity.stopAnimating()
+    }
+    
+    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        webView.reload()
     }
 }
 

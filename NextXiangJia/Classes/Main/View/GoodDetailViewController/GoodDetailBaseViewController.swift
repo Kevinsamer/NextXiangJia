@@ -9,9 +9,10 @@
 import UIKit
 import XLPagerTabStrip
 class GoodDetailBaseViewController: UIViewController ,IndicatorInfoProvider{
-    
+    var goodsInfo : GoodInfo?
     init(itemInfo: IndicatorInfo) {
         self.itemInfo = itemInfo
+        //self.goodsInfo = goodsInfo
         super.init(nibName: nil, bundle: nil)
     }
     

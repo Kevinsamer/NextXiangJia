@@ -9,10 +9,17 @@
 import UIKit
 import SnapKit
 import XLPagerTabStrip
+import SwiftEventBus
 //底部bar高度
 private let bottomBarH:CGFloat = 60
 class GoodDetailViewController: ButtonBarPagerTabStripViewController {
     var usableViewHeight : CGFloat?
+    var goodsViewModel : GoodsDetailViewModel = GoodsDetailViewModel()
+    var goodsInfo:GoodInfo?
+    var goodsID:Int = 0//商品id初始化为0
+    var goodVC:GoodViewController?
+    var detailVC:DetailViewController?
+    var commentVC:CommentViewController?
     //MARK: - 懒加载
     lazy var shopButton: UIButton = {
         //店铺
@@ -45,7 +52,7 @@ class GoodDetailViewController: ButtonBarPagerTabStripViewController {
         button.backgroundColor = .red
         button.setTitleForAllStates("加入购物车")
         button.titleLabel?.textAlignment = .center
-        button.addTarget(self, action: #selector(addInToShopcartClicked), for: UIControlEvents.touchUpInside)
+        button.addTarget(self, action: #selector(addIntoShopcartClicked), for: UIControlEvents.touchUpInside)
         return button
     }()
     lazy var buyNowButton: UIButton = {
@@ -67,6 +74,16 @@ class GoodDetailViewController: ButtonBarPagerTabStripViewController {
         view.layer.borderWidth = 1
         return view
     }()
+    //MARK: - 重写构造方法获取当前商品的id
+    init(goodsID id : Int) {
+        super.init(nibName: nil, bundle: nil)
+        self.goodsID = id
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - 系统回调
     override func viewDidLoad() {
         settings.style.buttonBarItemTitleColor = .white
@@ -97,12 +114,21 @@ class GoodDetailViewController: ButtonBarPagerTabStripViewController {
     }
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-        let goodVC = GoodViewController(itemInfo: "商品")
-        let detailVC = DetailViewController(itemInfo: "详情")
-        let commentVC = CommentViewController(itemInfo: "评价")
+        //guard let goodInfo = goodsInfo else { }
+        //initData()
+        goodVC = GoodViewController(itemInfo: "商品")
+        detailVC = DetailViewController(itemInfo: "详情")
+        commentVC = CommentViewController(itemInfo: "评价")
+//        CommunicationTools.getCommunications(self, name: Communications.GoodsDetail) { (data) in
+//            let goodsInfo = data?.object as? GoodInfo
+//            goodVC.goodsInfo = goodsInfo
+//            detailVC.goodsInfo = goodsInfo
+//            commentVC.goodsInfo = goodsInfo
+//        }
+        
         //commentVC.view.size = CGSize(width: finalScreenW, height: usableViewHeight!)
         
-        return [goodVC,detailVC,commentVC]
+        return [goodVC!,detailVC!,commentVC!]
     }
     
 //    override func configureCell(_ cell: ButtonBarViewCell, indicatorInfo: IndicatorInfo) {
@@ -115,6 +141,7 @@ class GoodDetailViewController: ButtonBarPagerTabStripViewController {
         super.viewWillDisappear(animated)
         buttonBarView.isHidden = true
         //self.tabBarController?.tabBar.isHidden = true
+        SwiftEventBus.unregister(self, name: Communications.GoodsDetail.rawValue)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -134,7 +161,8 @@ class GoodDetailViewController: ButtonBarPagerTabStripViewController {
 }
 
 //MARK: - 设置界面
-extension GoodDetailViewController {
+extension GoodDetailViewController{
+    
     private func setUI(){
         //0.设置滑动栏buttonBarView
         setButtonBarView()
@@ -194,7 +222,13 @@ extension GoodDetailViewController {
     }
     
     private func initData(){
-        
+        goodsViewModel.requestGoodsDetail(goodsID: goodsID) {
+            self.goodsInfo = self.goodsViewModel.goodsInfo
+            CommunicationTools.post(duration: 0, name: Communications.GoodsDetail, data: self.goodsViewModel.goodsInfo)
+            self.goodVC?.goodsInfo = self.goodsViewModel.goodsInfo
+            self.detailVC?.goodsInfo = self.goodsViewModel.goodsInfo
+            self.commentVC?.goodsInfo = self.goodsViewModel.goodsInfo
+        }
     }
     
 }
@@ -219,7 +253,7 @@ extension GoodDetailViewController {
         self.navigationController?.show(vc, sender: self)
     }
     
-    @objc private func addInToShopcartClicked(){
+    @objc private func addIntoShopcartClicked(){
         print("加入购物车")
     }
 }

@@ -5,7 +5,16 @@
 //  Created by DEV2018 on 2018/8/22.
 //  Copyright © 2018年 DEV2018. All rights reserved.
 //
-
+//{
+//    "code":200,
+//    "result":{
+//        "banner_info":Array[2],
+//        "channel_info":Array[4],
+//        "recommend_info":Array[6],
+//        "hot_info":Array[8]
+//    },
+//    "time":1534904225
+//}
 import Foundation
 
 class HomeData: BaseModel {

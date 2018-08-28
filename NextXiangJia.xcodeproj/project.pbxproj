@@ -197,6 +197,9 @@
 		0992E47120C6738500B7902E /* TagData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992E47020C6738500B7902E /* TagData.swift */; };
 		0992E47320C6762900B7902E /* RoomData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992E47220C6762900B7902E /* RoomData.swift */; };
 		09A396A720CE096D00B82970 /* SearchResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A396A620CE096D00B82970 /* SearchResultController.swift */; };
+		09A7F57A212FF82D0095FC59 /* GoodInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F579212FF82D0095FC59 /* GoodInfo.swift */; };
+		09A7F57C212FFD5C0095FC59 /* GoodsPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F57B212FFD5C0095FC59 /* GoodsPhoto.swift */; };
+		09A7F57F213000F80095FC59 /* GoodsDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F57E213000F80095FC59 /* GoodsDetailViewModel.swift */; };
 		09D1AE2E209A94B9004C4DA4 /* UIButton-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */; };
 		09E37272209BEC1400F6E8B3 /* RegistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37271209BEC1400F6E8B3 /* RegistViewController.swift */; };
 		09E37274209BF43800F6E8B3 /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37273209BF43800F6E8B3 /* AuthCodeView.swift */; };
@@ -423,6 +426,9 @@
 		0992E47020C6738500B7902E /* TagData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagData.swift; sourceTree = "<group>"; };
 		0992E47220C6762900B7902E /* RoomData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomData.swift; sourceTree = "<group>"; };
 		09A396A620CE096D00B82970 /* SearchResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultController.swift; sourceTree = "<group>"; };
+		09A7F579212FF82D0095FC59 /* GoodInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodInfo.swift; sourceTree = "<group>"; };
+		09A7F57B212FFD5C0095FC59 /* GoodsPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsPhoto.swift; sourceTree = "<group>"; };
+		09A7F57E213000F80095FC59 /* GoodsDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsDetailViewModel.swift; sourceTree = "<group>"; };
 		09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-extension.swift"; sourceTree = "<group>"; };
 		09E37271209BEC1400F6E8B3 /* RegistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistViewController.swift; sourceTree = "<group>"; };
 		09E37273209BF43800F6E8B3 /* AuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeView.swift; sourceTree = "<group>"; };
@@ -553,6 +559,7 @@
 		0902698C2040F921007FF5B9 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				09A7F57D213000D50095FC59 /* ViewModel */,
 				090269A5204103C1007FF5B9 /* Model */,
 				090269A6204103C1007FF5B9 /* View */,
 				090269A3204103C1007FF5B9 /* Controller */,
@@ -647,6 +654,8 @@
 				094352C320DB7D9B00D4C31A /* GoodsPriceModel.swift */,
 				094352C420DB7D9B00D4C31A /* GoodsTypeModel.swift */,
 				094352C520DB7D9B00D4C31A /* SizeAttributeModel.swift */,
+				09A7F579212FF82D0095FC59 /* GoodInfo.swift */,
+				09A7F57B212FFD5C0095FC59 /* GoodsPhoto.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1243,6 +1252,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		09A7F57D213000D50095FC59 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				09A7F57E213000F80095FC59 /* GoodsDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		09E96439212121510095180C /* MyCollectionCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1529,6 +1546,7 @@
 				0943529120D3AB9400D4C31A /* CommentViewController.swift in Sources */,
 				090269A7204103C1007FF5B9 /* MainViewController.swift in Sources */,
 				0943528520D3578000D4C31A /* GoodDetailViewController.swift in Sources */,
+				09A7F57F213000F80095FC59 /* GoodsDetailViewModel.swift in Sources */,
 				0976F3C720EEF92A007A47A3 /* Address.swift in Sources */,
 				090DDDCC208F193200A42E3F /* MyCenterCell.swift in Sources */,
 				090DDDDB2092EC7F00A42E3F /* MyAdvisoryViewController.swift in Sources */,
@@ -1569,6 +1587,7 @@
 				0976F3E820F58FDD007A47A3 /* OrderDetailViewController.swift in Sources */,
 				094352CD20DB7D9B00D4C31A /* GoodsPriceModel.swift in Sources */,
 				0943E1172117E4C20026A7AC /* Announcement.swift in Sources */,
+				09A7F57C212FFD5C0095FC59 /* GoodsPhoto.swift in Sources */,
 				0976F3CE20EEF92A007A47A3 /* ItemWithPhoto.swift in Sources */,
 				094352D420DB7D9B00D4C31A /* TypeView.swift in Sources */,
 				0943E1192117E52E0026A7AC /* Area.swift in Sources */,
@@ -1583,6 +1602,7 @@
 				0943E11B2117E69B0026A7AC /* Article.swift in Sources */,
 				0976F3D220EEF92A007A47A3 /* AttributedTextBlock.swift in Sources */,
 				0992E46F20C660B700B7902E /* NSDate-extension.swift in Sources */,
+				09A7F57A212FF82D0095FC59 /* GoodInfo.swift in Sources */,
 				0943E12521192C760026A7AC /* BrandCategory.swift in Sources */,
 				0978EF8E20A282BB004BEACF /* AddNewAddressViewController.swift in Sources */,
 				0976F3E520F341C0007A47A3 /* MyOrderTableViewCell.swift in Sources */,

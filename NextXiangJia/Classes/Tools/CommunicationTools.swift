@@ -10,6 +10,7 @@ import UIKit
 import SwiftEventBus
 enum Communications: String {
     case SearchResult = "SearchResult"
+    case GoodsDetail = "GoodsDetail"
 }
 class CommunicationTools {
     
@@ -19,7 +20,7 @@ class CommunicationTools {
         }
     }
     
-    class func getCommunications(_ target: AnyObject, name: Communications, handler: @escaping ((Notification?) -> Void)){
-        SwiftEventBus.on(target, name: name.rawValue, queue: OperationQueue.current, handler: handler)
+    class func getCommunications(_ target: AnyObject, name: Communications, queue:OperationQueue? = OperationQueue.current, handler: @escaping ((Notification?) -> Void)){
+        SwiftEventBus.on(target, name: name.rawValue, queue: queue, handler: handler)
     }
 }

@@ -457,7 +457,14 @@ extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegat
     }
     //cell点击事件
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = GoodDetailViewController()
+        var goodsID = 0
+        if indexPath.section == 0 {
+            goodsID = recommends[indexPath.row].id
+        }else {
+            goodsID = hots[indexPath.row].id
+        }
+        
+        let vc = GoodDetailViewController(goodsID: goodsID)
         navigationController?.show(vc, sender: self)
         
     }

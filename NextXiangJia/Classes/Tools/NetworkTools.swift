@@ -11,6 +11,7 @@ import Alamofire
 
 let BASE_URL = "http://192.168.108.223/"
 let HOMEDATA_URL = BASE_URL + "app/home"
+let GOODINFO_URL = BASE_URL + "app/goodinfo"
 
 enum MethodType {
     case GET
