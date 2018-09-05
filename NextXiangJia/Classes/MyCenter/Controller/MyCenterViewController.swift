@@ -20,7 +20,7 @@ private let headToBodyH : CGFloat = 20
 private let bodyViewH : CGFloat = 505
 private let headLabelW : CGFloat = finalScreenW / 3 - 20
 private let headLabelH : CGFloat = 20
-private let fa:[FontAwesome] = [.trophy,.tags,.reply,.file,.comment,.comments,.bell,.heart,.money,.signIn,.mapMarker,.table,.key]
+private let fa:[FontAwesome] = [.trophy,.tags,.reply,.file,.comment,.comments,.bell,.heart,.moneyBillAlt,.signInAlt,.mapMarker,.table,.key]
 private let faText = ["我的积分","我的代金券","退款申请","站点建议","商品咨询","商品评价","短信息","收藏夹","账户余额","在线充值","地址管理","个人资料","修改密码"]
 private let rootScrollViewH : CGFloat = headViewUsedH + headToBodyH + bodyViewH
 class MyCenterViewController: UIViewController {
@@ -225,7 +225,7 @@ extension MyCenterViewController :UICollectionViewDataSource, UICollectionViewDe
             labelText.textAlignment = .center
             labelText.font = UIFont(name: "Arial", size: 18.0)
             labelFA.text = String.fontAwesomeIcon(name: fa[0])
-            labelFA.font = UIFont.fontAwesome(ofSize: 50)
+            labelFA.font = UIFont.fontAwesome(ofSize: 50, style: .solid)
             labelFA.textColor = UIColor.random.lighten(by: 0.5)
             labelFA.textAlignment = NSTextAlignment.center
             labelFA.text = String.fontAwesomeIcon(name: .shoppingBag)

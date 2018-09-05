@@ -1,17 +1,17 @@
 PODS:
-  - Alamofire (4.7.2)
-  - AlamofireObjectMapper (5.0.0):
+  - Alamofire (4.7.3)
+  - AlamofireObjectMapper (5.1.0):
     - Alamofire (~> 4.1)
-    - ObjectMapper (~> 3.0)
+    - ObjectMapper (~> 3.3)
   - CircleLabel (1.0.0)
-  - Eureka (4.1.1)
-  - FontAwesome.swift (1.3.2)
-  - FSPagerView (0.7.1)
+  - Eureka (4.2.0)
+  - FontAwesome.swift (1.4.4)
+  - FSPagerView (0.7.2)
   - ImageRow (3.1.0):
     - Eureka (~> 4.0)
-  - IQKeyboardManagerSwift (6.0.4)
+  - IQKeyboardManagerSwift (6.1.1)
   - Kingfisher (4.6.4)
-  - ObjectMapper (3.2.0)
+  - ObjectMapper (3.3.0)
   - PullToRefreshKit (0.8.6)
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
@@ -88,16 +88,16 @@ CHECKOUT OPTIONS:
     :tag: 3.0.0
 
 SPEC CHECKSUMS:
-  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
-  AlamofireObjectMapper: 5fafc816351cbbc0d486611aaeba7461c0cbad49
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AlamofireObjectMapper: 3395e698901d8b0e6f48b7d0c43bd47875325102
   CircleLabel: 61e9f7255c0ee1e1089a45650dda410b9945f93b
-  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
-  FontAwesome.swift: b4e4c8ccbbecb12f9b592bc533ff237af3706667
-  FSPagerView: 958aba39684e1573755ddcfcc29f7eebb8413cee
+  Eureka: 0748c7bbb2560130e43c7bfa83e99c98854a1f42
+  FontAwesome.swift: 17b93524b9f61136a8566344517b8556ed584e87
+  FSPagerView: 7515f63c424da71623d299d4fbbfb3dd884642ff
   ImageRow: 1ea483078bfa3d880a7fc76fdfcddfd5f29a9e6b
-  IQKeyboardManagerSwift: 36dbe324b4f9793f5f41ba5227f3e7c76dfefd50
+  IQKeyboardManagerSwift: 977affaeb4d6e971975c7790a6850f31d38f1207
   Kingfisher: 68498a706e46c2a050b0c9572f100e5db407f6e0
-  ObjectMapper: 5cccd2de6f253eda859df8116a5a554d9769e859
+  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   PullToRefreshKit: 172df52ab9c6cb2c1d4b1872b49f448d6291523f
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75

@@ -25,7 +25,7 @@ class MyCenterCell: UICollectionViewCell {
         labelFA?.textAlignment = .center
         labelText?.textAlignment = .center
         labelText?.font = UIFont.systemFont(ofSize: 13)
-        labelFA?.font = UIFont.fontAwesome(ofSize: 25)
+        labelFA?.font = UIFont.fontAwesome(ofSize: 25, style: .solid)
         self.addSubview(labelFA!)
         self.addSubview(labelText!)
     }

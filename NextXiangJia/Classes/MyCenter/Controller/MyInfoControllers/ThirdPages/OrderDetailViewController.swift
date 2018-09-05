@@ -39,7 +39,7 @@ class OrderDetailViewController: UIViewController {
     lazy var orderStateFALabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 10, y: 20, width: 30, height: 30))
         //label.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
-        label.font = UIFont.fontAwesome(ofSize: 22)
+        label.font = UIFont.fontAwesome(ofSize: 22, style: .solid)
         label.text = String.fontAwesomeIcon(name: orderState == "已完成" ? .checkCircle : .exclamationCircle)
         label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         label.textAlignment = .right

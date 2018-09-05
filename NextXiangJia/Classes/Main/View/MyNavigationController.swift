@@ -83,13 +83,13 @@ extension MyNavigationController {
         //设置图标按钮实现点击高亮效果
         let leftBtn = UIButton.init()
         leftBtn.setTitle(String.fontAwesomeIcon(name: .home), for: .normal)
-        leftBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
+        leftBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 20, style: .solid)
         leftBtn.setTitleColor(.white, for: .normal)
         leftBtn.setTitleColor(UIColor.init(named: "dark_gray"), for: .highlighted)
         
         let rightBtn = UIButton()
         rightBtn.setTitle(String.fontAwesomeIcon(name: .search), for: .normal)
-        rightBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 20)
+        rightBtn.titleLabel?.font = UIFont.fontAwesome(ofSize: 20, style: .solid)
         rightBtn.setTitleColor(.white                                                                   , for: .normal)
         rightBtn.setTitleColor(UIColor.init(named: "dark_gray"), for: .highlighted)
         rightBtn.addTarget(self, action: #selector(searchBtnClicked), for: .touchUpInside)

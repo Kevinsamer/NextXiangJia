@@ -53,7 +53,7 @@ class HomeViewController: UIViewController {
         
         let truck = UILabel(frame: CGRect(x: 10, y: 10, width: 60, height: 60))
         truck.text = String.fontAwesomeIcon(name: .truck)
-        truck.font = UIFont.fontAwesome(ofSize: 50)
+        truck.font = UIFont.fontAwesome(ofSize: 45, style: .solid)
         truck.textAlignment = .center
         let mianfei = UILabel(frame: CGRect(x: 70, y: 10, width: 250, height: 40))
         mianfei.text = "免费送货与退货"
@@ -64,8 +64,8 @@ class HomeViewController: UIViewController {
         view.addSubviews([truck,mianfei,suoyou])
         
         let rmb = UILabel(frame: CGRect(x: 10, y: 90, width: 60, height: 60))
-        rmb.text = String.fontAwesomeIcon(name: .rmb)
-        rmb.font = UIFont.fontAwesome(ofSize: 50)
+        rmb.text = String.fontAwesomeIcon(name: .yenSign)
+        rmb.font = UIFont.fontAwesome(ofSize: 50, style: .solid)
         rmb.textAlignment = .center
         let tuikuan = UILabel(frame: CGRect(x: 70, y: 90, width: 250, height: 40))
         tuikuan.text = "退款保证"
@@ -77,7 +77,7 @@ class HomeViewController: UIViewController {
         
         let phone = UILabel(frame: CGRect(x: 10, y: 170, width: 60, height: 60))
         phone.text = String.fontAwesomeIcon(name: .phone)
-        phone.font = UIFont.fontAwesome(ofSize: 50)
+        phone.font = UIFont.fontAwesome(ofSize: 50, style: .solid)
         phone.textAlignment = .center
         let zaixian = UILabel(frame: CGRect(x: 70, y: 170, width: 250, height: 40))
         zaixian.text = "在线支持24/7"
@@ -93,7 +93,7 @@ class HomeViewController: UIViewController {
         //导航分类headView
         let view = UIView(frame: CGRect(x: 0, y: bannerH + fourBtnH + collectionViewH, width: finalScreenW, height: categoryDHHeadH))
         let icon = UILabel(frame: CGRect(x: 20, y: 10, width: 40, height: 40))
-        icon.font = UIFont.fontAwesome(ofSize: 30)
+        icon.font = UIFont.fontAwesome(ofSize: 30, style: .solid)
         icon.text = String.fontAwesomeIcon(name: .list)
         icon.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
         
@@ -199,8 +199,8 @@ class HomeViewController: UIViewController {
         circle.useTextColor = false
         circle.textColor = .white
         circle.circleColor = UIColor(named: "global_orange")!
-        circle.text = String.fontAwesomeIcon(name: .listUL)
-        circle.font = UIFont.fontAwesome(ofSize: 30)
+        circle.text = String.fontAwesomeIcon(name: .listUl)
+        circle.font = UIFont.fontAwesome(ofSize: 30, style: .solid)
         var label:UILabel = {
             let label = UILabel(frame: CGRect(x: fourBtnW / 2 - 40, y: 70, width: 80, height: 20))
             label.textAlignment = .center
@@ -221,7 +221,7 @@ class HomeViewController: UIViewController {
         circle.textColor = .white
         circle.circleColor = UIColor.init(hexString: "#F85B8E")!
         circle.text = String.fontAwesomeIcon(name: .shoppingCart)
-        circle.font = UIFont.fontAwesome(ofSize: 30)
+        circle.font = UIFont.fontAwesome(ofSize: 30, style: .solid)
         var label:UILabel = {
             let label = UILabel(frame: CGRect(x: fourBtnW / 2 - 40, y: 70, width: 80, height: 20))
             label.textAlignment = .center
@@ -242,7 +242,7 @@ class HomeViewController: UIViewController {
         circle.textColor = .white
         circle.circleColor = UIColor.init(hexString: "#5AC2D7")!
         circle.text = String.fontAwesomeIcon(name: .gavel)
-        circle.font = UIFont.fontAwesome(ofSize: 30)
+        circle.font = UIFont.fontAwesome(ofSize: 30, style: .solid)
         var label:UILabel = {
             let label = UILabel(frame: CGRect(x: fourBtnW / 2 - 40, y: 70, width: 80, height: 20))
             label.textAlignment = .center
@@ -263,7 +263,7 @@ class HomeViewController: UIViewController {
         circle.textColor = .white
         circle.circleColor = UIColor.init(hexString: "#ED413F")!
         circle.text = String.fontAwesomeIcon(name: .star)
-        circle.font = UIFont.fontAwesome(ofSize: 30)
+        circle.font = UIFont.fontAwesome(ofSize: 30, style: .solid)
         var label:UILabel = {
             let label = UILabel(frame: CGRect(x: fourBtnW / 2 - 40, y: 70, width: 80, height: 20))
             label.textAlignment = .center
@@ -475,7 +475,7 @@ extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let head = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headID, for: indexPath) as! HomeCollHeadView
-        head.headTitleFALabel.font = UIFont.fontAwesome(ofSize: 22)
+        head.headTitleFALabel.font = UIFont.fontAwesome(ofSize: 22, style: .solid)
         head.headTitleFALabel.textAlignment = .left
         head.headTitleLabel.textAlignment = .left
         if indexPath.section == 0 {
