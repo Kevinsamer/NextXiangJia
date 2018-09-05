@@ -2,7 +2,7 @@
 //
 //  CountView.swift
 //  shoppingcart
-//
+//  购物车加减控件
 //  Created by  on 2018/2/5.
 //  Copyright © 2018年  All rights reserved.
 //

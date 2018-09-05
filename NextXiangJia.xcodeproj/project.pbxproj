@@ -58,6 +58,8 @@
 		090DDDF12092F20300A42E3F /* MyMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDDF02092F20300A42E3F /* MyMemberViewController.swift */; };
 		090DDDF32092F30400A42E3F /* MyCommissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDDF22092F30400A42E3F /* MyCommissionViewController.swift */; };
 		090DDE1D2093FCE900A42E3F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDE1C2093FCE800A42E3F /* LoginViewController.swift */; };
+		0920B7C92139785E005E48BB /* Double-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920B7C82139785E005E48BB /* Double-extension.swift */; };
+		0920B7CB213E312B005E48BB /* SelectedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920B7CA213E312B005E48BB /* SelectedProduct.swift */; };
 		09298D41212C4B160015CE6B /* AreaPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D40212C4B160015CE6B /* AreaPickView.swift */; };
 		09298D43212D036A0015CE6B /* iwebshop_areas.txt in Resources */ = {isa = PBXBuildFile; fileRef = 09298D42212D03690015CE6B /* iwebshop_areas.txt */; };
 		09298D45212D03D60015CE6B /* MyAreaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09298D44212D03D50015CE6B /* MyAreaPickerView.swift */; };
@@ -200,6 +202,9 @@
 		09A7F57A212FF82D0095FC59 /* GoodInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F579212FF82D0095FC59 /* GoodInfo.swift */; };
 		09A7F57C212FFD5C0095FC59 /* GoodsPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F57B212FFD5C0095FC59 /* GoodsPhoto.swift */; };
 		09A7F57F213000F80095FC59 /* GoodsDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F57E213000F80095FC59 /* GoodsDetailViewModel.swift */; };
+		09A7F581213537DD0095FC59 /* GoodsProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F580213537DD0095FC59 /* GoodsProduct.swift */; };
+		09A7F583213538A10095FC59 /* GoodsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F582213538A10095FC59 /* GoodsSpec.swift */; };
+		09A7F585213624580095FC59 /* ProductSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F584213624580095FC59 /* ProductSpec.swift */; };
 		09D1AE2E209A94B9004C4DA4 /* UIButton-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */; };
 		09E37272209BEC1400F6E8B3 /* RegistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37271209BEC1400F6E8B3 /* RegistViewController.swift */; };
 		09E37274209BF43800F6E8B3 /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37273209BF43800F6E8B3 /* AuthCodeView.swift */; };
@@ -287,6 +292,8 @@
 		090DDDF02092F20300A42E3F /* MyMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMemberViewController.swift; sourceTree = "<group>"; };
 		090DDDF22092F30400A42E3F /* MyCommissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCommissionViewController.swift; sourceTree = "<group>"; };
 		090DDE1C2093FCE800A42E3F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		0920B7C82139785E005E48BB /* Double-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double-extension.swift"; sourceTree = "<group>"; };
+		0920B7CA213E312B005E48BB /* SelectedProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedProduct.swift; sourceTree = "<group>"; };
 		09298D40212C4B160015CE6B /* AreaPickView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreaPickView.swift; sourceTree = "<group>"; };
 		09298D42212D03690015CE6B /* iwebshop_areas.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iwebshop_areas.txt; sourceTree = "<group>"; };
 		09298D44212D03D50015CE6B /* MyAreaPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAreaPickerView.swift; sourceTree = "<group>"; };
@@ -429,6 +436,9 @@
 		09A7F579212FF82D0095FC59 /* GoodInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodInfo.swift; sourceTree = "<group>"; };
 		09A7F57B212FFD5C0095FC59 /* GoodsPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsPhoto.swift; sourceTree = "<group>"; };
 		09A7F57E213000F80095FC59 /* GoodsDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsDetailViewModel.swift; sourceTree = "<group>"; };
+		09A7F580213537DD0095FC59 /* GoodsProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsProduct.swift; sourceTree = "<group>"; };
+		09A7F582213538A10095FC59 /* GoodsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsSpec.swift; sourceTree = "<group>"; };
+		09A7F584213624580095FC59 /* ProductSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSpec.swift; sourceTree = "<group>"; };
 		09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-extension.swift"; sourceTree = "<group>"; };
 		09E37271209BEC1400F6E8B3 /* RegistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistViewController.swift; sourceTree = "<group>"; };
 		09E37273209BF43800F6E8B3 /* AuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeView.swift; sourceTree = "<group>"; };
@@ -656,6 +666,10 @@
 				094352C520DB7D9B00D4C31A /* SizeAttributeModel.swift */,
 				09A7F579212FF82D0095FC59 /* GoodInfo.swift */,
 				09A7F57B212FFD5C0095FC59 /* GoodsPhoto.swift */,
+				09A7F580213537DD0095FC59 /* GoodsProduct.swift */,
+				09A7F584213624580095FC59 /* ProductSpec.swift */,
+				09A7F582213538A10095FC59 /* GoodsSpec.swift */,
+				0920B7CA213E312B005E48BB /* SelectedProduct.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -686,6 +700,7 @@
 				09F9EE42207DF666007D18D0 /* UIDevice-extension.swift */,
 				09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */,
 				0992E46E20C660B700B7902E /* NSDate-extension.swift */,
+				0920B7C82139785E005E48BB /* Double-extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1547,10 +1562,12 @@
 				090269A7204103C1007FF5B9 /* MainViewController.swift in Sources */,
 				0943528520D3578000D4C31A /* GoodDetailViewController.swift in Sources */,
 				09A7F57F213000F80095FC59 /* GoodsDetailViewModel.swift in Sources */,
+				09A7F585213624580095FC59 /* ProductSpec.swift in Sources */,
 				0976F3C720EEF92A007A47A3 /* Address.swift in Sources */,
 				090DDDCC208F193200A42E3F /* MyCenterCell.swift in Sources */,
 				090DDDDB2092EC7F00A42E3F /* MyAdvisoryViewController.swift in Sources */,
 				090269612040F710007FF5B9 /* NextXiangJia.xcdatamodeld in Sources */,
+				0920B7C92139785E005E48BB /* Double-extension.swift in Sources */,
 				0978EF9720A3D65D004BEACF /* FindPasswordViewController.swift in Sources */,
 				09298D47212D4DCE0015CE6B /* HomeData.swift in Sources */,
 				090269592040F710007FF5B9 /* AppDelegate.swift in Sources */,
@@ -1567,6 +1584,7 @@
 				0976F3B220EEF92A007A47A3 /* UITextView+Extensions.swift in Sources */,
 				090DDDE72092F04700A42E3F /* MyAddressViewController.swift in Sources */,
 				0976F3B420EEF92A007A47A3 /* UIViewController+Extensions.swift in Sources */,
+				09A7F583213538A10095FC59 /* GoodsSpec.swift in Sources */,
 				09298D41212C4B160015CE6B /* AreaPickView.swift in Sources */,
 				090DDDDD2092EDF600A42E3F /* MyEvaluationViewController.swift in Sources */,
 				0976F3C820EEF92A007A47A3 /* Location.swift in Sources */,
@@ -1613,6 +1631,7 @@
 				0943529320D3AE6B00D4C31A /* GoodDetailBaseViewController.swift in Sources */,
 				0976F3C520EEF92A007A47A3 /* LocationSearchResultsViewController.swift in Sources */,
 				094919A2209B032600E82D0A /* ChangePasswordViewController.swift in Sources */,
+				09A7F581213537DD0095FC59 /* GoodsProduct.swift in Sources */,
 				090DDDF12092F20300A42E3F /* MyMemberViewController.swift in Sources */,
 				0992E46120BC02D900B7902E /* LZConfigFile.swift in Sources */,
 				0976F3D420EEF92A007A47A3 /* Button.swift in Sources */,
@@ -1663,6 +1682,7 @@
 				0943E1112117D7480026A7AC /* AdminRole.swift in Sources */,
 				090269A920410445007FF5B9 /* HomeViewController.swift in Sources */,
 				0943E11D2117E8730026A7AC /* ArticleCategory.swift in Sources */,
+				0920B7CB213E312B005E48BB /* SelectedProduct.swift in Sources */,
 				0976F3D720EEF92A007A47A3 /* SegmentedControl.swift in Sources */,
 				09F9EE41207DF257007D18D0 /* YTools.swift in Sources */,
 				0992E47120C6738500B7902E /* TagData.swift in Sources */,

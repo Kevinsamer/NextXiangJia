@@ -50,7 +50,7 @@ extension HomeViewModel {
             guard let resultCode = resultDict["code"] as? Int else { return }
             if resultCode == 200 {
                 guard let homeDatas = resultDict["result"] as? [String:NSObject] else { return }
-                print(homeDatas.count)
+                //print(homeDatas.count)
                 self.homeDataGroup = HomeData(dict: homeDatas)
                 finishCallback()
             }else if resultCode == 201 {

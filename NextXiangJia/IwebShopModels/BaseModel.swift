@@ -15,6 +15,10 @@ class BaseModel:NSObject {
         setValuesForKeys(dict)
     }
     
+    override init() {
+        super.init()
+    }
+    
     override func setValue(_ value: Any?, forUndefinedKey key: String) {
         print("有未解析json数据,key=\(key)")
     }

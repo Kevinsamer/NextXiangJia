@@ -2,13 +2,13 @@
 //
 //  GoodsinfoView.swift
 //  shoppingcart
-//
+//  选择规格alert顶部商品属性展示view
 //  Created by  on 2018/2/5.
 //  Copyright © 2018年  All rights reserved.
 //
 
 import UIKit
-
+import Kingfisher
 class GoodsinfoView: UIView {
     var promatLabel:UILabel!
     var goodsImage:UIImageView!
@@ -98,7 +98,8 @@ class GoodsinfoView: UIView {
     
     func initData(model:GoodsModel){
         _model = model
-        goodsImage.image = UIImage.init(named: model.imageId)
+        goodsImage.kf.setImage(with: URL.init(string: BASE_URL + model.imageId), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+//        goodsImage.image = UIImage.init(named: model.imageId)
         goodsTitleLabel.text = model.title
         goodsCountLabel.text = "库存:\(model.totalStock)"
         goodsPriceLabel.text = "¥\(model.price.minPrice) ¥\(model.price.minOriginalPrice) "
@@ -115,10 +116,12 @@ class GoodsinfoView: UIView {
         //判断图片id是否为空
         if sizeModel.imageId.isEmpty
         {
-            goodsImage.image = UIImage(named: sizeModel.imageId)
-        }
-        else {
-            goodsImage.image = UIImage(named: _model.imageId)
+            //TODO:添加规格类型判断   如果是文字则此处使用商品信息的图片，如果规格类型是图片则根据选择的规格改变图片
+            //goodsImage.image = UIImage(named: sizeModel.imageId)
+            goodsImage.kf.setImage(with: URL.init(string: BASE_URL + _model.imageId), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+        }else{
+            //goodsImage.image = UIImage(named: _model.imageId)
+            goodsImage.kf.setImage(with: URL.init(string: BASE_URL + sizeModel.imageId), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
         }
        
         goodsCountLabel.text = "库存:\(sizeModel.stock)"

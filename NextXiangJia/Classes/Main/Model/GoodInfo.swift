@@ -52,14 +52,14 @@ class GoodInfo:BaseModel {
     @objc var img:String = ""//商品图片路径
     @objc var sell_price:String = ""//现价
     @objc var market_price:String = ""//原价
-    @objc var point:Int = 0//???
+    @objc var point:Int = 0//积分
     @objc var weight:String = ""//重量
-    @objc var store_nums:String = ""//店铺id???seller_id
+    @objc var store_nums:String = ""//库存
     @objc var exp:Int = 0//经验值
-    @objc var goods_no:String = ""//商品编号
+    @objc var goods_no:String = ""//商品的货号
     @objc var product_id:String = ""//货号（查询规格）
-    @objc var seller_id:String = ""//???
-    @objc var is_delivery_fee:Int = 0
+    @objc var seller_id:String = ""//卖家id
+    @objc var is_delivery_fee:Int = 0//是否免运费  0收费 1免费
     @objc var photo:[[String:NSObject]]?
     {
         didSet{

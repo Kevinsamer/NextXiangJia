@@ -100,9 +100,82 @@ public class YTools{
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return dateFormatter.date(from: str) ?? Date(timeIntervalSince1970: 0)
     }
-    
+    //颜色数组中随机返回一个颜色
     public static func randomColorIn(colors colorArray:[UIColor]) -> UIColor{
         return colorArray[Int.random(between: 0, and: colorArray.count - 1)].withAlphaComponent(0.3)
+    }
+    //将商品规格中的售价放入数组并由大到小排序后返回
+    static func collectSellPriceFromGoodsProduct(goodsProducts products: [GoodsProduct]) -> [Double]{
+        var priceArray:[Double] = [Double]()
+        for product in products {
+            priceArray.append(Double(product.sell_price) ?? 0.00)
+        }
+        //print(priceArray)精确到小数点后两位
+        return priceArray.sorted(){$0 > $1}
+    }
+    
+    //将商品规格中的原价放入数组并由大到小排序后返回
+    static func collectMarketPriceFromGoodsProduct(goodsProducts products: [GoodsProduct]) -> [Double]{
+        var priceArray:[Double] = [Double]()
+        for product in products {
+            priceArray.append(Double(product.market_price) ?? 0.00)
+        }
+        return priceArray.sorted(){$0 > $1}
+    }
+    //传入商品的货品数组，返回该商品的规格类型数组
+    static func getSpecValuesFromProductSpec(products: [GoodsProduct]) -> [GoodsTypeModel]{
+        let specNum = products[0].productSpecs.count
+        var models:[GoodsTypeModel] = [GoodsTypeModel]()
+        for i in 0..<specNum {
+            models.append(GoodsTypeModel(selectIndex: -1, typeName: products[0].productSpecs[i].name, typeArray: [String]() as NSArray))
+        }
+        for productNo in 0..<products.count {
+            let product = products[productNo]
+            let specs = product.productSpecs
+            for specNo in 0..<specNum {
+                let spec = specs[specNo]
+                var temp:[String] = [String]()
+                if spec.type == 1 {
+                    temp = models[specNo].typeArray.adding("\(spec.value)") as! [String]
+                }else if spec.type == 2 {
+                    temp = models[specNo].typeArray.adding("\(spec.tip)") as! [String]
+                }
+                temp = Array(Set(temp))
+                models[specNo].typeArray = temp as NSArray
+                //添加结束  去重
+            }
+        }
+        return models
+    }
+    //传入一个货品信息，返回该货品的详细规格
+    static func getGoodsProductSpecs(product: GoodsProduct) -> String{
+        var strs:String = ""
+        for spec in product.productSpecs {
+            if spec.type == 1 {
+                strs += (spec.value + "、")
+            }else if spec.type == 2 {
+                strs += (spec.tip + "、")
+            }
+        }
+        strs.remove(at: strs.index(before: strs.endIndex))
+        return strs
+    }
+    //通过productId和选择数量获取已选的货品
+    static func getSelectedProductById(sizeModel model:SizeAttributeModel, goodsProducts products:[GoodsProduct]) -> SelectedProduct{
+        let selectedProduct:SelectedProduct = SelectedProduct()
+        selectedProduct.selectedNum = Int(model.count)
+        selectedProduct.productType = model.productType
+        if model.productType == 0 {
+            selectedProduct.good_Id = Int(model.goodsNo)
+        }else if model.productType == 1 {
+            selectedProduct.good_Id = Int(model.goodsNo)
+            for product in products {
+                if "\(product.id)" == model.productId {
+                    selectedProduct.selectedProduct = product
+                }
+            }
+        }
+        return selectedProduct
     }
     
 }

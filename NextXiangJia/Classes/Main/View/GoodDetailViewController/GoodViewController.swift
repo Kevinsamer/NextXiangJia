@@ -42,16 +42,46 @@ class GoodViewController: GoodDetailBaseViewController {
     var usableViewHeight : CGFloat?
     var bannerImages : [GoodsPhoto]?
     var model : GoodsModel = GoodsModel()
+    var specTypies:[String] = [String]()//规格类型数组
+    var specTags:[Int] = [Int]()//不同规格的第一个下标记录
     var isLoadedWeb = false
+    var sellPriceArray:[Double]?//各规格现价的数组
+    var marketPriceArray:[Double]?//各规格原价的数组
     var viewLayer = CALayer()//底层view的动画layer
+    var selectedProduct:SelectedProduct?//选择的货品
     override var goodsInfo: GoodInfo? {
         didSet{
             self.goodNameLabel.text = goodsInfo?.name
             bannerImages = goodsInfo?.photos
             goodBannerPageControll.numberOfPages = (goodsInfo?.photos.count)!
             goodBanner.reloadData()
-            priceLabel.attributedText = goodPriceString((goodsInfo?.sell_price) ?? "\(0.00)", (goodsInfo?.market_price) ?? "\(0.00)")
-            
+            if sellPriceArray != nil && sellPriceArray?.first == sellPriceArray?.last{
+                priceLabel.attributedText = goodPriceString((goodsInfo?.sell_price) ?? "\(0.00)", (goodsInfo?.market_price) ?? "\(0.00)")
+                
+            }
+            initModel()
+        }
+    }
+    var goodsProducts:[GoodsProduct]? {
+        didSet{
+            //print(goodsProducts![0].productSpecs[0].value)
+            guard let products = goodsProducts else { return }
+            sellPriceArray = YTools.collectSellPriceFromGoodsProduct(goodsProducts: products)
+            if sellPriceArray?.count != 1 && sellPriceArray?.first != sellPriceArray?.last{
+                priceLabel.text = "￥\(sellPriceArray?.last ?? 0.00)-￥\(sellPriceArray?.first ?? 0.00)"
+                priceLabel.textColor = .red
+                priceLabel.font = UIFont.boldSystemFont(ofSize: 20)
+            }
+            initModel()
+        }
+    }
+    var productSpecs:[[ProductSpec]]? {
+        didSet{
+//            guard let specs = productSpecs else {
+//                productSpecs = [[ProductSpec]]()
+//                return
+//            }
+            //print(specs.count)
         }
     }
     //MARK: - 懒加载
@@ -193,7 +223,7 @@ class GoodViewController: GoodDetailBaseViewController {
         //设置下标的个数
         pageControl.numberOfPages = bannerNumbers
         //设置下标位置
-        pageControl.contentHorizontalAlignment = .right
+        pageControl.contentHorizontalAlignment = .center
         pageControl.contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         //设置下标指示器图片（选中状态和普通状态）
         //        pageControl.setImage(UIImage.init(named: "1"), for: .normal)
@@ -204,7 +234,7 @@ class GoodViewController: GoodDetailBaseViewController {
         //pageControl.setPath(UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 10, height: 5)), for: .selected)
         //pageControl.setPath(UIBezierPath?.init(UIBezierPath.init(arcCenter: CGPoint.init(x: 10, y: 10), radius: 3, startAngle: 3, endAngle: 2, clockwise: true)), for: UIControlState.selected)
         //设置下标指示器边框颜色（选中状态和普通状态）
-        pageControl.setStrokeColor(.white, for: .normal)
+        pageControl.setStrokeColor(.gray, for: .normal)
         pageControl.setStrokeColor(.gray, for: .selected)
         //设置下标指示器颜色（选中状态和普通状态）
         pageControl.setFillColor(.white, for: .normal)
@@ -236,8 +266,6 @@ class GoodViewController: GoodDetailBaseViewController {
         webView.navigationDelegate = self
         webView.scrollView.delegate = self
         webView.backgroundColor = UIColor.white
-        
-//        webView.isHidden = true
         return webView
     }()
     
@@ -274,6 +302,8 @@ class GoodViewController: GoodDetailBaseViewController {
         label.alpha = 0
         return label
     }()
+    
+    var alert: ChoseGoodsTypeAlert?
     
     //MARK: - 系统回调
     override func viewDidLoad() {
@@ -340,46 +370,116 @@ extension GoodViewController {
         
     }
     private func initData(){
-        model.imageId = "1.jpg"
-        model.goodsNo = "商品名"
-        model.title = "商品标题"
-        model.totalStock = "100"
-        //价格信息
+        initModel()
+        bannerImages = [GoodsPhoto(dict: ["String" : "1" as NSObject])]
+        bannerNumbers = (bannerImages?.count)!
+    }
+    
+    private func initModel(){
+        model.imageId = goodsInfo?.img ?? "loading"
+        model.goodsNo = "\(goodsInfo?.goods_id ?? 0)"
+        model.title = goodsInfo?.name ?? "商品标题"
+        model.totalStock = goodsInfo?.store_nums ?? "商品库存"
         model.price = GoodsPriceModel()
-        model.price.minPrice = "150"
-        model.price.maxPrice = "158"
-        model.price.minOriginalPrice = "155"
-        model.price.maxOriginalPrice = "160"
-        //属性-应该从服务器获取属性列表
-        let type1 = GoodsTypeModel()
-        type1.selectIndex = -1
-        type1.typeName = "尺码"
-        type1.typeArray = ["XL", "XXL"]
-        let type2 = GoodsTypeModel()
-        type2.selectIndex = -1
-        type2.typeName = "颜色"
-        type2.typeArray = ["黑色", "白色", "黑色", "白色", "黑色", "白色", "黑色"]
-        let type3 = GoodsTypeModel()
-        type3.selectIndex = -1
-        type3.typeName = "日期"
-        type3.typeArray = ["2016", "2017", "2018"]
-        model.itemsList = [type1, type2, type3]
-        //属性组合数组-有时候不同的属性组合价格库存都会有差异，选择完之后要对应修改商品的价格、库存图片等信息，可能是获得商品信息时将属性数组一并返回，也可能属性选择后再请求服务器获得属性组合对应的商品信息，根据自己的实际情况调整
-        model.sizeAttribute = NSMutableArray()
-        var valueArr = ["XL、黑色、2016", "XXL、黑色、2016", "XL、白色、2016", "XXL、白色、2016", "XL、黑色、2017", "XXL、黑色、2017", "XL、白色、2017", "XXL、白色、2017", "XL、黑色、2018", "XXL、黑色、2018", "XL、白色、2018", "XXL、白色、2018"]
-        for i in 0..<valueArr.count {
+        model.sizeAttribute = NSMutableArray()//此处初始化后GoodsInfoView的才能显示初始化数据,去掉则都显示0
+        //价格信息
+        sellPriceArray = [Double]()
+        if let products = goodsProducts {
+            
+            sellPriceArray = YTools.collectSellPriceFromGoodsProduct(goodsProducts: products)
+            marketPriceArray = YTools.collectMarketPriceFromGoodsProduct(goodsProducts: products)
+            model.itemsList = YTools.getSpecValuesFromProductSpec(products: products) as NSArray
+            
+            //如果该商品规格值spec_array有值，则使用规格中的价格区间，如果spec_array没有值，则使用商品属性中的销售价和市场价作为其中的价格区间
+            model.price.minPrice = "\(sellPriceArray?.last ?? Double(goodsInfo?.sell_price ?? "0.00") ?? 0.00)"
+            model.price.maxPrice = "\(sellPriceArray?.first ?? Double(goodsInfo?.sell_price ?? "0.00") ?? 0.00)"
+            model.price.minOriginalPrice = "\(marketPriceArray?.last ?? Double(goodsInfo?.market_price ?? "0.00") ?? 0.00)"
+            model.price.maxOriginalPrice = "\(marketPriceArray?.first ?? Double(goodsInfo?.market_price ?? "0.00") ?? 0.00)"
+            for product in products {
+//                type.price = "153"
+//                type.originalPrice = "158"
+//                type.stock = "\(i)"
+//                type.goodsNo = model.goodsNo
+//                type.value = valueArr[i]
+//                type.imageId = "\(arc4random() % 4).jpg"
+//                model.sizeAttribute.add(type)
+                let type = SizeAttributeModel()
+                type.price = product.sell_price
+                type.originalPrice = product.market_price
+                type.stock = "\(product.store_nums)"
+                type.goodsNo = "\(product.goods_id)"
+                type.value = YTools.getGoodsProductSpecs(product: product)
+                //                type.imageId = goodsInfo?.img ?? "loading"
+                for spec in product.productSpecs {
+                    if spec.type == 1 {
+                        //使用商品的图片
+                        type.type = 1
+                        type.imageId = goodsInfo?.img ?? "loading"
+                    }
+                    else if spec.type == 2 {
+                        //使用各规格的图片
+                        type.type = 2
+                        type.imageId = spec.value
+                    }
+                }
+                type.productId = "\(product.id)"
+                type.productNo = product.products_no
+                type.productType = 1//该商品有规格
+                model.sizeAttribute.add(type)
+            }
+        }else {
+            model.itemsList = [GoodsTypeModel.init(selectIndex: 0, typeName: "请选择规格", typeArray: ["\(goodsInfo?.name ?? "")"])]
+            
             let type = SizeAttributeModel()
-            type.price = "153"
-            type.originalPrice = "158"
-            type.stock = "\(i)"
-            type.goodsNo = model.goodsNo
-            type.value = valueArr[i]
-            type.imageId = "\(arc4random() % 4).jpg"
+            model.price.minPrice = goodsInfo?.sell_price ?? "0.00"
+            model.price.maxPrice = goodsInfo?.sell_price ?? "0.00"
+            model.price.minOriginalPrice = goodsInfo?.market_price ?? "0.00"
+            model.price.maxOriginalPrice = goodsInfo?.market_price ?? "0.00"
+            //print(goodsInfo?.name)
+            type.price = goodsInfo?.sell_price ?? "0.00"
+            type.originalPrice = goodsInfo?.market_price ?? "0.00"
+            type.stock = goodsInfo?.store_nums ?? "0"
+            type.goodsNo = "\(goodsInfo?.goods_id ?? 0)"
+            type.imageId = goodsInfo?.img ?? "loading"
+            type.value = "\(goodsInfo?.name ?? "")"
+            type.type = 1
+            type.productId = ""
+            type.productNo = ""
+            type.productType = 0//该商品无规格
+            //如果是没有规格只有一种的商品，则使用其属性构造一个规格以供选择，其规格的id和no都是-1
             model.sizeAttribute.add(type)
         }
         
-        bannerImages = [GoodsPhoto(dict: ["String" : "1" as NSObject])]
-        bannerNumbers = (bannerImages?.count)!
+        
+        //属性-应该从服务器获取属性列表
+        
+//        let type1 = GoodsTypeModel()
+//        type1.selectIndex = -1
+//        type1.typeName = "尺码"
+//        type1.typeArray = ["XL", "XXL"]
+//        let type2 = GoodsTypeModel()
+//        type2.selectIndex = -1
+//        type2.typeName = "颜色"
+//        type2.typeArray = ["黑色", "白色", "黑色", "白色", "黑色", "白色", "黑色"]
+//        let type3 = GoodsTypeModel()
+//        type3.selectIndex = -1
+//        type3.typeName = "日期"
+//        type3.typeArray = ["2016", "2017", "2018"]
+        
+        //model.itemsList = [type1, type2, type3]
+        //属性组合数组-有时候不同的属性组合价格库存都会有差异，选择完之后要对应修改商品的价格、库存图片等信息，可能是获得商品信息时将属性数组一并返回，也可能属性选择后再请求服务器获得属性组合对应的商品信息，根据自己的实际情况调整
+//        model.sizeAttribute = NSMutableArray()
+//        var valueArr = ["XL、黑色、2016", "XXL、黑色、2016", "XL、白色、2016", "XXL、白色、2016", "XL、黑色、2017", "XXL、黑色、2017", "XL、白色、2017", "XXL、白色、2017", "XL、黑色、2018", "XXL、黑色、2018", "XL、白色、2018", "XXL、白色、2018"]
+//        for i in 0..<valueArr.count {
+//            let type = SizeAttributeModel()
+//            type.price = "153"
+//            type.originalPrice = "158"
+//            type.stock = "\(i)"
+//            type.goodsNo = model.goodsNo
+//            type.value = valueArr[i]
+//            type.imageId = "\(arc4random() % 4).jpg"
+//            model.sizeAttribute.add(type)
+//        }
     }
     
     private func setWebView(){
@@ -465,7 +565,9 @@ extension GoodViewController {
             guard !self.isLoadedWeb else {
                 return
             }
-            let request = URLRequest(url: URL(string: BASE_URL + "site/products/id/\((self.goodsInfo?.goods_id) ?? 0)")!)
+            //此处有显示图文详情的链接则直接使用，若没有提供链接，则使用注释的request来加载手机端商品详情页面，通过js隐藏不需要的元素来展示图文详情
+//            let request = URLRequest(url: URL(string: BASE_URL + "site/products/id/\((self.goodsInfo?.goods_id) ?? 0)")!)
+            let request = URLRequest(url: URL(string: GOODWEBDETAIL_URL + "\(self.goodsInfo?.goods_id ?? 0)")!)
             self.wkWebView.load(request)
             self.isLoadedWeb = true
         }
@@ -570,21 +672,21 @@ extension GoodViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 //遵守webView的协议
-extension GoodViewController: UIWebViewDelegate {
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        self.activity.isHidden = false
-        self.activity.startAnimating()
-        return true
-    }
-    
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        self.activity.stopAnimating()
-    }
-    
-    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-        self.activity.stopAnimating()
-    }
-}
+//extension GoodViewController: UIWebViewDelegate {
+//    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+//        self.activity.isHidden = false
+//        self.activity.startAnimating()
+//        return true
+//    }
+//    
+//    func webViewDidFinishLoad(_ webView: UIWebView) {
+//        self.activity.stopAnimating()
+//    }
+//    
+//    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+//        self.activity.stopAnimating()
+//    }
+//}
 
 // MARK: - 设置banner的数据源和代理
 extension GoodViewController: FSPagerViewDataSource,FSPagerViewDelegate{
@@ -596,6 +698,8 @@ extension GoodViewController: FSPagerViewDataSource,FSPagerViewDelegate{
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
         let cell = pagerView.dequeueReusableCell(withReuseIdentifier: bannerCellID, at: index)
         cell.imageView?.kf.setImage(with: URL.init(string: BASE_URL + bannerImages![index].img))
+        cell.imageView?.contentMode = .scaleAspectFit
+        cell.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         cell.contentView.layer.shadowRadius = 0 //去除下标指示器阴影
         //cell.textLabel?.text = "title\(index)"
         return cell
@@ -614,20 +718,23 @@ extension GoodViewController: FSPagerViewDataSource,FSPagerViewDelegate{
 //MARK: - 事件响应
 extension GoodViewController {
     @objc private func popChooseView(){
-        let alert = ChoseGoodsTypeAlert(frame: CGRect(x: 0, y: UIDevice.current.isX() ? -IphonexHomeIndicatorH : 0, width: kWidth, height: kHeight), andHeight: kSize(width:500), vc:self)
-        alert.alpha = 0
-        UIApplication.shared.keyWindow?.addSubview(alert)
-        alert.selectSize = {(_ sizeModel: SizeAttributeModel) -> Void in
+        alert = ChoseGoodsTypeAlert(frame: CGRect(x: 0, y: UIDevice.current.isX() ? -IphonexHomeIndicatorH : 0, width: kWidth, height: kHeight), andHeight: kSize(width:500), vc:self)
+        alert?.alpha = 0
+        UIApplication.shared.keyWindow?.addSubview(alert!)
+        alert?.selectSize = {(_ sizeModel: SizeAttributeModel) -> Void in
             //sizeModel 选择的属性模型
             //SVProgressHUD.showSuccess(withStatus: "选择了:"+sizeModel.value)
-            YTools.showMyToast(rootView: self.view, message: "选择了: \(sizeModel.value)、\(sizeModel.count)件", duration: 2.0, position: ToastPosition.center)
+            YTools.showMyToast(rootView: self.view, message: "选择了: \(sizeModel.value)、\(sizeModel.count)件、\(sizeModel.productNo)", duration: 2.0, position: ToastPosition.center)
             self.chosenInfoLabel.attributedText = self.goodChosenString("\(sizeModel.value)、\(sizeModel.count)件")
             //self.zoomOut()
+            self.selectedProduct = YTools.getSelectedProductById(sizeModel: sizeModel, goodsProducts: self.goodsProducts!)
+            //获取到选择的规格，根据productType来确定参数是否带有规格信息（0无规格  1有规格）
         }
-        alert.initData(goodsModel: model)
+        //initModel()
+        alert?.initData(goodsModel: model)
         
         //zoomIn()
-        alert.showView()
+        alert?.showView()
         
     }
     //navigationController的view折叠内陷方法

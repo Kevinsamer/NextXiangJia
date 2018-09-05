@@ -129,6 +129,7 @@ class ChoseGoodsTypeAlert: UIView , UITableViewDataSource, UITableViewDelegate, 
         }
         return str as NSString
     }
+    //刷新顶部商品信息栏
     func reloadGoodsInfo() {
         for typemodel:GoodsTypeModel in dataSource as! [GoodsTypeModel] {
             if typemodel.selectIndex < 0 {

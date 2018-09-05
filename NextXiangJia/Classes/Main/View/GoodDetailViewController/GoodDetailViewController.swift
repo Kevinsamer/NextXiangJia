@@ -16,6 +16,8 @@ class GoodDetailViewController: ButtonBarPagerTabStripViewController {
     var usableViewHeight : CGFloat?
     var goodsViewModel : GoodsDetailViewModel = GoodsDetailViewModel()
     var goodsInfo:GoodInfo?
+    var productSpecs:[[ProductSpec]]?//规格信息
+    var goodsProducts:[GoodsProduct]?
     var goodsID:Int = 0//商品id初始化为0
     var goodVC:GoodViewController?
     var detailVC:DetailViewController?
@@ -224,10 +226,18 @@ extension GoodDetailViewController{
     private func initData(){
         goodsViewModel.requestGoodsDetail(goodsID: goodsID) {
             self.goodsInfo = self.goodsViewModel.goodsInfo
-            CommunicationTools.post(duration: 0, name: Communications.GoodsDetail, data: self.goodsViewModel.goodsInfo)
+            //CommunicationTools.post(duration: 0, name: Communications.GoodsDetail, data: self.goodsViewModel.goodsInfo)
             self.goodVC?.goodsInfo = self.goodsViewModel.goodsInfo
             self.detailVC?.goodsInfo = self.goodsViewModel.goodsInfo
             self.commentVC?.goodsInfo = self.goodsViewModel.goodsInfo
+        }
+        goodsViewModel.requestGoodsProducts(goodsID: goodsID) {
+            if self.goodsViewModel.goodsProducts != nil {
+                self.goodsProducts = self.goodsViewModel.goodsProducts
+                self.goodVC?.goodsProducts = self.goodsViewModel.goodsProducts
+            }
+            self.goodVC?.productSpecs = self.goodsViewModel.productSpecs
+            self.productSpecs = self.goodsViewModel.productSpecs
         }
     }
     

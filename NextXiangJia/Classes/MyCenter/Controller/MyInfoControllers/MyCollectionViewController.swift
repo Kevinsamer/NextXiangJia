@@ -102,8 +102,9 @@ extension MyCollectionViewController:UICollectionViewDataSource,UICollectionView
 //MARK: - 事件绑定
 extension MyCollectionViewController {
     @objc private func cancelClicked(_ sender: UIView){
-        let cell = (sender.superview?.superview) as! MyCollectionViewCell
-        let indexPath = MyCollectionView.indexPath(for: cell)!
+//        let cell = (sender.superview?.superview) as! MyCollectionViewCell
+//        let indexPath = MyCollectionView.indexPath(for: cell)!
+        //真实删除的情况需要通过收藏商品的id来操作
         let alert = UIAlertController(title: "提示", message: "是否取消收藏", preferredStyle: UIAlertControllerStyle.alert)
         let OKAction = UIAlertAction(title: "是", style: UIAlertActionStyle.default) { [unowned self] (OK) in
             self.collNum -= 1

@@ -18,4 +18,8 @@ class SizeAttributeModel: NSObject {
     var stock = ""   //库存
     var count = ""  //数量
     var value = "" //可能规格不同商品图片也不同
+    var type = 1//1文字  2图片
+    var productId = "-1"//货品id
+    var productNo = "-1"//货品编号
+    var productType = 0//规格类型：0该商品无规格  1该商品有规格
 }
