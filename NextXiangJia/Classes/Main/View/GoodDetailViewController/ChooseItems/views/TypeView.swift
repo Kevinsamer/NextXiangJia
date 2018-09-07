@@ -49,6 +49,7 @@ class TypeView: UIView {
             btn.setTitleColor(UIColor.black, for: UIControlState.normal)
             btn.setTitleColor(UIColor.white, for: UIControlState.selected)
             btn.backgroundColor = UIColor(named: "line_gray")!
+            
             let dic = NSDictionary(object: UIFont.systemFont(ofSize: 13), forKey: NSAttributedStringKey.font as NSCopying)
             
             let size: CGSize = text.size(withAttributes: (dic as! [NSAttributedStringKey : Any]))
@@ -58,6 +59,9 @@ class TypeView: UIView {
             }
             btn.frame = CGRect(x: upX, y: upY, width: Int(size.width+30.0), height: Int(24))
             cutCorner(cornerRadius: 12, borderWidth: 1, borderColor: UIColor.white, view: btn)
+            if btn.width > finalScreenW - 20 {
+                btn.width = finalScreenW - 20
+            }
             self.addSubview(btn)
             btn.tag = 100+i
             btn.addTarget(self, action: #selector(self.touchbtn), for: UIControlEvents.touchUpInside)

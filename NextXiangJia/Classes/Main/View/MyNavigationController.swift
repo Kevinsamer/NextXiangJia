@@ -144,10 +144,11 @@ extension MyNavigationController : UISearchBarDelegate {
         searchBtnClicked()
         searchContent = (searchBar.textField?.text)!
         let vc = SearchResultController(collectionViewLayout: UICollectionViewFlowLayout())
+        vc.keys = searchContent
         vc.hidesBottomBarWhenPushed = true
-        DispatchQueue.global().async {
-            vc.SendData(data: searchContent)
-        }
+//        DispatchQueue.global().async {
+//            vc.SendData(data: searchContent)
+//        }
         
 //        CommunicationTools.post(name: Communications.SearchResult, data: searchContent)
 //        DispatchQueue.afterDelay(duration: 0.01) {

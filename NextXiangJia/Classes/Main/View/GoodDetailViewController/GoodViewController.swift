@@ -442,6 +442,7 @@ extension GoodViewController {
             type.goodsNo = "\(goodsInfo?.goods_id ?? 0)"
             type.imageId = goodsInfo?.img ?? "loading"
             type.value = "\(goodsInfo?.name ?? "")"
+            
             type.type = 1
             type.productId = ""
             type.productNo = ""

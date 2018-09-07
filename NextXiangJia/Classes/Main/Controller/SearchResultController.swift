@@ -8,20 +8,37 @@
 
 import UIKit
 import SwiftEventBus
+import Kingfisher
+import PullToRefreshKit
 private var collectionItemW = ( finalScreenW - 3 ) / 2
 //private var collectionItemH = UIDevice.current.isX() ? collectionItemW * 10 / 8 : collectionItemW * 10 / 9
 private var collectionItemH:CGFloat = 230
 private var cellID = "cellID"
 private let listCellID = "listCellID"
 private let collCellID = "collCellID"
-private var keys = ""
-private var newKeys = ""
+
 
 class SearchResultController: UICollectionViewController {
     private var navBarY:CGFloat?
     private var searchBarY:CGFloat?
     private var navigationBarLayer:CALayer?
     private var searchBarLayer:CALayer?
+    var keys:String = ""//接收搜索结果
+//    private var newKeys = ""
+    private var currentPage = 1//当前页
+    private var maxNumPerPage = 21//每页数据最多条数
+    private var searchResultViewModel : SearchResultViewModel = SearchResultViewModel()
+    private var searchResults:[SearchResultModel]?{
+        didSet{
+            if searchResults != nil {
+                noDataLabel.removeFromSuperview()
+                self.collectionView?.reloadData()
+            }else{
+                //nil展示无数据页
+                setNoDataView()
+            }
+        }
+    }
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
     }
@@ -31,6 +48,38 @@ class SearchResultController: UICollectionViewController {
     }
     
     //MARK: - 懒加载
+    lazy var header: DefaultRefreshHeader = {
+        let header = DefaultRefreshHeader.header()
+        header.setText("下拉刷新", mode: .pullToRefresh)
+        header.setText("释放刷新", mode: .releaseToRefresh)
+        header.setText("数据刷新成功", mode: .refreshSuccess)
+        header.setText("刷新中...", mode: .refreshing)
+        header.setText("数据刷新失败，请检查网络设置", mode: .refreshFailure)
+        header.tintColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+        header.imageRenderingWithTintColor = true
+        header.durationWhenHide = 0.4
+        return header
+    }()
+    
+    lazy var footer: DefaultRefreshFooter = {
+        let footer = DefaultRefreshFooter.footer()
+        footer.setText("上拉加载更多", mode: .pullToRefresh)
+        footer.setText("到底啦", mode: .noMoreData)
+        footer.setText("加载中...", mode: .refreshing)
+        footer.setText("点击加载更多", mode: .tapToRefresh)
+        footer.textLabel.textColor  = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+        footer.refreshMode = .scroll
+        return footer
+    }()
+    
+    lazy var noDataLabel: UILabel = {
+        let label = UILabel(frame: CGRect(origin: CGPoint.init(x: 0, y: 100), size: CGSize(width: finalScreenW, height: 60)))
+        label.text = "抱歉，没有找到商品额~"
+        label.textColor = #colorLiteral(red: 0.7803921569, green: 0.7803921569, blue: 0.7803921569, alpha: 1)
+        label.textAlignment = .center
+        return label
+    }()
+    
     lazy var searchBarVC: UISearchController = {
         let searchBarVC = UISearchController(searchResultsController: nil)
         
@@ -147,6 +196,7 @@ extension SearchResultController {
     
     private func setUI(){
         self.view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.navBarY = self.navigationController?.navigationBar.layer.position.y
         //0.初始化数据
         initData()
         //1.设置navigationBar
@@ -158,20 +208,39 @@ extension SearchResultController {
         //self.definesPresentationContext = true
     }
     
+    private func setNoDataView(){
+        self.collectionView?.addSubview(noDataLabel)
+    }
+    
     private func initData(){
-
-//        SwiftEventBus.onBackgroundThread(self, name: "searchKeys") {[unowned self] (result) in
-//            keys = result?.object as! String
-//            self.navigationItem.title = keys
-//            print(keys)
-//        }
-//        CommunicationTools.getCommunications(self, name: Communications.SearchResult) { [unowned self] (notification) in
-//            keys = notification?.object as! String
-//            self.navigationItem.title = keys
-//            print(keys)
-//        }
-        self.navBarY = self.navigationController?.navigationBar.layer.position.y
-        
+        requestResultData(word: keys, page: 1)
+    }
+    
+    private func requestResultData(word:String, page:Int){
+        searchResultViewModel.requestSearchResult(word: word, page: page) {[unowned self] in
+            if self.currentPage == 1 {
+                self.searchResults = self.searchResultViewModel.searchResults
+                if self.searchResultViewModel.searchResults?.count < self.maxNumPerPage {
+                    self.collectionView?.switchRefreshFooter(to: FooterRefresherState.noMoreData)
+                }else {
+                    self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
+                }
+                self.collectionView?.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
+                self.collectionView?.reloadData()
+            }else {
+                if self.searchResultViewModel.searchResults?.count == self.maxNumPerPage {
+                    //如果请求到的数据条数=每页最大条数，则未到最后一页
+                    self.searchResults?.append(self.searchResultViewModel.searchResults!)
+                    self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
+                }else {
+                    //如果请求到的数据条数<每页最大条数，则已经请求到最后一组分页数据
+                    self.searchResults?.append(self.searchResultViewModel.searchResults!)
+                    self.collectionView?.switchRefreshFooter(to: FooterRefresherState.noMoreData)
+                }
+            }
+            
+            //self.searchResults?.append(self.searchResultViewModel.searchResults!)
+        }
     }
     
     private func setNavigationBar(){
@@ -179,10 +248,6 @@ extension SearchResultController {
         navigationItem.title = "搜索结果"
         navigationBarLayer = self.navigationController?.navigationBar.layer
         //navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        if (self.navigationController?.navigationBar) != nil {
-            //navigationbar.barTintColor = UIColor(named: "navibar_bartint_orange")!
-            //navigationbar.tintColor = .white
-        }
     }
     
     private func setCollectionView(){
@@ -192,6 +257,21 @@ extension SearchResultController {
         collectionView?.register(UINib.init(nibName: "CollCell", bundle: nil), forCellWithReuseIdentifier: collCellID)
         collectionView?.register(UINib.init(nibName: "ListCell", bundle: nil), forCellWithReuseIdentifier: listCellID)
         collectionView?.backgroundColor = UIColor(named: "line_gray")!
+//        collectionView?.contentInsetAdjustmentBehavior = .never
+        
+        collectionView?.configRefreshHeader(with: header, container: self, action: {[unowned self] in
+            self.currentPage = 1
+            self.requestResultData(word: self.keys, page: self.currentPage)
+            self.collectionView?.reloadData {
+                self.collectionView?.switchRefreshHeader(to: HeaderRefresherState.normal(RefreshResult.success, 0.3))
+            }
+        })
+        
+        collectionView?.configRefreshFooter(with: footer, container: self, action: {[unowned self] in
+            self.currentPage += 1
+            self.requestResultData(word: self.keys, page: self.currentPage)
+            self.collectionView?.reloadData()
+        })
     }
     
     private func setSearchBar(){
@@ -251,9 +331,12 @@ extension SearchResultController : UISearchControllerDelegate,UISearchResultsUpd
 
 extension SearchResultController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if newKeys != "" {
+        //print(searchBar.text)
+        if keys != "" {
+            currentPage = 1
             searchBar.text = ""
-            searchBar.placeholder = newKeys
+            searchBar.placeholder = keys
+            requestResultData(word: keys, page: currentPage)
         }
         dismissAlphaView()
         searchBar.resignFirstResponder()
@@ -266,7 +349,7 @@ extension SearchResultController : UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        newKeys = searchText
+        keys = searchText
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -278,9 +361,18 @@ extension SearchResultController : UISearchBarDelegate {
 extension SearchResultController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = GoodDetailViewController(goodsID: 0)
-        navigationController?.pushViewController(vc, animated: true)
+        if let results = searchResults {
+            let vc = GoodDetailViewController(goodsID: results[indexPath.row].id)
+            self.navigationBarLayer?.position.y = self.navBarY!
+            //self.searchBarLayer?.position.y = self.searchBarY!
+            self.navigationItem.hidesBackButton = false
+            self.navigationItem.title = "搜索结果"
+            self.navigationItem.rightBarButtonItem?.customView?.isHidden = false
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        
     }
+    
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 //        print(velocity.y)
 //        print(scrollView.contentOffset.y)
@@ -314,26 +406,32 @@ extension SearchResultController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 21
+        return searchResults?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if imageButton.isSelected {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: listCellID, for: indexPath) as! ListCell
             cell.backgroundColor = UIColor.white
-            cell.ImageView.image = UIImage(named: "LaunchImage")
-            cell.GoodsInfo.text = "ListViewInfoListViewInfoListViewInfoListViewInfoListViewInfoListViewInfo\(indexPath.row)"
-            cell.NewPrice.text = "￥\(indexPath.row)\(indexPath.row)"
-            cell.OldPrice.attributedText = YTools.textAddMiddleLine(text: "￥\(indexPath.row)\(indexPath.row)")
+            if let results = searchResults {
+                cell.ImageView.kf.setImage(with: URL.init(string: BASE_URL + "\(results[indexPath.row].img)"), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+                cell.GoodsInfo.text = "\(results[indexPath.row].name)"
+                cell.NewPrice.text = "￥\(results[indexPath.row].sell_price)"
+                cell.OldPrice.attributedText = YTools.textAddMiddleLine(text: "￥\(results[indexPath.row].market_price)")
+            }
+            
+            
             //print("\(indexPath.row)")
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collCellID, for: indexPath) as! CollCell
             cell.backgroundColor = UIColor.white
-            cell.ImageView.image = UIImage(named: "LaunchImage")
-            cell.GoodsInfo.text = "CollectionViewInfoCollectionViewInfoCollectionViewInfoCollectionViewInfoCollectionViewInfoCollectionViewInfo\(indexPath.item)"
-            cell.NewPrice.text = "￥\(indexPath.row)\(indexPath.row)"
-            cell.OldPrice.attributedText = YTools.textAddMiddleLine(text: "￥\(indexPath.row)\(indexPath.row)")
+            if let results = searchResults {
+                cell.ImageView.kf.setImage(with: URL.init(string: BASE_URL + "\(results[indexPath.row].img)"), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+                cell.GoodsInfo.text = "\(results[indexPath.row].name)"
+                cell.NewPrice.text = "￥\(results[indexPath.row].sell_price)"
+                cell.OldPrice.attributedText = YTools.textAddMiddleLine(text: "￥\(results[indexPath.row].market_price)")
+            }
             //print("\(indexPath.row)")
             return cell
         }
@@ -360,11 +458,12 @@ extension SearchResultController {
     }
 }
 
-extension SearchResultController : SendDataProtocol {
-    func SendData(data: Any?) {
-        if let key = (data as? String){
-            print("key = \(key)")
-            keys = key
-        }
-    }
-}
+//extension SearchResultController : SendDataProtocol {
+//    func SendData(data: Any?) {
+//        if let key = (data as? String){
+//            print("key = \(key)")
+//            //keys = key
+//        }
+//    }
+//}
+
