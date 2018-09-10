@@ -161,7 +161,7 @@ public class YTools{
         return strs
     }
     //通过productId和选择数量获取已选的货品
-    static func getSelectedProductById(sizeModel model:SizeAttributeModel, goodsProducts products:[GoodsProduct]) -> SelectedProduct{
+    static func getSelectedProductById(sizeModel model:SizeAttributeModel, goodsProducts products:[GoodsProduct]?) -> SelectedProduct{
         let selectedProduct:SelectedProduct = SelectedProduct()
         selectedProduct.selectedNum = Int(model.count)
         selectedProduct.productType = model.productType
@@ -169,9 +169,11 @@ public class YTools{
             selectedProduct.good_Id = Int(model.goodsNo)
         }else if model.productType == 1 {
             selectedProduct.good_Id = Int(model.goodsNo)
-            for product in products {
-                if "\(product.id)" == model.productId {
-                    selectedProduct.selectedProduct = product
+            if products != nil {
+                for product in products! {
+                    if "\(product.id)" == model.productId {
+                        selectedProduct.selectedProduct = product
+                    }
                 }
             }
         }

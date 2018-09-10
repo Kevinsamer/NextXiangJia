@@ -10,6 +10,7 @@ import Foundation
 
 class SearchResultViewModel {
     var searchResults:[SearchResultModel]?
+    var categoryResults:[SearchResultModel]?
 }
 
 extension SearchResultViewModel {
@@ -27,6 +28,25 @@ extension SearchResultViewModel {
             }else if resultCode == 201 {
                 //搜索无结果
                 self.searchResults = nil
+            }
+            finishCallBack()
+        }
+    }
+    
+    func requestCategoryResult(cat:Int, page:Int, finishCallBack : @escaping () -> ()){
+        NetworkTools.requestData(type: .GET, urlString: CATEGORYLIST_URL, parameters: ["cat" : "\(cat)" as NSString, "page" : "\(page)" as NSString]) { (result) in
+            guard let resultDict = result as? [String: NSObject] else { return }
+            guard let resultCode = resultDict["code"] as? Int else { return }
+            if resultCode == 200 {
+                //搜索有结果
+                guard let resultData = resultDict["result"] as? [[String:NSObject]]  else { return }
+                self.categoryResults = [SearchResultModel]()
+                for result in resultData {
+                    self.categoryResults?.append(SearchResultModel(dict: result))
+                }
+            }else if resultCode == 201 {
+                //搜索无结果
+                self.categoryResults = nil
             }
             finishCallBack()
         }

@@ -728,7 +728,7 @@ extension GoodViewController {
             YTools.showMyToast(rootView: self.view, message: "选择了: \(sizeModel.value)、\(sizeModel.count)件、\(sizeModel.productNo)", duration: 2.0, position: ToastPosition.center)
             self.chosenInfoLabel.attributedText = self.goodChosenString("\(sizeModel.value)、\(sizeModel.count)件")
             //self.zoomOut()
-            self.selectedProduct = YTools.getSelectedProductById(sizeModel: sizeModel, goodsProducts: self.goodsProducts!)
+            self.selectedProduct = YTools.getSelectedProductById(sizeModel: sizeModel, goodsProducts: self.goodsProducts)
             //获取到选择的规格，根据productType来确定参数是否带有规格信息（0无规格  1有规格）
         }
         //initModel()

@@ -15,6 +15,7 @@ let GOODINFO_URL = BASE_URL + "app/goodinfo"//商品详情数据库接口,传商
 let GOODPRODUCT_URL = BASE_URL + "app/getSpecification"//规格接口,传商品id
 let GOODWEBDETAIL_URL = BASE_URL + "siteapp/productsapp/id/"//图文详情接口，直接拼接商品id
 let SEARCH_URL = BASE_URL + "app/getSearch"//搜索接口 传搜索内容和分页数
+let CATEGORYLIST_URL = BASE_URL + "app/getGoodslist"//分类搜索结果  传分类id和分页数
 enum MethodType {
     case GET
     case POST

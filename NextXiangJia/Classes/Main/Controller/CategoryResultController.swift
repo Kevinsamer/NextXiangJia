@@ -18,13 +18,13 @@ private let listCellID = "listCellID"
 private let collCellID = "collCellID"
 
 
-class SearchResultController: UICollectionViewController {
+class CategoryResultController: UICollectionViewController {
     private var navBarY:CGFloat?
     private var searchBarY:CGFloat?
     private var navigationBarLayer:CALayer?
     private var searchBarLayer:CALayer?
-    var keys:String = ""//接收搜索结果
-//    private var newKeys = ""
+    var keys:String = ""//搜索关键词
+    var catID:Int = 0//分类id
     private var currentPage = 1//当前页
     private var maxNumPerPage = 21//每页数据最多条数
     private var searchResultViewModel : SearchResultViewModel = SearchResultViewModel()
@@ -35,7 +35,16 @@ class SearchResultController: UICollectionViewController {
                 self.collectionView?.reloadData()
             }else{
                 //nil展示无数据页
-                self.collectionView?.switchRefreshFooter(to: FooterRefresherState.removed)
+                setNoDataView()
+            }
+        }
+    }
+    private var categoryResults:[SearchResultModel]?{
+        didSet{
+            if categoryResults != nil {
+                noDataLabel.removeFromSuperview()
+                self.collectionView?.reloadData()
+            }else {
                 setNoDataView()
             }
         }
@@ -128,37 +137,37 @@ class SearchResultController: UICollectionViewController {
         return item
     }()
     
-//    lazy var naviMissAnimate: CABasicAnimation = {
-//        let ani = CABasicAnimation(keyPath: "position")
-//        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY!))
-//        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY! - finalNavigationBarH))
-//        ani.duration = 0.5
-//        return ani
-//    }()
-//
-//    lazy var naviShowAnimate: CABasicAnimation = {
-//        let ani = CABasicAnimation(keyPath: "position")
-//        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY! - finalNavigationBarH))
-//        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY!))
-//        ani.duration = 0.5
-//        return ani
-//    }()
-//
-//    lazy var searchBarMissAnimate: CABasicAnimation = {
-//        let ani = CABasicAnimation(keyPath: "position")
-//        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY!))
-//        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY! - finalNavigationBarH))
-//        ani.duration = 0.5
-//        return ani
-//    }()
-//
-//    lazy var searchBarShowAnimate: CABasicAnimation = {
-//        let ani = CABasicAnimation(keyPath: "position")
-//        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY! - finalNavigationBarH))
-//        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY!))
-//        ani.duration = 0.5
-//        return ani
-//    }()
+    //    lazy var naviMissAnimate: CABasicAnimation = {
+    //        let ani = CABasicAnimation(keyPath: "position")
+    //        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY!))
+    //        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY! - finalNavigationBarH))
+    //        ani.duration = 0.5
+    //        return ani
+    //    }()
+    //
+    //    lazy var naviShowAnimate: CABasicAnimation = {
+    //        let ani = CABasicAnimation(keyPath: "position")
+    //        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY! - finalNavigationBarH))
+    //        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.navBarY!))
+    //        ani.duration = 0.5
+    //        return ani
+    //    }()
+    //
+    //    lazy var searchBarMissAnimate: CABasicAnimation = {
+    //        let ani = CABasicAnimation(keyPath: "position")
+    //        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY!))
+    //        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY! - finalNavigationBarH))
+    //        ani.duration = 0.5
+    //        return ani
+    //    }()
+    //
+    //    lazy var searchBarShowAnimate: CABasicAnimation = {
+    //        let ani = CABasicAnimation(keyPath: "position")
+    //        ani.fromValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY! - finalNavigationBarH))
+    //        ani.toValue = NSValue(cgPoint: CGPoint(x: (navigationBarLayer?.position.x)!, y: self.searchBarY!))
+    //        ani.duration = 0.5
+    //        return ani
+    //    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -193,7 +202,7 @@ class SearchResultController: UICollectionViewController {
     }
 }
 
-extension SearchResultController {
+extension CategoryResultController {
     
     private func setUI(){
         self.view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -214,10 +223,9 @@ extension SearchResultController {
     }
     
     private func initData(){
-        requestResultData(word: keys, page: 1)
+        requestCategoryResultData(cat: catID, page: 1)
     }
-    
-    private func requestResultData(word:String, page:Int){
+    private func requestSearchResultData(word:String, page:Int){
         searchResultViewModel.requestSearchResult(word: word, page: page) {[unowned self] in
             if self.currentPage == 1 {
                 self.searchResults = self.searchResultViewModel.searchResults
@@ -226,20 +234,43 @@ extension SearchResultController {
                 }else {
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
                 }
-                if self.searchResults != nil {
-                    self.collectionView?.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
-                }
+                self.collectionView?.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
                 self.collectionView?.reloadData()
             }else {
-                if self.searchResultViewModel.searchResults?.count == self.maxNumPerPage && self.searchResults?.last?.id != self.searchResultViewModel.searchResults?.last?.id {
-                    //如果请求到的数据条数=每页最大条数,且本页数据最后一个和请求的数据最后一个不相同，则未到最后一页
+                if self.searchResultViewModel.searchResults?.count == self.maxNumPerPage {
+                    //如果请求到的数据条数=每页最大条数，则未到最后一页
                     self.searchResults?.append(self.searchResultViewModel.searchResults!)
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
-                }else if self.searchResultViewModel.searchResults?.count < self.maxNumPerPage {
-                    //如果请求到的数据条数<每页最大条数且本页数据最后一条和请求的数据最后一条相同，则已经请求到最后一组分页数据
+                }else {
+                    //如果请求到的数据条数<每页最大条数，则已经请求到最后一组分页数据
                     self.searchResults?.append(self.searchResultViewModel.searchResults!)
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.noMoreData)
+                }
+            }
+            
+            //self.searchResults?.append(self.searchResultViewModel.searchResults!)
+        }
+    }
+    
+    private func requestCategoryResultData(cat:Int, page:Int){
+        searchResultViewModel.requestCategoryResult(cat: cat, page: page) {[unowned self] in
+            if self.currentPage == 1 {
+                self.categoryResults = self.searchResultViewModel.categoryResults
+                if self.searchResultViewModel.categoryResults?.count < self.maxNumPerPage {
+                    self.collectionView?.switchRefreshFooter(to: FooterRefresherState.noMoreData)
                 }else {
+                    self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
+                }
+                self.collectionView?.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
+                self.collectionView?.reloadData()
+            }else {
+                if self.searchResultViewModel.categoryResults?.count == self.maxNumPerPage {
+                    //如果请求到的数据条数=每页最大条数，则未到最后一页
+                    self.categoryResults?.append(self.searchResultViewModel.categoryResults!)
+                    self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
+                }else {
+                    //如果请求到的数据条数<每页最大条数，则已经请求到最后一组分页数据
+                    self.categoryResults?.append(self.searchResultViewModel.categoryResults!)
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.noMoreData)
                 }
             }
@@ -262,20 +293,37 @@ extension SearchResultController {
         collectionView?.register(UINib.init(nibName: "CollCell", bundle: nil), forCellWithReuseIdentifier: collCellID)
         collectionView?.register(UINib.init(nibName: "ListCell", bundle: nil), forCellWithReuseIdentifier: listCellID)
         collectionView?.backgroundColor = UIColor(named: "line_gray")!
-//        collectionView?.contentInsetAdjustmentBehavior = .never
+        //        collectionView?.contentInsetAdjustmentBehavior = .never
         
         collectionView?.configRefreshHeader(with: header, container: self, action: {[unowned self] in
-            self.currentPage = 1
-            self.requestResultData(word: self.keys, page: self.currentPage)
-            self.collectionView?.reloadData {
-                self.collectionView?.switchRefreshHeader(to: HeaderRefresherState.normal(RefreshResult.success, 0.3))
+            if self.keys == "" {
+                //keys=""时，未开始搜索，需请求分类搜索数据
+                self.currentPage = 1
+                self.requestCategoryResultData(cat: self.catID, page: self.currentPage)
+                self.collectionView?.reloadData {
+                    self.collectionView?.switchRefreshHeader(to: HeaderRefresherState.normal(RefreshResult.success, 0.3))
+                }
+            }else {
+                //keys有其他值时，请求搜索数据
+                self.currentPage = 1
+                self.requestSearchResultData(word: self.keys, page: self.currentPage)
+                self.collectionView?.reloadData {
+                    self.collectionView?.switchRefreshHeader(to: HeaderRefresherState.normal(RefreshResult.success, 0.3))
+                }
             }
         })
         
         collectionView?.configRefreshFooter(with: footer, container: self, action: {[unowned self] in
-            self.currentPage += 1
-            self.requestResultData(word: self.keys, page: self.currentPage)
-            self.collectionView?.reloadData()
+            if self.keys == "" {
+                self.currentPage += 1
+                self.requestCategoryResultData(cat: self.catID, page: self.currentPage)
+                self.collectionView?.reloadData()
+            }else {
+                self.currentPage += 1
+                self.requestSearchResultData(word: self.keys, page: self.currentPage)
+                self.collectionView?.reloadData()
+            }
+            
         })
     }
     
@@ -304,11 +352,11 @@ extension SearchResultController {
                 if let backgroundview = textfield.subviews.first {
                     // Background color
                     backgroundview.backgroundColor = UIColor.white
-
+                    
                     // Rounded corner
                     backgroundview.layer.cornerRadius = 10
                     backgroundview.clipsToBounds = true
-
+                    
                 }
             }
             
@@ -323,7 +371,7 @@ extension SearchResultController {
     }
 }
 
-extension SearchResultController : UISearchControllerDelegate,UISearchResultsUpdating{
+extension CategoryResultController : UISearchControllerDelegate,UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
         
     }
@@ -334,7 +382,7 @@ extension SearchResultController : UISearchControllerDelegate,UISearchResultsUpd
     
 }
 
-extension SearchResultController : UISearchBarDelegate {
+extension CategoryResultController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         //print(searchBar.text)
         keys = searchBar.text ?? ""
@@ -342,7 +390,7 @@ extension SearchResultController : UISearchBarDelegate {
             currentPage = 1
             searchBar.text = ""
             searchBar.placeholder = keys
-            requestResultData(word: keys, page: currentPage)
+            requestSearchResultData(word: keys, page: currentPage)
         }
         dismissAlphaView()
         searchBar.resignFirstResponder()
@@ -364,7 +412,7 @@ extension SearchResultController : UISearchBarDelegate {
     
 }
 
-extension SearchResultController {
+extension CategoryResultController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let results = searchResults {
@@ -380,12 +428,12 @@ extension SearchResultController {
     }
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-//        print(velocity.y)
-//        print(scrollView.contentOffset.y)
+        //        print(velocity.y)
+        //        print(scrollView.contentOffset.y)
         if velocity.y > 0 {
             //隐藏搜索框
-//            navigationBarLayer?.add(naviMissAnimate, forKey: "missNavi")
-//            searchBarLayer?.add(searchBarMissAnimate, forKey: "searchMiss")
+            //            navigationBarLayer?.add(naviMissAnimate, forKey: "missNavi")
+            //            searchBarLayer?.add(searchBarMissAnimate, forKey: "searchMiss")
             UIView.animate(withDuration: 0.5, animations: {[unowned self] in
                 self.navigationBarLayer?.position.y = self.navBarY! - finalNavigationBarH
                 //self.searchBarLayer?.position.y = self.searchBarY! - finalNavigationBarH
@@ -397,8 +445,8 @@ extension SearchResultController {
         }else{
             //显示
             
-//            navigationBarLayer?.add(naviShowAnimate, forKey: "showNavi")
-//            searchBarLayer?.add(searchBarShowAnimate, forKey: "searchShow")
+            //            navigationBarLayer?.add(naviShowAnimate, forKey: "showNavi")
+            //            searchBarLayer?.add(searchBarShowAnimate, forKey: "searchShow")
             UIView.animate(withDuration: 0.5, animations: {[unowned self] in
                 self.navigationBarLayer?.position.y = self.navBarY!
                 //self.searchBarLayer?.position.y = self.searchBarY!
@@ -407,7 +455,7 @@ extension SearchResultController {
                 self.navigationItem.rightBarButtonItem?.customView?.isHidden = false
             })
             //navigationController?.setNavigationBarHidden(false, animated: true)
-
+            
         }
     }
     
@@ -444,7 +492,7 @@ extension SearchResultController {
     }
 }
 //MARK: - 响应事件
-extension SearchResultController {
+extension CategoryResultController {
     @objc private func changeLayout(){
         imageButton.isSelected = !imageButton.isSelected
         if imageButton.isSelected {
