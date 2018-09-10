@@ -35,6 +35,7 @@ class CategoryResultController: UICollectionViewController {
                 self.collectionView?.reloadData()
             }else{
                 //nil展示无数据页
+                self.collectionView?.switchRefreshFooter(to: FooterRefresherState.removed)
                 setNoDataView()
             }
         }
@@ -234,16 +235,21 @@ extension CategoryResultController {
                 }else {
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
                 }
-                self.collectionView?.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
+                if self.searchResults != nil {
+                    self.collectionView?.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
+                }
                 self.collectionView?.reloadData()
             }else {
-                if self.searchResultViewModel.searchResults?.count == self.maxNumPerPage {
-                    //如果请求到的数据条数=每页最大条数，则未到最后一页
+                if self.searchResultViewModel.searchResults?.count == self.maxNumPerPage && self.searchResults?.last?.id != self.searchResultViewModel.searchResults?.last?.id {
+                    //如果请求到的数据条数=每页最大条数且请求到的最后一条id和当前数据最后一条id不相同，则未到最后一页
                     self.searchResults?.append(self.searchResultViewModel.searchResults!)
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
-                }else {
-                    //如果请求到的数据条数<每页最大条数，则已经请求到最后一组分页数据
+                }else if self.searchResultViewModel.searchResults?.count < self.maxNumPerPage {
+                    //如果请求到的数据条数<每页最大条数，则已经请求到最后一组分页数据，请求到的数据需添加到当前数据集合
                     self.searchResults?.append(self.searchResultViewModel.searchResults!)
+                    self.collectionView?.switchRefreshFooter(to: FooterRefresherState.noMoreData)
+                }else {
+                    //如果请求到的数据条数=每页最大条数且最后的数据相同，则已请求到最后一页且无需将请求到的数据添加到当前数据集合
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.noMoreData)
                 }
             }
@@ -261,21 +267,24 @@ extension CategoryResultController {
                 }else {
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
                 }
-                self.collectionView?.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
+                if self.categoryResults != nil {
+                    self.collectionView?.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
+                }
                 self.collectionView?.reloadData()
             }else {
                 if self.searchResultViewModel.categoryResults?.count == self.maxNumPerPage {
                     //如果请求到的数据条数=每页最大条数，则未到最后一页
                     self.categoryResults?.append(self.searchResultViewModel.categoryResults!)
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
-                }else {
-                    //如果请求到的数据条数<每页最大条数，则已经请求到最后一组分页数据
+                }else if self.searchResultViewModel.categoryResults?.count < self.maxNumPerPage{
+                    //如果请求到的数据条数<每页最大条数，则已经请求到最后一组分页数据,请求到的数据需添加到当前数据集合
                     self.categoryResults?.append(self.searchResultViewModel.categoryResults!)
+                    self.collectionView?.switchRefreshFooter(to: FooterRefresherState.noMoreData)
+                }else {
+                    //剩余的情况是请求到的数据>=每页最大条数且最后的id相同，则表示已请求到最后一页且最后一页的数据正好是每页最大数据，请求到的数据已经重复不需要添加到当前数据集合
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.noMoreData)
                 }
             }
-            
-            //self.searchResults?.append(self.searchResultViewModel.searchResults!)
         }
     }
     

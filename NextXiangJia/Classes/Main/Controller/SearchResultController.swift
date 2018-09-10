@@ -236,10 +236,11 @@ extension SearchResultController {
                     self.searchResults?.append(self.searchResultViewModel.searchResults!)
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
                 }else if self.searchResultViewModel.searchResults?.count < self.maxNumPerPage {
-                    //如果请求到的数据条数<每页最大条数且本页数据最后一条和请求的数据最后一条相同，则已经请求到最后一组分页数据
+                    //如果请求到的数据条数<每页最大条数，则已经请求到最后一组分页数据，且该请求数据需添加至当前数据集合
                     self.searchResults?.append(self.searchResultViewModel.searchResults!)
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.noMoreData)
                 }else {
+                    //如果请求到的数据=每页最大条数且最后一条相同，则已请求到最后一组数据且该请求数据无需添加到当前数据集合
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.noMoreData)
                 }
             }
