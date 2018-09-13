@@ -8,6 +8,8 @@
 
 import UIKit
 import FontAwesome_swift
+import PullToRefreshKit
+import Kingfisher
 private let leftWidth:CGFloat = 100
 private let headViewH:CGFloat = 30
 private var categoryNum = 10
@@ -15,28 +17,71 @@ private var lineNum = 3
 private let MyCellID = "MyCellID"
 private let headID = "headID"
 private var centerX:CGFloat = finalContentViewHaveTabbarH / 2 + 25
-private var categoryText:[String] = []//左侧
-private var cellText:[String] = []//右侧
+
 ////searchBar attribute
 //private let searchBarH:CGFloat = 64
 class CategoryViewController: UIViewController {
+    //不需要滑动到页面中间的segmentView的个数
+    let extrasNum = (finalContentViewHaveTabbarH / 50 / 2).int
+    private var categoryText:[String] = [String]()//左侧
+    private var cellText:[String] = [String]()//右侧
+    var categorys:[CategoryModel]?{
+        didSet{
+            if categorys != nil {
+                for _ in 0..<categoryText.count {
+                    verticalSegment.removeSegmentAtIndex(0)
+                }
+                categoryText.removeAll()
+                
+                for category in categorys! {
+                    categoryText.append(category.name)
+                    verticalSegment.addSegmentWithTitle(category.name, onSelectionImage: nil, offSelectionImage: nil)
+                }
+                //视图层级为左侧一个UIScrollView，左侧scrollview上添加一个SMSegmentView，右侧一个collectionView
+                //SMSegmentView的高度由segment的数量决定，segment的高度为leftwidth/2
+                //左侧scrollview的可滑动区域高度由segment的数量决定且如果计算高度小于屏幕可视高度则固定为屏幕高度+1
+                leftScrollView.contentSize = CGSize(width: leftWidth, height: leftWidth * CGFloat(categoryText.count) / 2 > finalContentViewHaveTabbarH ? leftWidth * CGFloat(categoryText.count) / 2 : finalContentViewHaveTabbarH + 1 )
+                verticalSegment.height = leftWidth / 2 * CGFloat(categoryText.count)
+                verticalSegment.organiseMode = .vertical
+                verticalSegment.selectedSegmentIndex = 0
+//                requestCategoryGoods(cat: categorys![0].id, page: 1)
+            }
+        }
+    }
+    var categoryGoods:[SearchResultModel]?{
+        didSet{
+            if categoryGoods?.count == 0 {
+                self.rightCollectionView.addSubview(noDataLabel)
+                self.rightCollectionView.isScrollEnabled = false
+            }else {
+                self.noDataLabel.removeFromSuperview()
+                self.rightCollectionView.isScrollEnabled = true
+                self.categoryGoods = YTools.splitArray(array: categoryGoods!, num: 4) as? [SearchResultModel]
+            }
+            self.rightCollectionView.reloadData()
+        }
+    }
+    var categoryViewModel:CategoryViewModel = CategoryViewModel()
     // MARK: - 懒加载属性
     lazy var rightCollectionView: UICollectionView = {
         var layout = UICollectionViewFlowLayout()
-        layout.headerReferenceSize = CGSize(width: 100, height: 10)
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        layout.itemSize = CGSize(width: (finalScreenW - leftWidth - 40) / 3, height: 60)
-        layout.headerReferenceSize = CGSize(width: finalScreenW - leftWidth, height: headViewH)
+//        layout.headerReferenceSize = CGSize(width: 100, height: 10)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        layout.itemSize = CGSize(width: (finalScreenW - leftWidth), height: (finalContentViewHaveTabbarH - 30) / 2)
+//        layout.headerReferenceSize = CGSize(width: finalScreenW - leftWidth, height: headViewH)
+        layout.scrollDirection = .horizontal
         let coll = UICollectionView(frame: CGRect(x: leftWidth, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW - leftWidth, height: finalContentViewHaveTabbarH), collectionViewLayout: layout)
         coll.dataSource = self
         coll.delegate = self
         //coll.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        coll.alwaysBounceVertical = true
+        coll.alwaysBounceHorizontal = true
+        coll.isPagingEnabled = true
         //coll.register(UINib.init(), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
         //coll.cancelInteractiveMovement()
-        coll.register(UICollectionViewCell.self, forCellWithReuseIdentifier: MyCellID)
+        coll.register(UINib.init(nibName: "RightCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: MyCellID)
+        //coll.register(UICollectionViewCell.self, forCellWithReuseIdentifier: MyCellID)
         coll.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        coll.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
+        //coll.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
         return coll
     }()
     lazy var leftScrollView: UIScrollView = {
@@ -45,15 +90,14 @@ class CategoryViewController: UIViewController {
         scroll.backgroundColor = UIColor.init(named: "global_orange")!
         return scroll
     }()
-    lazy var rightScrollView: UIScrollView = {
-        var scroll = UIScrollView(frame: CGRect(x: leftWidth, y: 0, width: finalScreenW - leftWidth, height: finalContentViewHaveTabbarH))
-            scroll.contentSize = CGSize(width: finalScreenW - leftWidth, height: finalContentViewHaveTabbarH + 10)
-        scroll.backgroundColor = UIColor.white
-        return scroll
-    }()
+//    lazy var rightScrollView: UIScrollView = {
+//        var scroll = UIScrollView(frame: CGRect(x: leftWidth, y: 0, width: finalScreenW - leftWidth, height: finalContentViewHaveTabbarH))
+//            scroll.contentSize = CGSize(width: finalScreenW - leftWidth, height: finalContentViewHaveTabbarH + 10)
+//        scroll.backgroundColor = UIColor.white
+//        return scroll
+//    }()
     lazy var verticalSegment: SMSegmentView = {
         var appearance = SMSegmentAppearance(contentVerticalMargin: 5, segmentOnSelectionColour: .white, segmentOffSelectionColour: UIColor.init(named: "global_orange")!, titleOnSelectionColour: UIColor.init(named: "global_orange")!, titleOffSelectionColour: .white, titleOnSelectionFont: UIFont.boldSystemFont(ofSize: 18), titleOffSelectionFont: UIFont.systemFont(ofSize: 15), titleGravity: nil)
-        
         var verticalSegment = SMSegmentView(frame: CGRect.init(x: 0, y: 0, width: leftWidth, height: leftWidth * CGFloat(categoryText.count) / 2), dividerColour: UIColor.lightGray, dividerWidth: 0, segmentAppearance: appearance)
         verticalSegment.organiseMode = .vertical
         for index in 0..<categoryText.count {
@@ -63,10 +107,18 @@ class CategoryViewController: UIViewController {
         verticalSegment.addTarget(self, action: #selector(segmentValueChanged(segment:)), for: UIControlEvents.valueChanged)
         return verticalSegment
     }()
+    
+    lazy var noDataLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.rightCollectionView.frame.width, height: self.rightCollectionView.frame.height))
+        label.text = "商品进货中，请稍后关注上架情况"
+        label.textAlignment = .center
+        label.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        return label
+    }()
     // MARK: - 系统回调函数
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         setUI()
         
@@ -87,12 +139,29 @@ class CategoryViewController: UIViewController {
 extension CategoryViewController{
     private func setUI(){
         //0.初始化数据
-        refreshCategoryData()
-        refreshCollData(category: categoryText[0])
+        initData()
         //1.设置导航栏
         setupNavigationBar()
         //2.设置contentView
         setupContentView()
+    }
+    
+    private func initData(){
+        requestCategorys()
+        refreshCategoryData()
+        //refreshCollData(category: categoryText[0])
+    }
+    
+    private func requestCategorys(){
+        categoryViewModel.requestCategorys(parentID: nil) {
+            self.categorys = self.categoryViewModel.categorys
+        }
+    }
+    
+    private func requestCategoryGoods(cat:Int, page:Int){
+        categoryViewModel.requestCategoryGoods(categoryID: cat, page: page) {
+            self.categoryGoods = self.categoryViewModel.categoryGoods
+        }
     }
     
     private func setupContentView(){
@@ -102,7 +171,16 @@ extension CategoryViewController{
         setupRightCollectionView()
     }
     private func setupRightCollectionView(){
-        
+        rightCollectionView.configSideRefresh(with: DefaultRefreshRight.right(), container: self, at: SideRefreshDestination.right) {
+            if let categorys = self.categorys {
+                let vc = CategoryResultController(collectionViewLayout: UICollectionViewFlowLayout())
+                vc.catID = categorys[self.verticalSegment.selectedSegmentIndex].id
+                vc.navTitle = categorys[self.verticalSegment.selectedSegmentIndex].name
+//                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+
+        }
         self.view.addSubview(rightCollectionView)
     }
     private func setupLeftVerticalSegment(){
@@ -117,12 +195,10 @@ extension CategoryViewController{
 //MARK: - clicked listener
 extension CategoryViewController {
     @objc func segmentValueChanged(segment: SMSegmentView){
-        print("\((finalContentViewHaveTabbarH / 100))")
-        //不需要滑动到页面中间的segmentView的个数
-        let extrasNum = (finalContentViewHaveTabbarH / 50 / 2).int
+        //每次点击segment时将该segment自动滑动到屏幕中部，如果点击的是不需要滑动到中间的首尾几个segment，则将segmentView滑动至顶部或者底部
         if segment.selectedSegmentIndex > extrasNum && segment.selectedSegmentIndex < Int(categoryText.count) - extrasNum - 1 {
             UIView.animate(withDuration: 0.3, animations: {
-                self.leftScrollView.setContentOffset(CGPoint.init(x: 0, y: leftWidth / 2 * CGFloat(segment.selectedSegmentIndex - extrasNum)), animated: false)
+                self.leftScrollView.setContentOffset(CGPoint.init(x: 0, y: leftWidth / 2 * CGFloat(segment.selectedSegmentIndex - self.extrasNum)), animated: false)
             })
         }else if segment.selectedSegmentIndex <= extrasNum {
             UIView.animate(withDuration: 0.3, animations: {
@@ -133,21 +209,23 @@ extension CategoryViewController {
                 self.leftScrollView.setContentOffset(CGPoint.init(x: 0, y: self.leftScrollView.contentSize.height - finalContentViewHaveTabbarH), animated: false)
             })
         }
-        
-        refreshCollData(category: categoryText[segment.selectedSegmentIndex])
-        rightCollectionView.reloadData()
-    }
-    
-    private func refreshCollData(category:String){
-        cellText.removeAll()
-        for i in 0...randomNumber(from: 8...17){
-            cellText.append("\(category)的cell\(i)")
+        requestCategoryGoods(cat: categorys![segment.selectedSegmentIndex].id, page: 1)
+        if categoryGoods != nil && categoryGoods?.count > 0{
+            self.rightCollectionView.scrollToItem(at: IndexPath.init(row: 0, section: 0), at: UICollectionViewScrollPosition.left, animated: true)
         }
     }
-    
+//    //测试数据
+//    private func refreshCollData(category:String){
+//        cellText.removeAll()
+//        for i in 0...randomNumber(from: 8...17){
+//            cellText.append("\(category)的cell\(i)")
+//        }
+//        rightCollectionView.reloadData()
+//    }
+    //测试数据
     private func refreshCategoryData(){
         categoryText.removeAll()
-        for i in 0...randomNumber(from: 6...77){
+        for i in 0...randomNumber(from: 6...50){
             categoryText.append("segment\(i)")
         }
     }
@@ -155,51 +233,49 @@ extension CategoryViewController {
 
 extension CategoryViewController:UICollectionViewDelegateFlowLayout,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellText.count
+        return categoryGoods?.count ?? 4
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCellID, for: indexPath)
-//        cell.contentView.bounds.size = CGSize(width: 180, height: 180)
-//        cell.contentView.layer.borderColor = UIColor.blue.cgColor
-//        cell.contentView.layer.borderWidth = 1
-        //cell.backgroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)
-        let text = UITextView(frame: CGRect(x: 0, y: 0, width: cell.frame.width, height: cell.frame.height))
-        text.textAlignment = .center
-        text.text = cellText[indexPath.row]
-        text.isEditable = false
-        text.isSelectable = false
-        text.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
-        cell.addSubview(text)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCellID, for: indexPath) as! RightCollectionViewCell
+        if let goods = categoryGoods {
+            cell.imageView.kf.setImage(with: URL.init(string: BASE_URL + goods[indexPath.row].img), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+            cell.nameLabel.text = goods[indexPath.row].name
+            cell.sellPriceLabel.text = "￥\(goods[indexPath.row].sell_price)"
+            cell.marketPriceLabel.attributedText = YTools.textAddMiddleLine(text: "￥\(goods[indexPath.row].market_price)")
+        }
+
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let head = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID, for: indexPath)
-        let headText = UITextField(frame: CGRect(x: 0, y: 0, width: 100, height: headViewH))
-        headText.text = "ABC"
-        headText.attributedText = headText.text?.bold
-        headText.textAlignment = .center
-        headText.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        headText.font = UIFont.systemFont(ofSize: 18)
-        head.addSubview(headText)
-        return head
-    }
+//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        //设置headerVIew
+//        let head = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID, for: indexPath)
+//        let headText = UITextField(frame: CGRect(x: 0, y: 0, width: 100, height: headViewH))
+//        headText.text = "ABC"
+//        headText.attributedText = headText.text?.bold
+//        headText.textAlignment = .center
+//        headText.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+//        headText.font = UIFont.systemFont(ofSize: 18)
+//        head.addSubview(headText)
+//        return head
+//    }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cell.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+        cell.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        collectionView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
     }
 }
 

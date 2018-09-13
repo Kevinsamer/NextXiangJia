@@ -27,6 +27,10 @@
 		0902B7D5213FC437000E984F /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902B7D4213FC437000E984F /* SearchResultViewModel.swift */; };
 		0902B7D7213FC520000E984F /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902B7D6213FC520000E984F /* SearchResultModel.swift */; };
 		0902B7D921425413000E984F /* CategoryResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902B7D821425413000E984F /* CategoryResultController.swift */; };
+		0902B7DB21460C77000E984F /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902B7DA21460C77000E984F /* CategoryViewModel.swift */; };
+		0902B7DE21460CC2000E984F /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902B7DD21460CC2000E984F /* CategoryModel.swift */; };
+		0902B7E721475C1D000E984F /* RightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902B7E521475C1D000E984F /* RightCollectionViewCell.swift */; };
+		0902B7E821475C1D000E984F /* RightCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0902B7E621475C1D000E984F /* RightCollectionViewCell.xib */; };
 		0904C37820CFC0DE009A8282 /* CollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C37420CFC0DD009A8282 /* CollCell.swift */; };
 		0904C37920CFC0DE009A8282 /* CollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0904C37520CFC0DD009A8282 /* CollCell.xib */; };
 		0904C37A20CFC0DE009A8282 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C37620CFC0DD009A8282 /* ListCell.swift */; };
@@ -264,6 +268,10 @@
 		0902B7D4213FC437000E984F /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		0902B7D6213FC520000E984F /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
 		0902B7D821425413000E984F /* CategoryResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryResultController.swift; sourceTree = "<group>"; };
+		0902B7DA21460C77000E984F /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
+		0902B7DD21460CC2000E984F /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		0902B7E521475C1D000E984F /* RightCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightCollectionViewCell.swift; sourceTree = "<group>"; };
+		0902B7E621475C1D000E984F /* RightCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightCollectionViewCell.xib; sourceTree = "<group>"; };
 		0904C37420CFC0DD009A8282 /* CollCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollCell.swift; sourceTree = "<group>"; };
 		0904C37520CFC0DD009A8282 /* CollCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollCell.xib; sourceTree = "<group>"; };
 		0904C37620CFC0DD009A8282 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
@@ -554,6 +562,7 @@
 		0902698A2040F921007FF5B9 /* CategoryCenter */ = {
 			isa = PBXGroup;
 			children = (
+				0902B7DC21460CA2000E984F /* ViewModel */,
 				0908C8462060DBF500CED99E /* Model */,
 				0908C8472060DBFA00CED99E /* View */,
 				0908C8482060DC0100CED99E /* Controller */,
@@ -713,6 +722,14 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		0902B7DC21460CA2000E984F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0902B7DA21460C77000E984F /* CategoryViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		0904C37320CFC0DD009A8282 /* SearchResultCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -796,6 +813,7 @@
 		0908C8462060DBF500CED99E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0902B7DD21460CC2000E984F /* CategoryModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -804,6 +822,8 @@
 			isa = PBXGroup;
 			children = (
 				094C407320AAC3FF001E5C77 /* SMSegmentView */,
+				0902B7E521475C1D000E984F /* RightCollectionViewCell.swift */,
+				0902B7E621475C1D000E984F /* RightCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1441,6 +1461,7 @@
 				093B387520F83DFB0063E2F5 /* OrderDetailFooterView.xib in Resources */,
 				0992E45C20BC02D900B7902E /* cart_unSelect_btn@2x.png in Resources */,
 				0902699D2040FD70007FF5B9 /* CategoryCenter.storyboard in Resources */,
+				0902B7E821475C1D000E984F /* RightCollectionViewCell.xib in Resources */,
 				0978EF9320A2DE5D004BEACF /* address.txt in Resources */,
 				090269972040FD33007FF5B9 /* ShopCart.storyboard in Resources */,
 				0904C37B20CFC0DE009A8282 /* ListCell.xib in Resources */,
@@ -1628,6 +1649,7 @@
 				0982A22E20E224EA00D9890B /* NextShopCartViewController.swift in Sources */,
 				0943E1212117EAFA0026A7AC /* Bill.swift in Sources */,
 				0976F3C620EEF92A007A47A3 /* SearchHistoryManager.swift in Sources */,
+				0902B7DB21460C77000E984F /* CategoryViewModel.swift in Sources */,
 				0976F3D820EEF92A007A47A3 /* TextField.swift in Sources */,
 				0943E11B2117E69B0026A7AC /* Article.swift in Sources */,
 				0976F3D220EEF92A007A47A3 /* AttributedTextBlock.swift in Sources */,
@@ -1643,6 +1665,7 @@
 				0943529320D3AE6B00D4C31A /* GoodDetailBaseViewController.swift in Sources */,
 				0976F3C520EEF92A007A47A3 /* LocationSearchResultsViewController.swift in Sources */,
 				094919A2209B032600E82D0A /* ChangePasswordViewController.swift in Sources */,
+				0902B7E721475C1D000E984F /* RightCollectionViewCell.swift in Sources */,
 				09A7F581213537DD0095FC59 /* GoodsProduct.swift in Sources */,
 				090DDDF12092F20300A42E3F /* MyMemberViewController.swift in Sources */,
 				0992E46120BC02D900B7902E /* LZConfigFile.swift in Sources */,
@@ -1678,6 +1701,7 @@
 				0976F3C920EEF92A007A47A3 /* Assets.swift in Sources */,
 				0976F3A820EEF92A007A47A3 /* Optional+Extensions.swift in Sources */,
 				0943E1152117E39F0026A7AC /* AdPosition.swift in Sources */,
+				0902B7DE21460CC2000E984F /* CategoryModel.swift in Sources */,
 				096C42C1211300D900BBA4DE /* BaseModel.swift in Sources */,
 				0976F3BB20EEF92A007A47A3 /* ImagePickerViewController.swift in Sources */,
 				090DDE1D2093FCE900A42E3F /* LoginViewController.swift in Sources */,

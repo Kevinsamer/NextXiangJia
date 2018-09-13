@@ -25,6 +25,7 @@ class CategoryResultController: UICollectionViewController {
     private var searchBarLayer:CALayer?
     var keys:String = ""//搜索关键词
     var catID:Int = 0//分类id
+    var navTitle:String = "标题"//分类名（搜索前标题）
     private var currentPage = 1//当前页
     private var maxNumPerPage = 21//每页数据最多条数
     private var searchResultViewModel : SearchResultViewModel = SearchResultViewModel()
@@ -42,10 +43,12 @@ class CategoryResultController: UICollectionViewController {
     }
     private var categoryResults:[SearchResultModel]?{
         didSet{
-            if categoryResults != nil {
+            if categoryResults != nil && categoryResults?.count != 0 {
                 noDataLabel.removeFromSuperview()
                 self.collectionView?.reloadData()
             }else {
+                //nil展示无数据页
+                self.collectionView?.switchRefreshFooter(to: FooterRefresherState.removed)
                 setNoDataView()
             }
         }
@@ -267,9 +270,10 @@ extension CategoryResultController {
                 }else {
                     self.collectionView?.switchRefreshFooter(to: FooterRefresherState.normal)
                 }
-                if self.categoryResults != nil {
-                    self.collectionView?.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
-                }
+                
+//                if self.categoryResults != nil {
+//                    self.collectionView?.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
+//                }
                 self.collectionView?.reloadData()
             }else {
                 if self.searchResultViewModel.categoryResults?.count == self.maxNumPerPage {
@@ -290,7 +294,7 @@ extension CategoryResultController {
     
     private func setNavigationBar(){
         navigationItem.rightBarButtonItem = rightItem
-        navigationItem.title = "搜索结果"
+        navigationItem.title = navTitle
         navigationBarLayer = self.navigationController?.navigationBar.layer
         //navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     }
@@ -400,6 +404,7 @@ extension CategoryResultController : UISearchBarDelegate {
             searchBar.text = ""
             searchBar.placeholder = keys
             requestSearchResultData(word: keys, page: currentPage)
+            self.navigationItem.title = "搜索结果"
         }
         dismissAlphaView()
         searchBar.resignFirstResponder()
@@ -469,18 +474,28 @@ extension CategoryResultController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searchResults?.count ?? 0
+        return keys == "" ? categoryResults?.count ?? 4 : searchResults?.count ?? 4
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if imageButton.isSelected {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: listCellID, for: indexPath) as! ListCell
             cell.backgroundColor = UIColor.white
-            if let results = searchResults {
-                cell.ImageView.kf.setImage(with: URL.init(string: BASE_URL + "\(results[indexPath.row].img)"), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
-                cell.GoodsInfo.text = "\(results[indexPath.row].name)"
-                cell.NewPrice.text = "￥\(results[indexPath.row].sell_price)"
-                cell.OldPrice.attributedText = YTools.textAddMiddleLine(text: "￥\(results[indexPath.row].market_price)")
+            
+            if keys == "" {
+                if let results = categoryResults {
+                    cell.ImageView.kf.setImage(with: URL.init(string: BASE_URL + "\(results[indexPath.row].img)"), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+                    cell.GoodsInfo.text = "\(results[indexPath.row].name)"
+                    cell.NewPrice.text = "￥\(results[indexPath.row].sell_price)"
+                    cell.OldPrice.attributedText = YTools.textAddMiddleLine(text: "￥\(results[indexPath.row].market_price)")
+                }
+            }else {
+                if let results = searchResults {
+                    cell.ImageView.kf.setImage(with: URL.init(string: BASE_URL + "\(results[indexPath.row].img)"), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+                    cell.GoodsInfo.text = "\(results[indexPath.row].name)"
+                    cell.NewPrice.text = "￥\(results[indexPath.row].sell_price)"
+                    cell.OldPrice.attributedText = YTools.textAddMiddleLine(text: "￥\(results[indexPath.row].market_price)")
+                }
             }
             
             
@@ -489,11 +504,20 @@ extension CategoryResultController {
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collCellID, for: indexPath) as! CollCell
             cell.backgroundColor = UIColor.white
-            if let results = searchResults {
-                cell.ImageView.kf.setImage(with: URL.init(string: BASE_URL + "\(results[indexPath.row].img)"), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
-                cell.GoodsInfo.text = "\(results[indexPath.row].name)"
-                cell.NewPrice.text = "￥\(results[indexPath.row].sell_price)"
-                cell.OldPrice.attributedText = YTools.textAddMiddleLine(text: "￥\(results[indexPath.row].market_price)")
+            if keys == "" {
+                if let results = categoryResults {
+                    cell.ImageView.kf.setImage(with: URL.init(string: BASE_URL + "\(results[indexPath.row].img)"), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+                    cell.GoodsInfo.text = "\(results[indexPath.row].name)"
+                    cell.NewPrice.text = "￥\(results[indexPath.row].sell_price)"
+                    cell.OldPrice.attributedText = YTools.textAddMiddleLine(text: "￥\(results[indexPath.row].market_price)")
+                }
+            }else {
+                if let results = searchResults {
+                    cell.ImageView.kf.setImage(with: URL.init(string: BASE_URL + "\(results[indexPath.row].img)"), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+                    cell.GoodsInfo.text = "\(results[indexPath.row].name)"
+                    cell.NewPrice.text = "￥\(results[indexPath.row].sell_price)"
+                    cell.OldPrice.attributedText = YTools.textAddMiddleLine(text: "￥\(results[indexPath.row].market_price)")
+                }
             }
             //print("\(indexPath.row)")
             return cell

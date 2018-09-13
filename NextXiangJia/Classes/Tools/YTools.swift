@@ -179,6 +179,18 @@ public class YTools{
         }
         return selectedProduct
     }
+    //截取数组前num个
+    static func splitArray(array:[NSObject], num:Int) -> [NSObject]{
+        if array.count <= num {
+            return array
+        }else {
+            var temp = [NSObject]()
+            for i in 0..<num {
+                temp.append(array[i])
+            }
+            return temp
+        }
+    }
     
 }
 //MARK: - objc func
