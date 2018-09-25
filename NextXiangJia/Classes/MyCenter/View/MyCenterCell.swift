@@ -18,14 +18,14 @@ class MyCenterCell: UICollectionViewCell {
         super.init(frame: frame)
         let cellW = self.bounds.width
         labelFA = UILabel(frame: CGRect(x: cellW / 2 - 15, y: 20, width: 30, height: 30))
-        labelFA?.textColor = UIColor.random.lighten(by: 0.4)
+        labelFA?.textColor = myCenterColors.random()
         labelText = UILabel(frame: CGRect(x: cellW / 2 - 40, y: 60, width: 80, height: 20))
 //        labelText?.backgroundColor = UIColor.red.lighten(by: 0.8)
 //        labelFA?.backgroundColor = UIColor.red.lighten(by: 0.8)
         labelFA?.textAlignment = .center
         labelText?.textAlignment = .center
         labelText?.font = UIFont.systemFont(ofSize: 13)
-        labelFA?.font = UIFont.fontAwesome(ofSize: 25, style: .solid)
+        labelFA?.font = UIFont.fontAwesome(ofSize: 24, style: .solid)
         self.addSubview(labelFA!)
         self.addSubview(labelText!)
     }

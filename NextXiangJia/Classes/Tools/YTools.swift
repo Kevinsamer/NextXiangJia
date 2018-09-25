@@ -13,7 +13,7 @@ private var viewC:UIViewController?
 
 public class YTools{
     
-    public static func setNavigationBarAndTabBar(navCT:UINavigationController, tabbarCT:UITabBarController? = nil, color:UIColor = UIColor.white, fontSize:CGFloat = 18, titleName:String? = nil, navItem:UINavigationItem){
+    class func setNavigationBarAndTabBar(navCT:UINavigationController, tabbarCT:UITabBarController? = nil, color:UIColor = UIColor.white, fontSize:CGFloat = 18, titleName:String? = nil, navItem:UINavigationItem){
         //1.隐藏tabbar
         //tabbarCT.tabBar.isHidden = true
         //2.修改navigationBar
@@ -25,13 +25,13 @@ public class YTools{
         
     }
     //显示toast
-    public static func showMyToast(rootView: UIView, message:String, duration:TimeInterval = 3.0, position:ToastPosition = .bottom){
+    class func showMyToast(rootView: UIView, message:String, duration:TimeInterval = 3.0, position:ToastPosition = .center){
         var myStyle = ToastStyle()
         myStyle.backgroundColor = UIColor(named: "global_orange")!
         rootView.makeToast(message, duration: duration, position: position, style: myStyle)
     }
     
-    public static func getCategoryLine(categoryNum : CGFloat,num : Int) -> Int{
+    class func getCategoryLine(categoryNum : CGFloat,num : Int) -> Int{
         if (categoryNum / CGFloat(num)) - CGFloat(Int(categoryNum) / num) != 0{
             //print(categoryNum / CGFloat(num))
             return Int(categoryNum) / num + 1
@@ -41,7 +41,7 @@ public class YTools{
     }
     
     //通过class_copyIvarList来查看类中所有的属性--p1:目标类  p2:属性个数的指针(返回时包含返回数组的长度)。该函数返回所有属性的地址
-    public static func printKVCKey(_ cls: AnyClass?){
+    class func printKVCKey(_ cls: AnyClass?){
         var count : UInt32 = 0
         let ivars = class_copyIvarList(cls, &count)!
         //循环count次，查看所有属性
@@ -52,7 +52,7 @@ public class YTools{
         }
     }
     //文字添加中划线，返回NSAttributedString
-    public static func textAddMiddleLine(text: String) -> NSAttributedString{
+    class func textAddMiddleLine(text: String) -> NSAttributedString{
         let attributeText = NSMutableAttributedString(string: text)
         attributeText.addAttribute(NSAttributedStringKey.baselineOffset, value: 0, range: NSMakeRange(0, attributeText.length))
         attributeText.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeText.length))
@@ -60,22 +60,22 @@ public class YTools{
         return attributeText
     }
     //获取当前navigationBar高度
-    public static func getCurrentNavigationBarHeight(navCT: UINavigationController) -> CGFloat{
+    class func getCurrentNavigationBarHeight(navCT: UINavigationController) -> CGFloat{
         return navCT.navigationBar.frame.height
     }
     //测试模式打印信息
-    public static func myPrint(content: String, mode: Bool){
+    class func myPrint(content: String, mode: Bool){
         if mode {
             print(content)
         }
     }
     //处理手机号，4-7位改为*
-    public static func changePhoneNum(phone: String) -> String{
+    class func changePhoneNum(phone: String) -> String{
         return phone.slicing(from: 0, length: 3)! + "****" + phone.slicing(from: 7, length: 4)!
     }
     
     //处理价格￥和小数点中间的数字加粗放大
-    public static func changePrice(price: String,fontNum: CGFloat) -> NSMutableAttributedString{
+    class func changePrice(price: String,fontNum: CGFloat) -> NSMutableAttributedString{
         let ￥ = price.slicing(from: 0, to: 1)
         let integer = price.splitted(by: ".")[0].slicing(at: 1)!
         let decimal = price.splitted(by: ".")[1]
@@ -89,23 +89,23 @@ public class YTools{
         return attributedString
     }
     //将date转为2018-11-11 11:11:11类型的字符串
-    public static func dateToString(date:Date) -> String{
+    class func dateToString(date:Date) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return dateFormatter.string(from: date)
     }
     //字符串转data,失败返回1970.1.1
-    public static func stringToDate(str:String) -> Date{
+    class func stringToDate(str:String) -> Date{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return dateFormatter.date(from: str) ?? Date(timeIntervalSince1970: 0)
     }
     //颜色数组中随机返回一个颜色
-    public static func randomColorIn(colors colorArray:[UIColor]) -> UIColor{
+    class func randomColorIn(colors colorArray:[UIColor]) -> UIColor{
         return colorArray[Int.random(between: 0, and: colorArray.count - 1)].withAlphaComponent(0.3)
     }
     //将商品规格中的售价放入数组并由大到小排序后返回
-    static func collectSellPriceFromGoodsProduct(goodsProducts products: [GoodsProduct]) -> [Double]{
+    class func collectSellPriceFromGoodsProduct(goodsProducts products: [GoodsProduct]) -> [Double]{
         var priceArray:[Double] = [Double]()
         for product in products {
             priceArray.append(Double(product.sell_price) ?? 0.00)
@@ -115,7 +115,7 @@ public class YTools{
     }
     
     //将商品规格中的原价放入数组并由大到小排序后返回
-    static func collectMarketPriceFromGoodsProduct(goodsProducts products: [GoodsProduct]) -> [Double]{
+    class func collectMarketPriceFromGoodsProduct(goodsProducts products: [GoodsProduct]) -> [Double]{
         var priceArray:[Double] = [Double]()
         for product in products {
             priceArray.append(Double(product.market_price) ?? 0.00)
@@ -123,7 +123,7 @@ public class YTools{
         return priceArray.sorted(){$0 > $1}
     }
     //传入商品的货品数组，返回该商品的规格类型数组
-    static func getSpecValuesFromProductSpec(products: [GoodsProduct]) -> [GoodsTypeModel]{
+    class func getSpecValuesFromProductSpec(products: [GoodsProduct]) -> [GoodsTypeModel]{
         let specNum = products[0].productSpecs.count
         var models:[GoodsTypeModel] = [GoodsTypeModel]()
         for i in 0..<specNum {
@@ -148,7 +148,7 @@ public class YTools{
         return models
     }
     //传入一个货品信息，返回该货品的详细规格
-    static func getGoodsProductSpecs(product: GoodsProduct) -> String{
+    class func getGoodsProductSpecs(product: GoodsProduct) -> String{
         var strs:String = ""
         for spec in product.productSpecs {
             if spec.type == 1 {
@@ -161,7 +161,7 @@ public class YTools{
         return strs
     }
     //通过productId和选择数量获取已选的货品
-    static func getSelectedProductById(sizeModel model:SizeAttributeModel, goodsProducts products:[GoodsProduct]?) -> SelectedProduct{
+    class func getSelectedProductById(sizeModel model:SizeAttributeModel, goodsProducts products:[GoodsProduct]?) -> SelectedProduct{
         let selectedProduct:SelectedProduct = SelectedProduct()
         selectedProduct.selectedNum = Int(model.count)
         selectedProduct.productType = model.productType
@@ -180,7 +180,7 @@ public class YTools{
         return selectedProduct
     }
     //截取数组前num个
-    static func splitArray(array:[NSObject], num:Int) -> [NSObject]{
+    class func splitArray(array:[NSObject], num:Int) -> [NSObject]{
         if array.count <= num {
             return array
         }else {

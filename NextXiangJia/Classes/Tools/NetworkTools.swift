@@ -17,6 +17,9 @@ let GOODWEBDETAIL_URL = BASE_URL + "siteapp/productsapp/id/"//图文详情接口
 let SEARCH_URL = BASE_URL + "app/getSearch"//搜索接口 传搜索内容和分页数
 let CATEGORYLIST_URL = BASE_URL + "app/getGoodslist"//分类搜索结果  传分类id和分页数
 let CATEGORYS_URL = BASE_URL + "app/typeleft"//分类数据接口  可选参数父分类id
+let LOGIN_URL = BASE_URL + "app/login_act"//登录接口
+let REGISTER_URL = BASE_URL + "app/reg_act"//注册接口
+let AUTHCODE_URL = BASE_URL + "site/getCaptcha/random"//验证码图片链接
 enum MethodType {
     case GET
     case POST

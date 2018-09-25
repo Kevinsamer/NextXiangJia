@@ -31,6 +31,7 @@
 		0902B7DE21460CC2000E984F /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902B7DD21460CC2000E984F /* CategoryModel.swift */; };
 		0902B7E721475C1D000E984F /* RightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902B7E521475C1D000E984F /* RightCollectionViewCell.swift */; };
 		0902B7E821475C1D000E984F /* RightCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0902B7E621475C1D000E984F /* RightCollectionViewCell.xib */; };
+		0902B80B214A56B7000E984F /* AppUserCoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902B80A214A56B7000E984F /* AppUserCoreDataHelper.swift */; };
 		0904C37820CFC0DE009A8282 /* CollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C37420CFC0DD009A8282 /* CollCell.swift */; };
 		0904C37920CFC0DE009A8282 /* CollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0904C37520CFC0DD009A8282 /* CollCell.xib */; };
 		0904C37A20CFC0DE009A8282 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0904C37620CFC0DD009A8282 /* ListCell.swift */; };
@@ -212,6 +213,9 @@
 		09A7F581213537DD0095FC59 /* GoodsProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F580213537DD0095FC59 /* GoodsProduct.swift */; };
 		09A7F583213538A10095FC59 /* GoodsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F582213538A10095FC59 /* GoodsSpec.swift */; };
 		09A7F585213624580095FC59 /* ProductSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7F584213624580095FC59 /* ProductSpec.swift */; };
+		09B1A553214F9476006BC8B2 /* UserMemberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B1A552214F9476006BC8B2 /* UserMemberModel.swift */; };
+		09B1A555214FA097006BC8B2 /* MyCenterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B1A554214FA097006BC8B2 /* MyCenterViewModel.swift */; };
+		09B1A55721509EED006BC8B2 /* MyRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B1A55621509EED006BC8B2 /* MyRegex.swift */; };
 		09D1AE2E209A94B9004C4DA4 /* UIButton-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */; };
 		09E37272209BEC1400F6E8B3 /* RegistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37271209BEC1400F6E8B3 /* RegistViewController.swift */; };
 		09E37274209BF43800F6E8B3 /* AuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E37273209BF43800F6E8B3 /* AuthCodeView.swift */; };
@@ -272,6 +276,7 @@
 		0902B7DD21460CC2000E984F /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		0902B7E521475C1D000E984F /* RightCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightCollectionViewCell.swift; sourceTree = "<group>"; };
 		0902B7E621475C1D000E984F /* RightCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RightCollectionViewCell.xib; sourceTree = "<group>"; };
+		0902B80A214A56B7000E984F /* AppUserCoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUserCoreDataHelper.swift; sourceTree = "<group>"; };
 		0904C37420CFC0DD009A8282 /* CollCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollCell.swift; sourceTree = "<group>"; };
 		0904C37520CFC0DD009A8282 /* CollCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollCell.xib; sourceTree = "<group>"; };
 		0904C37620CFC0DD009A8282 /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
@@ -453,6 +458,9 @@
 		09A7F580213537DD0095FC59 /* GoodsProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsProduct.swift; sourceTree = "<group>"; };
 		09A7F582213538A10095FC59 /* GoodsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsSpec.swift; sourceTree = "<group>"; };
 		09A7F584213624580095FC59 /* ProductSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSpec.swift; sourceTree = "<group>"; };
+		09B1A552214F9476006BC8B2 /* UserMemberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMemberModel.swift; sourceTree = "<group>"; };
+		09B1A554214FA097006BC8B2 /* MyCenterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCenterViewModel.swift; sourceTree = "<group>"; };
+		09B1A55621509EED006BC8B2 /* MyRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRegex.swift; sourceTree = "<group>"; };
 		09D1AE2D209A94B9004C4DA4 /* UIButton-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-extension.swift"; sourceTree = "<group>"; };
 		09E37271209BEC1400F6E8B3 /* RegistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistViewController.swift; sourceTree = "<group>"; };
 		09E37273209BF43800F6E8B3 /* AuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeView.swift; sourceTree = "<group>"; };
@@ -595,6 +603,7 @@
 		0902698D2040F921007FF5B9 /* MyCenter */ = {
 			isa = PBXGroup;
 			children = (
+				09B1A551214F9444006BC8B2 /* ViewModel */,
 				0908C8432060DBD500CED99E /* Model */,
 				0908C8442060DBDB00CED99E /* View */,
 				0908C8452060DBE200CED99E /* Controller */,
@@ -615,6 +624,7 @@
 		0902698F2040F921007FF5B9 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				09B1A54E214A64AC006BC8B2 /* CoreDataTools */,
 				090269AE20415776007FF5B9 /* Extension */,
 				090269AC2041399B007FF5B9 /* fontawesome.ttf */,
 				090269B32043B392007FF5B9 /* Common.swift */,
@@ -622,6 +632,7 @@
 				0992E46820C617A000B7902E /* NetworkTools.swift */,
 				0904C37C20D0AA32009A8282 /* CommunicationTools.swift */,
 				0904C3A120D0FC0F009A8282 /* SendDataProtocol.swift */,
+				09B1A55621509EED006BC8B2 /* MyRegex.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -778,6 +789,7 @@
 			isa = PBXGroup;
 			children = (
 				09E9643E21225DDD0095180C /* MyCollectionModel.swift */,
+				09B1A552214F9476006BC8B2 /* UserMemberModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1304,6 +1316,22 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		09B1A54E214A64AC006BC8B2 /* CoreDataTools */ = {
+			isa = PBXGroup;
+			children = (
+				0902B80A214A56B7000E984F /* AppUserCoreDataHelper.swift */,
+			);
+			path = CoreDataTools;
+			sourceTree = "<group>";
+		};
+		09B1A551214F9444006BC8B2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				09B1A554214FA097006BC8B2 /* MyCenterViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		09E96439212121510095180C /* MyCollectionCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1518,12 +1546,14 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/CircleLabel/CircleLabel.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/FSPagerView/FSPagerView.framework",
 				"${BUILT_PRODUCTS_DIR}/FontAwesome.swift/FontAwesome_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ImageRow/ImageRow.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/MaterialTapTargetPrompt-iOS/MaterialTapTargetPrompt_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/PullToRefreshKit/PullToRefreshKit.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
@@ -1539,12 +1569,14 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CircleLabel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSPagerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesome_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageRow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialTapTargetPrompt_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PullToRefreshKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
@@ -1613,6 +1645,7 @@
 				0976F3BA20EEF92A007A47A3 /* DatePickerViewController.swift in Sources */,
 				09E37274209BF43800F6E8B3 /* AuthCodeView.swift in Sources */,
 				0943E1132117E1550026A7AC /* AdManage.swift in Sources */,
+				09B1A55721509EED006BC8B2 /* MyRegex.swift in Sources */,
 				090DDDDF2092EE4500A42E3F /* MyMessageViewController.swift in Sources */,
 				0976F3B220EEF92A007A47A3 /* UITextView+Extensions.swift in Sources */,
 				090DDDE72092F04700A42E3F /* MyAddressViewController.swift in Sources */,
@@ -1661,6 +1694,7 @@
 				0976F3AB20EEF92A007A47A3 /* UIApplication+Extensions.swift in Sources */,
 				090769A720ECAD8600E6FE93 /* MyAlertController.swift in Sources */,
 				0978EF9920A41B71004BEACF /* FindPasswordTabViewController.swift in Sources */,
+				09B1A553214F9476006BC8B2 /* UserMemberModel.swift in Sources */,
 				0976F3AC20EEF92A007A47A3 /* UIColor+Extensions.swift in Sources */,
 				0943529320D3AE6B00D4C31A /* GoodDetailBaseViewController.swift in Sources */,
 				0976F3C520EEF92A007A47A3 /* LocationSearchResultsViewController.swift in Sources */,
@@ -1675,6 +1709,7 @@
 				0976F3AE20EEF92A007A47A3 /* UIImageView+Extensions.swift in Sources */,
 				090DDDD72092C63600A42E3F /* MyRefundApplicationViewController.swift in Sources */,
 				090769A420ECA04B00E6FE93 /* FillOrderGoodsCell.swift in Sources */,
+				09B1A555214FA097006BC8B2 /* MyCenterViewModel.swift in Sources */,
 				090DDDD92092C96100A42E3F /* MySuggestionsViewController.swift in Sources */,
 				0976F3CC20EEF92A007A47A3 /* PhotoLayout.swift in Sources */,
 				0976F3CA20EEF92A007A47A3 /* PhotoLibraryPickerViewController.swift in Sources */,
@@ -1731,6 +1766,7 @@
 				0978EF9520A2DE5D004BEACF /* Extention.swift in Sources */,
 				094C407920AAC400001E5C77 /* SMSegmentAppearance.swift in Sources */,
 				093B387320F83DDF0063E2F5 /* OrderDetailFooterView.swift in Sources */,
+				0902B80B214A56B7000E984F /* AppUserCoreDataHelper.swift in Sources */,
 				0976F3C020EEF92A007A47A3 /* LocaleInfo.swift in Sources */,
 				093B386D20F833E80063E2F5 /* HomeCollHeadView.swift in Sources */,
 				094352CF20DB7D9B00D4C31A /* SizeAttributeModel.swift in Sources */,

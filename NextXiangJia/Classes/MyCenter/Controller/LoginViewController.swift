@@ -14,6 +14,48 @@ private let buttonW: CGFloat = (finalScreenW - 80) / 3
 private var usernameString = ""
 private var passwordString = ""
 class LoginViewController: UIViewController {
+    private let myCenterViewModel:MycenterViewModel = MycenterViewModel()
+    private var loginErrorInfo:String?{
+        didSet{
+            if loginErrorInfo != nil && AppDelegate.appUser?.id == -1{
+                YTools.showMyToast(rootView: self.view, message: loginErrorInfo ?? "系统错误")
+            }
+        }
+    }
+    private var userMember:UserMemberModel?{
+        didSet{
+            if let user = userMember {
+                AppDelegate.appUser?.id = Int32(user.id)
+                AppDelegate.appUser?.username = user.username
+                AppDelegate.appUser?.password = user.password
+                AppDelegate.appUser?.head_ico = user.head_ico
+                AppDelegate.appUser?.user_id = Int32(user.user_id)
+                AppDelegate.appUser?.true_name = user.true_name
+                AppDelegate.appUser?.telephone = user.telephone
+                AppDelegate.appUser?.mobile = user.mobile
+                AppDelegate.appUser?.area = user.area
+                AppDelegate.appUser?.contact_addr = user.contact_addr
+                AppDelegate.appUser?.qq = user.qq
+                AppDelegate.appUser?.sex = Int32(user.sex)
+                AppDelegate.appUser?.birthday = user.birthday
+                AppDelegate.appUser?.group_id = Int32(user.group_id)
+                AppDelegate.appUser?.exp = Int32(user.exp)
+                AppDelegate.appUser?.point = Int32(user.point)
+                AppDelegate.appUser?.message_ids = user.message_ids
+                AppDelegate.appUser?.time = user.time
+                AppDelegate.appUser?.zip = user.zip
+                AppDelegate.appUser?.status = Int32(user.status)
+                AppDelegate.appUser?.prop = user.prop
+                AppDelegate.appUser?.balance = user.balance
+                AppDelegate.appUser?.last_login = user.last_login
+                AppDelegate.appUser?.custom = user.custom
+                AppDelegate.appUser?.email = user.email
+                AppUserCoreDataHelper.AppUserHelper.modifyAppUser(appUser: AppDelegate.appUser!)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
     //MARK: - 懒加载
     lazy var username: MyTextField = {
         let name = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
@@ -216,8 +258,31 @@ extension LoginViewController {
         self.navigationController?.show(vc, sender: self)
     }
     @objc func loginButtonClicked(){
-        YTools.showMyToast(rootView: self.view, message: "登录成功")
-        //self.navigationController?.popViewController(animated: true)
+        //1.输入框验证
+        if let usernameText = self.username.text {
+            if let passwordText = self.password.text {
+                let matcher = MyRegex(usernameRegex)
+                if matcher.match(input: usernameText){
+                    //匹配成功
+                    if passwordText.count >= 6 && passwordText.count <= 32{
+                        //密码正确
+                        myCenterViewModel.requestLoginData(username: usernameText, password: passwordText) {
+                            self.userMember = self.myCenterViewModel.userMember
+                            self.loginErrorInfo = self.myCenterViewModel.errorInfo
+                        }
+                    }else {
+                        YTools.showMyToast(rootView: self.view, message: "密码长度为6-32个字符")
+                    }
+                }else{
+                    YTools.showMyToast(rootView: self.view, message: "用户名长度不能少于2个字符，可以为字母、数字、下划线、中文")
+                }
+            }else {
+                YTools.showMyToast(rootView: self.view, message: "请填写密码")
+            }
+        }else {
+            YTools.showMyToast(rootView: self.view, message: "请填写用户名/邮箱/手机号")
+        }
+        
     }
     @objc func loginByQQClicked(){
         YTools.showMyToast(rootView: self.view, message: "QQ登录")

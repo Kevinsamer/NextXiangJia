@@ -34,4 +34,9 @@ pod "SwiftEventBus", :tag => "3.0.0", :git => "https://github.com/cesarferreira/
 #swift语法糖
 #pod "SwifterSwift", :git => "https://github.com/SwifterSwift/SwifterSwift.git","~> 4.2.0"          # All Extensions
 pod "SwifterSwift","~> 4.2.0"          # All Extensions
+#全屏提醒
+pod "MaterialTapTargetPrompt-iOS"
+
+#MD5
+pod "CryptoSwift", "~>0.7.2"
 end

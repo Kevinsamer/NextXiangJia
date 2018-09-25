@@ -153,6 +153,11 @@ extension MyInfoViewController {
             cell.tintColor = UIColor(named: "dark_gray")
         }).onCellSelection({ (cell, row) in
             print("退出登录")
+            if AppDelegate.appUser?.id != -1 {
+                AppUserCoreDataHelper.AppUserHelper.delAppUser {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
         })
         
         // 开启导航辅助，并且遇到被禁用的行就隐藏导航

@@ -12,9 +12,12 @@ import IQKeyboardManagerSwift
 var Areas:[Area] = [Area]()
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
- 
     var window: UIWindow?
-
+    static var appUser:AppUser?{
+        didSet{
+    
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -42,6 +45,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Areas = MyAreaPickerView.getDataFromTxt()!
         //TODO:数据回调
+        
+        //firstOpenUserInit
+        if AppUserCoreDataHelper.AppUserHelper.getAppUser() == nil {
+            AppUserCoreDataHelper.AppUserHelper.insertAppUser()
+        }
+        AppDelegate.appUser = AppUserCoreDataHelper.AppUserHelper.getAppUser()
         return true
     }
     

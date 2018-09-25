@@ -10,6 +10,7 @@ import UIKit
 import FontAwesome_swift
 import PullToRefreshKit
 import Kingfisher
+import MaterialTapTargetPrompt_iOS
 private let leftWidth:CGFloat = 100
 private let headViewH:CGFloat = 30
 private var categoryNum = 10
@@ -63,6 +64,17 @@ class CategoryViewController: UIViewController {
     }
     var categoryViewModel:CategoryViewModel = CategoryViewModel()
     // MARK: - 懒加载属性
+    
+    lazy var promptButton: UIButton = {[unowned self] in
+        let button = UIButton(type: UIButtonType.system)
+        button.frame = CGRect(x: finalScreenW - 50, y: self.rightCollectionView.frame.height / 2 - 25 + finalStatusBarH + finalNavigationBarH, width: 50, height: 50)
+        button.size = CGSize(width: 50, height: 50)
+        button.layer.cornerRadius = 25
+        button.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        button.addTarget(self, action: #selector(dismissPromptButton), for: UIControlEvents.touchUpInside)
+        return button
+    }()
+    
     lazy var rightCollectionView: UICollectionView = {
         var layout = UICollectionViewFlowLayout()
 //        layout.headerReferenceSize = CGSize(width: 100, height: 10)
@@ -121,8 +133,6 @@ class CategoryViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         setUI()
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -133,6 +143,17 @@ class CategoryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if AppDelegate.appUser?.isFirstOpen ?? true {
+            self.view.addSubview(promptButton)
+            showPrompt()
+            AppDelegate.appUser?.isFirstOpen = false
+            AppUserCoreDataHelper.AppUserHelper.modifyAppUser(appUser: AppDelegate.appUser!)
+            AppDelegate.appUser = AppUserCoreDataHelper.AppUserHelper.getAppUser()
+        }
     }
 }
 //设置UI界面
@@ -228,6 +249,25 @@ extension CategoryViewController {
         for i in 0...randomNumber(from: 6...50){
             categoryText.append("segment\(i)")
         }
+    }
+    
+    @objc private func showPrompt(){
+        let prompt = MaterialTapTargetPrompt(target: promptButton, type: .circle)
+        prompt.circleColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 0.6941085188)
+        prompt.textPostion = .centerLeft
+        prompt.secondaryFont = UIFont.systemFont(ofSize: 30)
+        prompt.primaryText = ""
+        prompt.secondaryText = "      左滑查看更多"
+        prompt.dismissed = {
+            self.dismissPromptButton()
+        }
+        prompt.action = {
+            self.dismissPromptButton()
+        }
+    }
+    
+    @objc private func dismissPromptButton(){
+        self.promptButton.removeFromSuperview()
     }
 }
 

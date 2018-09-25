@@ -24,6 +24,7 @@ private let fa:[FontAwesome] = [.trophy,.tags,.reply,.file,.comment,.comments,.b
 private let faText = ["我的积分","我的代金券","退款申请","站点建议","商品咨询","商品评价","短信息","收藏夹","账户余额","在线充值","地址管理","个人资料","修改密码"]
 private let rootScrollViewH : CGFloat = headViewUsedH + headToBodyH + bodyViewH
 class MyCenterViewController: UIViewController {
+    
     //MARK: - sb拖拽控件
     @IBOutlet var headView: UIView!
     
@@ -65,9 +66,21 @@ class MyCenterViewController: UIViewController {
 //        label.adjustsFontSizeToFitWidth = true // 改变字号使所有字符能显示
         return label
     }()
+    
+    lazy var topInfoView: UIView = {
+        let view = UIView(frame: CGRect(x: 10, y: 520, width: finalScreenW - 20, height: 70))
+        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        view.layer.cornerRadius = 10
+        view.layer.shadowOpacity = 0.3
+        view.layer.shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        view.layer.shadowRadius = 10
+        view.layer.shadowOffset = .zero
+        return view
+    }()
+    
     lazy var myBalanceLabel : UILabel = {
-        let label = UILabel(frame: CGRect(x: 10, y: 520, width: (headLabelW), height: headLabelH))
-        label.textColor = .white
+        let label = UILabel(frame: CGRect(x: 0, y: 40, width: (headLabelW), height: headLabelH))
+        label.textColor = .black
         label.text = "余额"
         label.font = UIFont(name: "Arial", size: 15.0)
         label.textAlignment = .center
@@ -75,44 +88,44 @@ class MyCenterViewController: UIViewController {
     }()
     //余额num
     lazy var myBalanceNum : UILabel = {
-        let label = UILabel(frame: CGRect(x: 10, y: 550, width: (headLabelW), height: headLabelH))
-        label.textColor = .white
+        let label = UILabel(frame: CGRect(x: 0, y: 10, width: (headLabelW), height: headLabelH))
+        label.textColor = .black
 //        label.text = "10.00"
         label.textAlignment = .center
-        label.font = UIFont(name: "Arial", size: 15.0)
+        label.font = UIFont(name: "HelveticaNeue-CondensedBold", size: 20.0)
         return label
     }()
-    lazy var myMemberGroupLabel : UILabel = {
-        let label = UILabel(frame: CGRect(x: finalScreenW / 3 + 10, y: 520, width: (headLabelW ), height: headLabelH))
-        label.textColor = .white
-        label.text = "我的会员组"
+    lazy var myExpGroupLabel : UILabel = {
+        let label = UILabel(frame: CGRect(x: (finalScreenW - 20) / 3, y: 40, width: (headLabelW ), height: headLabelH))
+        label.textColor = .black
+        label.text = "经验值"
         label.textAlignment = .center
         label.font = UIFont(name: "Arial", size: 15.0)
         return label
     }()
-    lazy var myMemberGroupDetail : UILabel = {
-        let label = UILabel(frame: CGRect(x: finalScreenW / 3 + 10, y: 550, width: (headLabelW ), height: headLabelH))
-        label.textColor = .white
+    lazy var myExpGroupDetail : UILabel = {
+        let label = UILabel(frame: CGRect(x: (finalScreenW - 20) / 3, y: 10, width: (headLabelW ), height: headLabelH))
+        label.textColor = .black
 //        label.text = ""
         label.textAlignment = .center
-        label.font = UIFont(name: "Arial", size: 15.0)
+        label.font = UIFont(name: "HelveticaNeue-CondensedBold", size: 20.0)
         return label
     }()
     lazy var myScoreLabel : UILabel = {
-        let label = UILabel(frame: CGRect(x: finalScreenW / 3 * 2 + 10, y: 520, width: (headLabelW), height: headLabelH))
-        label.textColor = .white
-        label.text = "我的会员积分"
+        let label = UILabel(frame: CGRect(x: (finalScreenW - 20) / 3 * 2, y: 40, width: (headLabelW), height: headLabelH))
+        label.textColor = .black
+        label.text = "积分"
         label.textAlignment = .center
         label.font = UIFont(name: "Arial", size: 15.0)
         return label
     }()
     //积分num
     lazy var myScoreNum : UILabel = {
-        let label = UILabel(frame: CGRect(x: finalScreenW / 3 * 2 + 10, y: 550, width: (headLabelW), height: headLabelH))
-        label.textColor = .white
+        let label = UILabel(frame: CGRect(x: (finalScreenW - 20) / 3 * 2, y: 10, width: (headLabelW), height: headLabelH))
+        label.textColor = .black
 //        label.text = "0.00"
         label.textAlignment = .center
-        label.font = UIFont(name: "Arial", size: 15.0)
+        label.font = UIFont(name: "HelveticaNeue-CondensedBold", size: 20.0)
         return label
     }()
     lazy var testSwitchButton : UIButton = {
@@ -121,6 +134,13 @@ class MyCenterViewController: UIViewController {
         button.setTitle("Test data", for: UIControlState.normal)
         button.addTarget(self, action: #selector(testButtonClicked), for: UIControlEvents.touchUpInside)
         return button
+    }()
+    
+    lazy var settingBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage.init(named: "mycenter_navigation_setting_icon"), for: UIControlState.normal)
+        btn.addTarget(self, action: #selector(pushToSetting), for: UIControlEvents.touchUpInside)
+        return btn
     }()
 
     // MARK: - 系统回调函数
@@ -140,6 +160,7 @@ class MyCenterViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //self.tabBarController?.tabBar.isHidden = false
+        initDatas()
     }
 
 }
@@ -158,22 +179,31 @@ extension MyCenterViewController{
         setupBodyView()
     }
     private func initDatas(){
-        headImageView.image = UIImage(named: "loading")
-        myIDLabel.text = "This is My ID"
-        myBalanceNum.text = "111.00"
-        myScoreNum.text = "0.00"
-        myMemberGroupDetail.text = ""
+        if AppDelegate.appUser?.id == -1 {
+            headImageView.image = UIImage(named: "loading")
+            myIDLabel.text = "登录/注册"
+            myBalanceNum.text = "0.00"
+            myScoreNum.text = "0"
+            myExpGroupDetail.text = "0"
+        }else {
+            headImageView.kf.setImage(with: URL.init(string: BASE_URL + (AppDelegate.appUser?.head_ico)!), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+            myIDLabel.text = AppDelegate.appUser?.username
+            myBalanceNum.text = "\(AppDelegate.appUser?.balance ?? 0.00)"
+            myScoreNum.text = "\(AppDelegate.appUser?.point ?? 0)"
+            myExpGroupDetail.text = "\(AppDelegate.appUser?.exp ?? 0)"
+        }
     }
     private func setupHeadView(){
         headView.backgroundColor = UIColor.init(named: "global_orange")
         headView.addSubview(headImageView)
         headView.addSubview(myIDLabel)
-        headView.addSubview(myBalanceLabel)
-        headView.addSubview(myBalanceNum)
-        headView.addSubview(myMemberGroupLabel)
-        headView.addSubview(myMemberGroupDetail)
-        headView.addSubview(myScoreLabel)
-        headView.addSubview(myScoreNum)
+        topInfoView.addSubview(myBalanceLabel)
+        topInfoView.addSubview(myBalanceNum)
+        topInfoView.addSubview(myExpGroupLabel)
+        topInfoView.addSubview(myExpGroupDetail)
+        topInfoView.addSubview(myScoreLabel)
+        topInfoView.addSubview(myScoreNum)
+        headView.addSubview(topInfoView)
         let lineV1 = UIView(frame: CGRect(x: finalScreenW / 3 - 0.5, y: 520, width: 1, height: 60))
         lineV1.backgroundColor = .white
         headView.addSubview(lineV1)
@@ -196,9 +226,10 @@ extension MyCenterViewController{
     }
     private func setupNavigationBar(){
         navigationItem.title = "个人中心"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: settingBtn)
     }
 }
-//MARK: - collection->dataSource, delegate
+//MARK: - UICollectionView->dataSource, delegate
 extension MyCenterViewController :UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 14
@@ -226,7 +257,7 @@ extension MyCenterViewController :UICollectionViewDataSource, UICollectionViewDe
             labelText.font = UIFont(name: "Arial", size: 18.0)
             labelFA.text = String.fontAwesomeIcon(name: fa[0])
             labelFA.font = UIFont.fontAwesome(ofSize: 50, style: .solid)
-            labelFA.textColor = UIColor.random.lighten(by: 0.5)
+            labelFA.textColor = myCenterColors.random()
             labelFA.textAlignment = NSTextAlignment.center
             labelFA.text = String.fontAwesomeIcon(name: .shoppingBag)
             cell.addSubview(labelText)
@@ -265,59 +296,59 @@ extension MyCenterViewController :UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            print("我的订单")
+            //print("我的订单")
             let orderVC = MyOrdersViewController()
             pushToVC(vc: orderVC)
         case 1:
-            print("我的积分")
+            //print("我的积分")
             let scoreVC = MyScoreViewController()
             pushToVC(vc: scoreVC)
         case 2:
-            print("我的代金券")
+            //print("我的代金券")
             let vouchersVC = MyVouchersViewController()
             pushToVC(vc: vouchersVC)
         case 3:
-            print("退款申请")
+            //print("退款申请")
             let refundVC = MyRefundApplicationViewController()
             pushToVC(vc: refundVC)
         case 4:
-            print("站点建议")
+            //print("站点建议")
             let suggestionVC = MySuggestionsViewController()
             pushToVC(vc: suggestionVC)
         case 5:
-            print("商品咨询")
+            //print("商品咨询")
             let advisoryVC = MyAdvisoryViewController()
             pushToVC(vc: advisoryVC)
         case 6:
-            print("商品评价")
+            //print("商品评价")
             let evaluationVC = MyEvaluationViewController()
             pushToVC(vc: evaluationVC)
         case 7:
-            print("短信息")
+            //print("短信息")
             let messageVC = MyMessageViewController()
             pushToVC(vc: messageVC)
         case 8:
-            print("收藏夹")
+            //print("收藏夹")
             let collectionVC = MyCollectionViewController()
             pushToVC(vc: collectionVC)
         case 9:
-            print("账户余额")
+            //print("账户余额")
             let balanceVC = MyBalanceViewController()
             pushToVC(vc: balanceVC)
         case 10:
-            print("在线充值")
+            //print("在线充值")
             let rechargeVC = MyRechargeOnlineViewController()
             pushToVC(vc: rechargeVC)
         case 11:
-            print("地址管理")
+            //print("地址管理")
             let addressVC = MyAddressViewController()
             pushToVC(vc: addressVC)
         case 12:
-            print("个人资料")
+            //print("个人资料")
             let myInfoVC = MyInfoViewController()
             pushToVC(vc: myInfoVC)
         case 13:
-            print("修改密码")
+            //print("修改密码")
             let changePasswordVC = ChangePasswordViewController()
             pushToVC(vc: changePasswordVC)
 //        case 14:
@@ -361,6 +392,11 @@ extension MyCenterViewController{
     func pushToVC(vc: UIViewController){
         //vc.hidesBottomBarWhenPushed = true
         self.navigationController?.show(vc, sender: self)
+    }
+    
+    @objc func pushToSetting(){
+        let myInfoVC = MyInfoViewController()
+        pushToVC(vc: myInfoVC)
     }
 }
 
