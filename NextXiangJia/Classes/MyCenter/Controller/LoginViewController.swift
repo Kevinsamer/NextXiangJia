@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
             }
         }
     }
-    private var userMember:UserMemberModel?{
+    var userMember:UserMemberModel?{
         didSet{
             if let user = userMember {
                 AppDelegate.appUser?.id = Int32(user.id)
@@ -67,6 +67,7 @@ class LoginViewController: UIViewController {
         name.delegate = self
         name.layer.borderColor = UIColor.gray.lighten(by: 0.4).cgColor
         name.layer.borderWidth = 0.5
+        name.clearButtonMode = UITextFieldViewMode.always
         //name.backgroundColor = UIColor.blue.lighten(by: 0.9)
         return name
     }()
@@ -82,6 +83,7 @@ class LoginViewController: UIViewController {
         password.layer.borderColor = UIColor.gray.lighten(by: 0.4).cgColor
         password.layer.borderWidth = 0.5
         //password.backgroundColor = UIColor.blue.lighten(by: 0.9)
+        password.clearButtonMode = UITextFieldViewMode.always
         return password
     }()
 //    lazy var dividerLineUsername: UIView = {
@@ -249,6 +251,7 @@ extension LoginViewController {
     @objc func registerClicked(){
         print("register")
         let vc = RegistViewController()
+        vc.sendData = self
         self.navigationController?.show(vc, sender: self)
     }
     
@@ -293,5 +296,15 @@ extension LoginViewController {
     @objc func loginByWBClicked(){
         YTools.showMyToast(rootView: self.view, message: "WB登录")
     }
+    
+}
+
+extension LoginViewController:SendDataProtocol {
+    func SendData(data: Any?) {
+        if let username = data {
+            self.username.text = username as? String
+        }
+    }
+    
     
 }

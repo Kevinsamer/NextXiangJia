@@ -51,9 +51,9 @@ class MyCenterViewController: UIViewController {
         imageView.layer.borderColor = UIColor(named: "head_view_border_color")?.cgColor
         imageView.layer.borderWidth = 2
         imageView.backgroundColor = .white
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(clickToLogin(sender: )))
-        imageView.addGestureRecognizer(tapGesture)
-        imageView.isUserInteractionEnabled = true
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(clickHeadView(sender: )))
+//        imageView.addGestureRecognizer(tapGesture)
+//        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     //ID Label
@@ -197,6 +197,9 @@ extension MyCenterViewController{
         headView.backgroundColor = UIColor.init(named: "global_orange")
         headView.addSubview(headImageView)
         headView.addSubview(myIDLabel)
+        headView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(clickHeadView(sender: )))
+        headView.addGestureRecognizer(tapGesture)
         topInfoView.addSubview(myBalanceLabel)
         topInfoView.addSubview(myBalanceNum)
         topInfoView.addSubview(myExpGroupLabel)
@@ -382,11 +385,12 @@ extension MyCenterViewController{
         myScoreNum.text = "\(Float.random(between: 20.0, and: 3000.0))"
         myIDLabel.text = "\(String.random(ofLength: 11))"
     }
-    @objc func clickToLogin(sender: UITapGestureRecognizer){
-        let loginVC = LoginViewController()
-        loginVC.hidesBottomBarWhenPushed = true
-        self.navigationController?.show(loginVC, sender: self)
-        print("login")
+    @objc func clickHeadView(sender: UITapGestureRecognizer){
+        if AppDelegate.appUser?.id == -1 {
+            pushToLogin()
+        }else {
+            pushToSetting()
+        }
     }
     
     func pushToVC(vc: UIViewController){
@@ -397,6 +401,11 @@ extension MyCenterViewController{
     @objc func pushToSetting(){
         let myInfoVC = MyInfoViewController()
         pushToVC(vc: myInfoVC)
+    }
+    
+    func pushToLogin(){
+        let loginVC = LoginViewController()
+        pushToVC(vc: loginVC)
     }
 }
 

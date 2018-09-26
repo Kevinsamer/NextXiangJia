@@ -15,16 +15,27 @@ private let textFieldH : CGFloat = 40
 private let viewSpace :CGFloat = 20
 
 class RegistViewController: UIViewController {
-    
+    var sendData:SendDataProtocol?
     private let myCenterViewModel:MycenterViewModel = MycenterViewModel()
     private var registerData:UserMemberModel?{
         didSet{
-            print(registerData?.username)
+            if let reg = registerData {
+                //非空判断
+                if let send = sendData {
+                    //将注册用户名传递至登录页
+                    send.SendData(data: reg.username)
+                    self.navigationController?.popViewController()
+                }
+                
+            }
         }
     }
     private var regErrorInfo:String?{
         didSet{
-            print(regErrorInfo)
+            if let error = regErrorInfo {
+                YTools.showMyToast(rootView: self.view, message: error)
+            }
+            
         }
     }
 //    private var usernameHasText:Bool = false
@@ -43,6 +54,7 @@ class RegistViewController: UIViewController {
         old.delegate = self
         old.layer.borderColor = UIColor.gray.lighten(by: 0.4).cgColor
         old.layer.borderWidth = 0.5
+        old.clearButtonMode = UITextFieldViewMode.always
         //old.backgroundColor = UIColor.blue.lighten(by: 0.9)
 //        old.addTarget(self, action: #selector(nameChanged(textField:)), for: UIControlEvents.editingChanged)
         return old
@@ -58,6 +70,7 @@ class RegistViewController: UIViewController {
         new.delegate = self
         new.layer.borderColor = UIColor.gray.lighten(by: 0.4).cgColor
         new.layer.borderWidth = 0.5
+        new.clearButtonMode = UITextFieldViewMode.always
         //new.backgroundColor = UIColor.blue.lighten(by: 0.9)
 //        new.addTarget(self, action: #selector(passwordChanged(textField:)), for: UIControlEvents.editingChanged)
         return new
@@ -72,6 +85,7 @@ class RegistViewController: UIViewController {
         newAgain.delegate = self
         newAgain.layer.borderColor = UIColor.gray.lighten(by: 0.4).cgColor
         newAgain.layer.borderWidth = 0.5
+        newAgain.clearButtonMode = UITextFieldViewMode.always
 //        newAgain.addTarget(self, action: #selector(repasswordChanged(textField:)), for: UIControlEvents.editingChanged)
         //newAgain.backgroundColor = UIColor.blue.lighten(by: 0.9)
         return newAgain
@@ -86,6 +100,7 @@ class RegistViewController: UIViewController {
         authCode.delegate = self
         authCode.layer.borderColor = UIColor.gray.lighten(by: 0.4).cgColor
         authCode.layer.borderWidth = 0.5
+        authCode.clearButtonMode = UITextFieldViewMode.always
         //authCode.backgroundColor = UIColor.blue.lighten(by: 0.9)
 //        authCode.addTarget(self, action: #selector(captchaChanged(textField:)), for: UIControlEvents.editingChanged)
         return authCode
@@ -298,12 +313,8 @@ extension RegistViewController {
 //    @objc func captchaChanged(textField:UITextField){
 //        captchaHasText = textField.hasText
 //    }
-    
+    //监听输入框文本改变的通知
     @objc func textChanged(notification:Notification){
-//        print(regUsername.hasText)
-//        print(regPassword.hasText)
-//        print(regPasswordAgain.hasText)
-//        print(authCodeInput.hasText)
         
         let textField = notification.object as! UITextField
         if regUsername.hasText && regPassword.hasText && regPasswordAgain.hasText && authCodeInput.hasText{

@@ -11,6 +11,26 @@ import Eureka
 import ImageRow
 class MyInfoViewController: FormViewController {
     private var qq:Int?
+    //MARK: - 懒加载
+    lazy var loginOutAlert: UIAlertController = {
+        let alert = UIAlertController(style: UIAlertControllerStyle.alert, source: nil, title: nil, message: "是否退出登录？", tintColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
+        let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.cancel, handler: { (action) in
+            
+        })
+        
+        let okAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.destructive, handler: { (action) in
+            if AppDelegate.appUser?.id != -1 {
+                AppUserCoreDataHelper.AppUserHelper.delAppUser {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        })
+        
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        return alert
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -152,12 +172,10 @@ extension MyInfoViewController {
             cell.backgroundColor = UIColor(named: "line_gray")
             cell.tintColor = UIColor(named: "dark_gray")
         }).onCellSelection({ (cell, row) in
-            print("退出登录")
-            if AppDelegate.appUser?.id != -1 {
-                AppUserCoreDataHelper.AppUserHelper.delAppUser {
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }
+//            print("退出登录")
+            
+            self.loginOutAlert.show()
+            
         })
         
         // 开启导航辅助，并且遇到被禁用的行就隐藏导航
