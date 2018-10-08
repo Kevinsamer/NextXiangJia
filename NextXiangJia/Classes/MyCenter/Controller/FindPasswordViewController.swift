@@ -33,6 +33,7 @@ class FindPasswordViewController: ButtonBarPagerTabStripViewController {
     
     
     
+    
     //xl datasource
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let findByPhoneVC = FindPasswordTabViewController(itemInfo: "短信找回", type: typePhone)

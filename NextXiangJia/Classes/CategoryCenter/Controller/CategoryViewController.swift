@@ -13,6 +13,7 @@ import Kingfisher
 import MaterialTapTargetPrompt_iOS
 private let leftWidth:CGFloat = 100
 private let headViewH:CGFloat = 30
+private let lineSpace:CGFloat = 10
 private var categoryNum = 10
 private var lineNum = 3
 private let MyCellID = "MyCellID"
@@ -235,14 +236,7 @@ extension CategoryViewController {
             self.rightCollectionView.scrollToItem(at: IndexPath.init(row: 0, section: 0), at: UICollectionViewScrollPosition.left, animated: true)
         }
     }
-//    //测试数据
-//    private func refreshCollData(category:String){
-//        cellText.removeAll()
-//        for i in 0...randomNumber(from: 8...17){
-//            cellText.append("\(category)的cell\(i)")
-//        }
-//        rightCollectionView.reloadData()
-//    }
+
     //测试数据
     private func refreshCategoryData(){
         categoryText.removeAll()
@@ -278,13 +272,19 @@ extension CategoryViewController:UICollectionViewDelegateFlowLayout,UICollection
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCellID, for: indexPath) as! RightCollectionViewCell
+        //绑定数据
         if let goods = categoryGoods {
             cell.imageView.kf.setImage(with: URL.init(string: BASE_URL + goods[indexPath.row].img), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
             cell.nameLabel.text = goods[indexPath.row].name
             cell.sellPriceLabel.text = "￥\(goods[indexPath.row].sell_price)"
             cell.marketPriceLabel.attributedText = YTools.textAddMiddleLine(text: "￥\(goods[indexPath.row].market_price)")
+        }else {
+            cell.imageView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+            cell.nameLabel.text = "goodsName"
+            cell.sellPriceLabel.text = "sellPrice"
+            cell.marketPriceLabel.attributedText = YTools.textAddMiddleLine(text: "marketPrice")
         }
-
+        
         return cell
     }
     
@@ -293,7 +293,7 @@ extension CategoryViewController:UICollectionViewDelegateFlowLayout,UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return lineSpace
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -317,5 +317,7 @@ extension CategoryViewController:UICollectionViewDelegateFlowLayout,UICollection
         cell.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         collectionView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
     }
+    
+    
 }
 
