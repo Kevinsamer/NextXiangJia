@@ -11,9 +11,14 @@ import  UIKit
 extension UIDevice{
     //判断是否为IphoneX
     public func isX() -> Bool{
-        if UIScreen.main.bounds.height == 812 {
+        if (UIApplication.shared.delegate?.window??.safeAreaInsets.bottom)! > CGFloat(0) {
             return true
         }
         return false
+        
+//        if UIScreen.main.bounds.height == 812 {
+//            return true
+//        }
+//        return false
     }
 }
