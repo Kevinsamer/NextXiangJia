@@ -30,7 +30,11 @@ class RightCollectionViewCell: UICollectionViewCell {
         nameLabel.frame = CGRect(x: nameLabel.frame.origin.x, y: cellH * 3 / 5, width: nameLabel.frame.width, height: cellH * 3 / 20)
         nameLabel.adjustsFontSizeToFitWidth = true
         sellPriceLabel.frame = CGRect(x: sellPriceLabel.frame.origin.x, y: cellH * 4 / 5, width: sellPriceLabel.frame.width, height: cellH * 3 / 20)
+        sellPriceLabel.textAlignment = .center
+        //sellPriceLabel.translatesAutoresizingMaskIntoConstraints = false
         marketPriceLabel.frame = CGRect(x: marketPriceLabel.frame.origin.x, y: cellH * 4 / 5, width: marketPriceLabel.frame.width, height: cellH * 3 / 20)
+        marketPriceLabel.textAlignment = .center
+        
     }
 
 }

@@ -8,7 +8,8 @@
 
 import UIKit
 import FontAwesome_swift
-
+import WebKit
+import Alamofire
 class ShopCartViewController: UIViewController {
     var dataArray: [LZCartModel] = []//所有数据集合
     var selectArray: [LZCartModel] = []//结算数据集合
@@ -21,20 +22,37 @@ class ShopCartViewController: UIViewController {
     var commitButton = UIButton(type: .custom)//结算、删除按钮
     let backgroundView = UIView()//无数据背景视图
     // MARK: - 懒加载属性
-
+//    ///////////////////////
+//    let config = WKWebViewConfiguration()
+//    var wk:WKWebView?
+//    ///////////////////////
     // MARK: - 系统回调函数
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         //设置UI
         setUI()
+//        ///////////////////////
+//        wk = WKWebView(frame: self.view.frame, configuration: config)
+//        wk?.load(URLRequest(url: URL(string: "http://192.168.108.223/simple/cart")!))
+//        self.view.addSubview(wk!)
+//        ///////////////////////
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+//    ///////////////////////
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Alamofire.request("http://192.168.108.223/simple/cart", method: HTTPMethod.get, parameters: nil).responseString { (data) in
+            print(data)
+        }
+    }
+//    ///////////////////////
 }
 
 // MARK: - 设置UI界面

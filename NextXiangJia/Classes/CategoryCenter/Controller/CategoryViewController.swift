@@ -84,17 +84,13 @@ class CategoryViewController: UIViewController {
 //        layout.headerReferenceSize = CGSize(width: finalScreenW - leftWidth, height: headViewH)
         layout.scrollDirection = .horizontal
         let coll = UICollectionView(frame: CGRect(x: leftWidth, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW - leftWidth, height: finalContentViewHaveTabbarH), collectionViewLayout: layout)
+        coll.register(UINib.init(nibName: "RightCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: MyCellID)
         coll.dataSource = self
         coll.delegate = self
-        //coll.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        coll.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         coll.alwaysBounceHorizontal = true
         coll.isPagingEnabled = true
-        //coll.register(UINib.init(), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
-        //coll.cancelInteractiveMovement()
-        coll.register(UINib.init(nibName: "RightCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: MyCellID)
-        //coll.register(UICollectionViewCell.self, forCellWithReuseIdentifier: MyCellID)
         coll.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        //coll.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
         return coll
     }()
     lazy var leftScrollView: UIScrollView = {
@@ -272,6 +268,10 @@ extension CategoryViewController:UICollectionViewDelegateFlowLayout,UICollection
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCellID, for: indexPath) as! RightCollectionViewCell
+//        cell.imageView.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+//        cell.nameLabel.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+//        cell.sellPriceLabel.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+//        cell.marketPriceLabel.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
         //绑定数据
         if let goods = categoryGoods {
             cell.imageView.kf.setImage(with: URL.init(string: BASE_URL + goods[indexPath.row].img), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)

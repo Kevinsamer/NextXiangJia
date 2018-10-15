@@ -309,7 +309,7 @@ class GoodViewController: GoodDetailBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         screenHeight = self.view.frame.height
-        usableViewHeight = self.view.frame.height - finalStatusBarH - finalNavigationBarH - bottomBarH
+        usableViewHeight = self.view.frame.height - finalStatusBarH - finalNavigationBarH - bottomBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH : 0)
         // Do any additional setup after loading the view.
         //print("screenH:\(screenHeight)---usableH:\(usableViewHeight)")
         setUI()

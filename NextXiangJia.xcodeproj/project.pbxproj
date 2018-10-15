@@ -616,6 +616,7 @@
 		0902698E2040F921007FF5B9 /* ShopCart */ = {
 			isa = PBXGroup;
 			children = (
+				0921CDAE217040E1009A134E /* ViewModel */,
 				0908C8402060DBA600CED99E /* Model */,
 				0908C8412060DBB000CED99E /* View */,
 				0908C8422060DBB600CED99E /* Controller */,
@@ -876,6 +877,13 @@
 				090DDDF22092F30400A42E3F /* MyCommissionViewController.swift */,
 			);
 			path = MyInfoControllers;
+			sourceTree = "<group>";
+		};
+		0921CDAE217040E1009A134E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		093B386F20F836D80063E2F5 /* MyAddressVCCell */ = {
@@ -1982,7 +1990,7 @@
 			baseConfigurationReference = FD757D58253EDEC075DAD194 /* Pods-NextXiangJia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_ACTIVITY_MODE = "";
 				DEVELOPMENT_TEAM = 2U9PZ73EZ2;
@@ -2017,7 +2025,7 @@
 			baseConfigurationReference = 6C25457C6C39A50360DA5123 /* Pods-NextXiangJia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_ACTIVITY_MODE = "";
 				DEVELOPMENT_TEAM = 2U9PZ73EZ2;

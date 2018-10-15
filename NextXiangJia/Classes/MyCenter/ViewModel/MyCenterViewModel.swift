@@ -60,4 +60,8 @@ extension MycenterViewModel {
         }
         
     }
+    
+    func requestLoginOut(){
+        Alamofire.request(LOGINOUT_URL, method: .get)
+    }
 }

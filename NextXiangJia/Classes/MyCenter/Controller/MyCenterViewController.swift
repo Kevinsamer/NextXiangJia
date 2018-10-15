@@ -128,13 +128,13 @@ class MyCenterViewController: UIViewController {
         label.font = UIFont(name: "HelveticaNeue-CondensedBold", size: 20.0)
         return label
     }()
-    lazy var testSwitchButton : UIButton = {
-        let button = UIButton(type: UIButtonType.system)
-        button.frame = CGRect(x: finalScreenW / 3 + 10, y: 490, width: (headLabelW ), height: headLabelH)
-        button.setTitle("Test data", for: UIControlState.normal)
-        button.addTarget(self, action: #selector(testButtonClicked), for: UIControlEvents.touchUpInside)
-        return button
-    }()
+//    lazy var testSwitchButton : UIButton = {
+//        let button = UIButton(type: UIButtonType.system)
+//        button.frame = CGRect(x: finalScreenW / 3 + 10, y: 490, width: (headLabelW ), height: headLabelH)
+//        button.setTitle("Test data", for: UIControlState.normal)
+//        button.addTarget(self, action: #selector(testButtonClicked), for: UIControlEvents.touchUpInside)
+//        return button
+//    }()
     
     lazy var settingBtn: UIButton = {
         let btn = UIButton()
@@ -213,9 +213,9 @@ extension MyCenterViewController{
         let lineV2 = UIView(frame: CGRect(x: finalScreenW / 3 * 2 - 0.5, y: 520, width: 1, height: 60))
         lineV2.backgroundColor = .white
         headView.addSubview(lineV2)
-        if testMode {
-            headView.addSubview(testSwitchButton)
-        }
+//        if testMode {
+//            headView.addSubview(testSwitchButton)
+//        }
     }
     private func setupBodyView(){
         bodyView.addSubview(myInfoColltionView)
@@ -378,13 +378,13 @@ extension MyCenterViewController :UICollectionViewDataSource, UICollectionViewDe
 
 //MARK: - click listener
 extension MyCenterViewController{
-    @objc func testButtonClicked(){
-        myInfoColltionView.reloadData()
-        headImageView.image = UIImage(named: "shopcart_top_home_left")
-        myBalanceNum.text = "\(Float.random(between: 0.0, and: 10000.0))"
-        myScoreNum.text = "\(Float.random(between: 20.0, and: 3000.0))"
-        myIDLabel.text = "\(String.random(ofLength: 11))"
-    }
+//    @objc func testButtonClicked(){
+//        myInfoColltionView.reloadData()
+//        headImageView.image = UIImage(named: "shopcart_top_home_left")
+//        myBalanceNum.text = "\(Float.random(between: 0.0, and: 10000.0))"
+//        myScoreNum.text = "\(Float.random(between: 20.0, and: 3000.0))"
+//        myIDLabel.text = "\(String.random(ofLength: 11))"
+//    }
     @objc func clickHeadView(sender: UITapGestureRecognizer){
         if AppDelegate.appUser?.id == -1 {
             pushToLogin()
@@ -399,8 +399,12 @@ extension MyCenterViewController{
     }
     
     @objc func pushToSetting(){
-        let myInfoVC = MyInfoViewController()
-        pushToVC(vc: myInfoVC)
+        if AppDelegate.appUser?.id == -1{
+            pushToLogin()
+        }else {
+            let myInfoVC = MyInfoViewController()
+            pushToVC(vc: myInfoVC)
+        }
     }
     
     func pushToLogin(){

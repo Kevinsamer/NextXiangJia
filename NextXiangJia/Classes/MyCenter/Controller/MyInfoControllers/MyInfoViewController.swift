@@ -11,6 +11,7 @@ import Eureka
 import ImageRow
 class MyInfoViewController: FormViewController {
     private var qq:Int?
+    private var myCenterViewModel:MycenterViewModel = MycenterViewModel()
     //MARK: - 懒加载
     lazy var loginOutAlert: UIAlertController = {
         let alert = UIAlertController(style: UIAlertControllerStyle.alert, source: nil, title: nil, message: "是否退出登录？", tintColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
@@ -20,9 +21,13 @@ class MyInfoViewController: FormViewController {
         
         let okAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.destructive, handler: { (action) in
             if AppDelegate.appUser?.id != -1 {
+                //App退出登录
                 AppUserCoreDataHelper.AppUserHelper.delAppUser {
                     self.navigationController?.popViewController(animated: true)
                 }
+                //发出退出登录的http请求
+                self.myCenterViewModel.requestLoginOut()
+                
             }
         })
         
