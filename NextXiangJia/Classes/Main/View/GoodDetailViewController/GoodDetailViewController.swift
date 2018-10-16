@@ -22,7 +22,34 @@ class GoodDetailViewController: ButtonBarPagerTabStripViewController {
     var goodVC:GoodViewController?
     var detailVC:DetailViewController?
     var commentVC:CommentViewController?
+    var selectedProduct:SelectedProduct?//选择的货品
+    var shopcartViewModel:ShopCartViewModel = ShopCartViewModel()
+    var joinCartModel:JoinCartModel?{
+        didSet{
+            if let joinCart = joinCartModel {
+                if joinCart.isError == false {
+                    //添加成功
+                    YTools.showMyToast(rootView: self.view, message: joinCart.message)
+                    addCartAnimationTarget = UIView(frame: CGRect(origin: addInToShopCartButton.center, size: CGSize(width: bottomBarH + 10, height: bottomBarH - 10)))
+                    addCartAnimationTarget?.backgroundColor = .red
+                    addCartAnimationTarget?.layer.cornerRadius = (bottomBarH - 10) / 2
+                    self.bottomBar.addSubview(addCartAnimationTarget!)
+                    addShopCartAnimate()
+                }else{
+                    YTools.showMyToast(rootView: self.view, message: joinCart.message)
+                }
+            }
+        }
+    }
+    var addCartAnimationTarget:UIView?
     //MARK: - 懒加载
+    lazy var bezierPath: UIBezierPath = {
+        let path = UIBezierPath()
+        path.move(to: addInToShopCartButton.center)
+        path.addQuadCurve(to: shopCartButton.center, controlPoint: CGPoint(x: (addInToShopCartButton.center.x - shopCartButton.center.x) / 3 + shopCartButton.center.x, y: shopCartButton.center.y - 300))
+        return path
+    }()
+    
     lazy var shopButton: UIButton = {
         //店铺
         let button = UIButton(type: UIButtonType.custom)
@@ -119,6 +146,7 @@ class GoodDetailViewController: ButtonBarPagerTabStripViewController {
         //guard let goodInfo = goodsInfo else { }
         //initData()
         goodVC = GoodViewController(itemInfo: "商品")
+        goodVC?.sendData = self
         detailVC = DetailViewController(itemInfo: "详情")
         commentVC = CommentViewController(itemInfo: "评价")
 //        CommunicationTools.getCommunications(self, name: Communications.GoodsDetail) { (data) in
@@ -185,10 +213,32 @@ extension GoodDetailViewController{
         bottomBar.addSubview(buyNowButton)
         self.view.addSubview(bottomBar)
     }
+    /// 加入购物车动画方法
+    private func addShopCartAnimate(){
+        ///绘制贝塞尔曲线路径
+        let animationPath = CAKeyframeAnimation.init(keyPath: "position")
+        animationPath.path = bezierPath.cgPath
+        animationPath.rotationMode = kCAAnimationRotateAuto
+        //旋转
+        let rotate = CABasicAnimation()
+        rotate.keyPath = "transform.rotation"
+        rotate.toValue = Double.pi
+        //缩小图片至0
+        let scale = CABasicAnimation()
+        scale.keyPath = "transform.scale"
+        scale.toValue = 0.0
+        //组合动画
+        let animationGroup = CAAnimationGroup()
+        animationGroup.animations = [animationPath,scale]
+        animationGroup.duration = 0.5
+        animationGroup.delegate = self
+        animationGroup.fillMode = kCAFillModeForwards
+        animationGroup.isRemovedOnCompletion = false
+        addCartAnimationTarget?.layer.add(animationGroup, forKey: nil)
+    }
     private func setButtonBarView(){
-        
-        
-        //改变选择字体的样式，选择加粗
+
+        //改变选择字体的样式，选中加粗
         changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else { return }
             
@@ -264,7 +314,45 @@ extension GoodDetailViewController {
     }
     
     @objc private func addIntoShopcartClicked(){
-        print("加入购物车")
+        if selectedProduct == nil {
+            YTools.showMyToast(rootView: self.view, message: "请选择商品规格")
+        }else{
+            if selectedProduct?.productType == 0{
+//                0无规格  1有规格
+                shopcartViewModel.requestJoinCart(id: (selectedProduct?.good_Id)!, num: (selectedProduct?.selectedNum)!, type: .goods) {
+                    self.joinCartModel = self.shopcartViewModel.joinCartModel
+                }
+
+            }else {
+                shopcartViewModel.requestJoinCart(id: (selectedProduct?.selectedProduct?.id)!, num: (selectedProduct?.selectedNum)!, type: .product) {
+                    self.joinCartModel = self.shopcartViewModel.joinCartModel
+                }
+
+            }
+        }
+        
+        
+    }
+}
+
+extension GoodDetailViewController:SendDataProtocol{
+    func SendData(data: Any?) {
+        self.selectedProduct = data as? SelectedProduct
+    }
+    
+    
+}
+
+extension GoodDetailViewController:CAAnimationDelegate{
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        //购物车抖动
+        let shakeAnimation = CABasicAnimation.init(keyPath: "transform.translation.y")
+        shakeAnimation.duration = 0.1
+        shakeAnimation.fromValue = NSNumber.init(value: -2)
+        shakeAnimation.toValue = NSNumber.init(value: 2)
+        shakeAnimation.autoreverses = true
+        shakeAnimation.repeatCount = 2
+        shopCartButton.layer.add(shakeAnimation, forKey: nil)
     }
 }
 

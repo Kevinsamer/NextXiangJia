@@ -46,6 +46,8 @@
 		0908C83F2060DB0F00CED99E /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908C83E2060DB0F00CED99E /* CategoryViewController.swift */; };
 		0908C84C2064D96F00CED99E /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908C84A2064D96F00CED99E /* ItemCell.swift */; };
 		0908C84D2064D96F00CED99E /* ItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0908C84B2064D96F00CED99E /* ItemCell.xib */; };
+		0908EB882174687C00F03D0F /* ShopCartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908EB872174687C00F03D0F /* ShopCartViewModel.swift */; };
+		0908EB8A2174699300F03D0F /* JoinCartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0908EB892174699300F03D0F /* JoinCartModel.swift */; };
 		090DDDCC208F193200A42E3F /* MyCenterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDDCB208F193200A42E3F /* MyCenterCell.swift */; };
 		090DDDCF2092B06200A42E3F /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDDCE2092B06200A42E3F /* MyOrdersViewController.swift */; };
 		090DDDD32092C22100A42E3F /* MyScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090DDDD22092C22100A42E3F /* MyScoreViewController.swift */; };
@@ -292,6 +294,8 @@
 		0908C83E2060DB0F00CED99E /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		0908C84A2064D96F00CED99E /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		0908C84B2064D96F00CED99E /* ItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemCell.xib; sourceTree = "<group>"; };
+		0908EB872174687C00F03D0F /* ShopCartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCartViewModel.swift; sourceTree = "<group>"; };
+		0908EB892174699300F03D0F /* JoinCartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCartModel.swift; sourceTree = "<group>"; };
 		090DDDCB208F193200A42E3F /* MyCenterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCenterCell.swift; sourceTree = "<group>"; };
 		090DDDCE2092B06200A42E3F /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
 		090DDDD22092C22100A42E3F /* MyScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyScoreViewController.swift; sourceTree = "<group>"; };
@@ -768,6 +772,7 @@
 		0908C8402060DBA600CED99E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0908EB892174699300F03D0F /* JoinCartModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -882,6 +887,7 @@
 		0921CDAE217040E1009A134E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				0908EB872174687C00F03D0F /* ShopCartViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1663,6 +1669,7 @@
 				0976F3B420EEF92A007A47A3 /* UIViewController+Extensions.swift in Sources */,
 				09A7F583213538A10095FC59 /* GoodsSpec.swift in Sources */,
 				09298D41212C4B160015CE6B /* AreaPickView.swift in Sources */,
+				0908EB882174687C00F03D0F /* ShopCartViewModel.swift in Sources */,
 				090DDDDD2092EDF600A42E3F /* MyEvaluationViewController.swift in Sources */,
 				0976F3C820EEF92A007A47A3 /* Location.swift in Sources */,
 				0943E1232117F44D0026A7AC /* Brand.swift in Sources */,
@@ -1770,6 +1777,7 @@
 				09F9EE41207DF257007D18D0 /* YTools.swift in Sources */,
 				0992E47120C6738500B7902E /* TagData.swift in Sources */,
 				0943528D20D3AB5300D4C31A /* GoodViewController.swift in Sources */,
+				0908EB8A2174699300F03D0F /* JoinCartModel.swift in Sources */,
 				0976F3D120EEF92A007A47A3 /* TwoTextFieldsViewController.swift in Sources */,
 				0904C37820CFC0DE009A8282 /* CollCell.swift in Sources */,
 				094C407820AAC400001E5C77 /* SMSegment.swift in Sources */,

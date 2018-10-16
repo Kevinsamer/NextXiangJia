@@ -49,6 +49,7 @@ class GoodViewController: GoodDetailBaseViewController {
     var marketPriceArray:[Double]?//各规格原价的数组
     var viewLayer = CALayer()//底层view的动画layer
     var selectedProduct:SelectedProduct?//选择的货品
+    var sendData:SendDataProtocol?
     override var goodsInfo: GoodInfo? {
         didSet{
             self.goodNameLabel.text = goodsInfo?.name
@@ -725,11 +726,14 @@ extension GoodViewController {
         alert?.selectSize = {(_ sizeModel: SizeAttributeModel) -> Void in
             //sizeModel 选择的属性模型
             //SVProgressHUD.showSuccess(withStatus: "选择了:"+sizeModel.value)
-            YTools.showMyToast(rootView: self.view, message: "选择了: \(sizeModel.value)、\(sizeModel.count)件、\(sizeModel.productNo)", duration: 2.0, position: ToastPosition.center)
+            YTools.showMyToast(rootView: self.view, message: "选择了: \(sizeModel.value)、\(sizeModel.count)件、\(sizeModel.productId)", duration: 2.0, position: ToastPosition.center)
             self.chosenInfoLabel.attributedText = self.goodChosenString("\(sizeModel.value)、\(sizeModel.count)件")
             //self.zoomOut()
             self.selectedProduct = YTools.getSelectedProductById(sizeModel: sizeModel, goodsProducts: self.goodsProducts)
             //获取到选择的规格，根据productType来确定参数是否带有规格信息（0无规格  1有规格）
+            if let send = self.sendData{
+                send.SendData(data: self.selectedProduct)
+            }
         }
         //initModel()
         alert?.initData(goodsModel: model)

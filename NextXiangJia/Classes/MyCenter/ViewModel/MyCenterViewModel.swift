@@ -19,10 +19,11 @@ extension MycenterViewModel {
             self.userMember = nil
             self.errorInfo = nil
             guard let resultDict = result as? [String: NSObject] else {return}
+            print(result)
+            print(resultDict)
             guard let resultCode = resultDict["code"] as? Int else {return}
             guard let resultData = resultDict["result"] as? [String:NSObject] else {return}
             if resultCode == 200 {
-                print(resultData)
                 self.userMember = UserMemberModel(dict: resultData)
             }else if resultCode == 201{
                 guard let errorInfo = resultData["scalar"] as? String else {return}
