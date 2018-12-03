@@ -30,9 +30,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5A3-Uc-XhB">
-                        <rect key="frame" x="145" y="20" width="110" height="20"/>
+                        <rect key="frame" x="145" y="20" width="200" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="110" id="Rba-EH-pcS"/>
+                            <constraint firstAttribute="width" constant="200" id="Rba-EH-pcS"/>
                             <constraint firstAttribute="height" constant="20" id="Xeg-Rq-AFu"/>
                         </constraints>
                         <attributedString key="attributedText">
@@ -45,12 +45,12 @@
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWq-os-PiZ">
-                        <rect key="frame" x="20" y="60" width="360" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="address" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWq-os-PiZ">
+                        <rect key="frame" x="20" y="50" width="360" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="SFw-C2-Acg"/>
+                            <constraint firstAttribute="height" constant="40" id="SFw-C2-Acg"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.53851996531111113" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -102,24 +102,44 @@
                             </attributedString>
                         </state>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MLk-CC-vsg">
+                        <rect key="frame" x="20" y="100" width="202" height="39"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-2"/>
+                        <state key="normal" title="设为默认" image="address_unselected">
+                            <color key="titleColor" name="dark_gray"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="imageForNormal" value="address_unselected"/>
+                            <userDefinedRuntimeAttribute type="image" keyPath="imageForSelected" value="address_selected"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="titleForNormal" value="设为默认"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="titleForSelected" value="设为默认地址"/>
+                        </userDefinedRuntimeAttributes>
+                    </button>
                 </subviews>
             </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Vdl-G7-jaW" firstAttribute="top" secondItem="bWq-os-PiZ" secondAttribute="bottom" constant="20" id="0EW-tg-Bc5"/>
+                <constraint firstItem="Vdl-G7-jaW" firstAttribute="top" secondItem="bWq-os-PiZ" secondAttribute="bottom" constant="10" id="0EW-tg-Bc5"/>
                 <constraint firstAttribute="trailing" secondItem="ywT-ss-u8f" secondAttribute="trailing" constant="20" id="25l-K2-D9W"/>
                 <constraint firstItem="DLr-gM-S86" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="5tX-Qs-7Mj"/>
+                <constraint firstItem="DLr-gM-S86" firstAttribute="top" secondItem="MLk-CC-vsg" secondAttribute="bottom" id="8OX-nN-AFw"/>
                 <constraint firstItem="pgV-A0-b0N" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="20" id="Cfw-oW-OXY"/>
-                <constraint firstItem="bWq-os-PiZ" firstAttribute="top" secondItem="pgV-A0-b0N" secondAttribute="bottom" constant="20" id="FBR-dI-ykF"/>
+                <constraint firstItem="bWq-os-PiZ" firstAttribute="top" secondItem="pgV-A0-b0N" secondAttribute="bottom" constant="10" id="FBR-dI-ykF"/>
+                <constraint firstItem="MLk-CC-vsg" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="GCL-Da-cRb"/>
                 <constraint firstItem="DLr-gM-S86" firstAttribute="top" secondItem="rb2-4D-WFd" secondAttribute="bottom" id="GaT-td-nob"/>
                 <constraint firstItem="DLr-gM-S86" firstAttribute="top" secondItem="ywT-ss-u8f" secondAttribute="bottom" id="HFR-es-1Mp"/>
+                <constraint firstItem="rb2-4D-WFd" firstAttribute="leading" secondItem="MLk-CC-vsg" secondAttribute="trailing" id="HS6-JS-3fr"/>
+                <constraint firstItem="MLk-CC-vsg" firstAttribute="top" secondItem="bWq-os-PiZ" secondAttribute="bottom" constant="10" id="LHk-zU-JLZ"/>
                 <constraint firstAttribute="trailing" secondItem="DLr-gM-S86" secondAttribute="trailing" id="NT2-M5-peW"/>
                 <constraint firstAttribute="trailing" secondItem="rb2-4D-WFd" secondAttribute="trailing" constant="98" id="UUl-4B-yLK"/>
                 <constraint firstItem="Vdl-G7-jaW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="UsS-pA-60j"/>
-                <constraint firstItem="rb2-4D-WFd" firstAttribute="top" secondItem="bWq-os-PiZ" secondAttribute="bottom" constant="20" id="WM6-DG-hzG"/>
+                <constraint firstItem="rb2-4D-WFd" firstAttribute="top" secondItem="bWq-os-PiZ" secondAttribute="bottom" constant="10" id="WM6-DG-hzG"/>
                 <constraint firstAttribute="trailing" secondItem="Vdl-G7-jaW" secondAttribute="trailing" id="XVX-Ii-e4H"/>
                 <constraint firstAttribute="bottom" secondItem="DLr-gM-S86" secondAttribute="bottom" id="brz-SQ-YLP"/>
                 <constraint firstAttribute="trailing" secondItem="bWq-os-PiZ" secondAttribute="trailing" constant="20" id="gtn-eb-2My"/>
-                <constraint firstItem="ywT-ss-u8f" firstAttribute="top" secondItem="bWq-os-PiZ" secondAttribute="bottom" constant="20" id="lWy-ed-N3b"/>
+                <constraint firstItem="ywT-ss-u8f" firstAttribute="top" secondItem="bWq-os-PiZ" secondAttribute="bottom" constant="10" id="lWy-ed-N3b"/>
                 <constraint firstAttribute="trailing" secondItem="Vdl-G7-jaW" secondAttribute="trailing" id="n4X-mz-yT8"/>
                 <constraint firstItem="bWq-os-PiZ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="pwh-6A-wUf"/>
                 <constraint firstItem="5A3-Uc-XhB" firstAttribute="leading" secondItem="pgV-A0-b0N" secondAttribute="trailing" constant="15" id="t9q-JC-9De"/>
@@ -130,6 +150,7 @@
             <size key="customSize" width="400" height="149"/>
             <connections>
                 <outlet property="addressLabel" destination="bWq-os-PiZ" id="gOV-x4-LKk"/>
+                <outlet property="addressSelectButton" destination="MLk-CC-vsg" id="cXf-wc-4sw"/>
                 <outlet property="delAddressButton" destination="ywT-ss-u8f" id="w6N-ih-fFI"/>
                 <outlet property="editAddressButton" destination="rb2-4D-WFd" id="OST-dr-fGO"/>
                 <outlet property="nameLabel" destination="pgV-A0-b0N" id="hY1-OJ-ySZ"/>
@@ -139,8 +160,13 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="address_edit_icon_normal" width="20" height="20"/>
+        <image name="address_edit_icon_normal" width="12" height="12"/>
+        <image name="address_selected" width="20" height="20"/>
+        <image name="address_unselected" width="20" height="20"/>
         <image name="trashIcon" width="12" height="14"/>
+        <namedColor name="dark_gray">
+            <color red="0.61799997091293335" green="0.62400001287460327" blue="0.62400001287460327" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="line_gray">
             <color red="0.92900002002716064" green="0.92900002002716064" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

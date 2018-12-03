@@ -14,7 +14,7 @@ PODS:
   - Kingfisher (4.6.4)
   - MaterialTapTargetPrompt-iOS (0.1.0)
   - ObjectMapper (3.3.0)
-  - PullToRefreshKit (0.8.6)
+  - PullToRefreshKit (0.8.8)
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
@@ -106,7 +106,7 @@ SPEC CHECKSUMS:
   Kingfisher: 68498a706e46c2a050b0c9572f100e5db407f6e0
   MaterialTapTargetPrompt-iOS: e74a0fdd5bcc106583050eca02b8a578a62b2a79
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
-  PullToRefreshKit: 172df52ab9c6cb2c1d4b1872b49f448d6291523f
+  PullToRefreshKit: 7cc53e720e69f135cffa1a57784dfb534f0222ab
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694

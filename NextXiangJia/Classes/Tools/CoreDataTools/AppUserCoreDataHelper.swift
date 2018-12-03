@@ -35,6 +35,7 @@ class AppUserCoreDataHelper{
         appUser.isFirstOpen = isFirst
         appUser.username = name
         appUser.password = pass
+        appUser.user_id = Int32(id)
         saveData()
     }
     

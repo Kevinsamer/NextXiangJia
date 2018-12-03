@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import Kingfisher
 private let goodsCollCellID = "goodsCollCellID"
 class MyOrderTableViewCell: UITableViewCell {
     var goodsNum:Int!
-    
+    var pics:[String] = [String](){
+        didSet{
+            self.myOrderGoodsCollView.reloadData()
+        }
+    }
     @IBOutlet var orderTimeLabel: UILabel!//订单时间
     @IBOutlet var orderCodeLabel: UILabel!//订单编号
     @IBOutlet var totalPriceLabel: UILabel!//总价
@@ -24,6 +29,7 @@ class MyOrderTableViewCell: UITableViewCell {
         myOrderGoodsCollView.dataSource = self
         myOrderGoodsCollView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
         myOrderGoodsCollView.showsHorizontalScrollIndicator = false
+        myOrderGoodsCollView.alwaysBounceHorizontal = true
         orderTimeLabel.adjustsFontSizeToFitWidth = true
         orderCodeLabel.adjustsFontSizeToFitWidth = true
         totalPriceLabel.adjustsFontSizeToFitWidth = true
@@ -43,14 +49,18 @@ class MyOrderTableViewCell: UITableViewCell {
 
 extension MyOrderTableViewCell:UICollectionViewDataSource ,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return goodsNum
+        return pics.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: goodsCollCellID, for: indexPath)
-//        let image = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-//        image.image = #imageLiteral(resourceName: "2")
-//        cell.addSubview(image)
+        
+        //TODO:加载图片，添加订单页的下拉刷新和上拉加载
+        let image = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.width, height: cell.frame.height))
+        image.kf.setImage(with: URL.init(string: "\(BASE_URL)\(pics[indexPath.row])"), placeholder: UIImage.init(named: "loading"))
+        cell.addSubview(image)
+        
+        
         cell.backgroundColor = UIColor.random
         return cell
     }

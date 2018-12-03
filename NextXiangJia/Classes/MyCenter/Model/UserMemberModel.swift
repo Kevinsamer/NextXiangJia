@@ -34,4 +34,5 @@ class UserMemberModel:BaseModel {
     @objc var last_login:String = ""//最后登录时间
     @objc var custom:String = ""//用户习惯方式，配送和支付方式等信息
     @objc var email:String = ""//邮箱
+    var local_pd:String = ""
 }

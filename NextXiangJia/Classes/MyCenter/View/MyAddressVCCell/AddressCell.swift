@@ -14,9 +14,11 @@ class AddressCell: UICollectionViewCell {
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var editAddressButton: UIButton!
     @IBOutlet var delAddressButton: UIButton!
+    @IBOutlet var addressSelectButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
         
     }
 

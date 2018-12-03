@@ -8,17 +8,28 @@
 
 import UIKit
 enum TitleImageStyly{
-    case ButtonImageTitleStyleDefault       //图片在左，文字在右，整体居中。
-    case ButtonImageTitleStyleLeft          //图片在左，文字在右，整体居中。
-    case ButtonImageTitleStyleRight         //图片在右，文字在左，整体居中。
-    case ButtonImageTitleStyleTop           //图片在上，文字在下，整体居中。
-    case ButtonImageTitleStyleBottom        //图片在下，文字在上，整体居中。
-    case ButtonImageTitleStyleCenterTop     //图片居中，文字在上距离按钮顶部。
-    case ButtonImageTitleStyleCenterBottom  //图片居中，文字在下距离按钮底部。
-    case ButtonImageTitleStyleCenterUp      //图片居中，文字在图片上面。
-    case ButtonImageTitleStyleCenterDown    //图片居中，文字在图片下面。
-    case ButtonImageTitleStyleRightLeft     //图片在右，文字在左，距离按钮两边边距
-    case ButtonImageTitleStyleLeftRight     //图片在左，文字在右，距离按钮两边边距
+    ///图片在左，文字在右，整体居中。
+    case ButtonImageTitleStyleDefault
+    //图片在左，文字在右，整体居中。
+    case ButtonImageTitleStyleLeft
+    ///图片在右，文字在左，整体居中。
+    case ButtonImageTitleStyleRight
+    ///图片在上，文字在下，整体居中。
+    case ButtonImageTitleStyleTop
+    ///图片在下，文字在上，整体居中。
+    case ButtonImageTitleStyleBottom
+    ///图片居中，文字在上距离按钮顶部。
+    case ButtonImageTitleStyleCenterTop
+    ///图片居中，文字在下距离按钮底部。
+    case ButtonImageTitleStyleCenterBottom
+    ///图片居中，文字在图片上面。
+    case ButtonImageTitleStyleCenterUp
+    ///图片居中，文字在图片下面。
+    case ButtonImageTitleStyleCenterDown
+    ///图片在右，文字在左，距离按钮两边边距
+    case ButtonImageTitleStyleRightLeft
+    ///图片在左，文字在右，距离按钮两边边距
+    case ButtonImageTitleStyleLeftRight
 }
 extension UIButton {
     

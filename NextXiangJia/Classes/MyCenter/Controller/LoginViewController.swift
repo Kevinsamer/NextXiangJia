@@ -50,6 +50,7 @@ class LoginViewController: UIViewController {
                 AppDelegate.appUser?.last_login = user.last_login
                 AppDelegate.appUser?.custom = user.custom
                 AppDelegate.appUser?.email = user.email
+                AppDelegate.appUser?.local_pd = user.local_pd
                 AppUserCoreDataHelper.AppUserHelper.modifyAppUser(appUser: AppDelegate.appUser!)
                 self.navigationController?.popViewController(animated: true)
             }

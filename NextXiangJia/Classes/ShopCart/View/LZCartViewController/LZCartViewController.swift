@@ -44,7 +44,7 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
             model.price = "100.00"
             model.number = 2
             model.date = "2018.06.01"
-            model.image = UIImage(named: "40fe711f9b754b596159f3a6.jpg")
+            model.image = "loading"
             dataArray.append(model)
         }
     }
@@ -103,7 +103,7 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
         cell?.configCellDateWithModel(model)
         
         /*点击cell数量加按钮回调*/
-        cell?.addNumber({number in
+        cell?.addNumber({(number,numberLabel) in
             
             model.number = number
             self.priceCount()
@@ -111,7 +111,7 @@ class LZCartViewController: UIViewController,UITableViewDelegate,UITableViewData
         })
         
         /*点击cell数量减按钮回调*/
-        cell?.cutNumber({number in
+        cell?.cutNumber({(number,numberLabel) in
             
             model.number = number
             self.priceCount()             

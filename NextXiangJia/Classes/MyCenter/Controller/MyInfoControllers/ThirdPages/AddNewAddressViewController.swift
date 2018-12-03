@@ -16,6 +16,7 @@ class AddNewAddressViewController: FormViewController {
     var detailedAddress:String?
     var telNum:String?
     var zipCode:Int?
+    var myCenterViewModel:MycenterViewModel = MycenterViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,22 +57,54 @@ extension AddNewAddressViewController {
         <<< TextRow("name"){
             $0.title = "收货人:"
             $0.placeholder = "请输入收货人姓名"
-        }
-        <<< TextRow("phonrNum"){
+            let nameRule = RuleClosure<String>{rowValue in
+                return (rowValue == nil || rowValue!.isEmpty) ? ValidationError(msg: "请输入收货人姓名") : nil
+            }
+            $0.add(rule: nameRule)
+            $0.validationOptions = .validatesOnBlur
+            }.cellUpdate({ (cell, row) in
+                if !row.isValid{
+                    cell.titleLabel?.textColor = .red
+                }
+            })
+        <<< PhoneRow("phoneNum"){
             $0.title = "手机:"
             $0.placeholder = "请输入手机号码"
-        }
-        <<< TextRow("telNum"){
+            let phoneRule = RuleClosure<String>{rowValue in
+                return YTools.isPhoneNumber(phoneNum: (rowValue)) ? nil : ValidationError.init(msg: "手机号码输入不正确")
+            }
+            $0.add(rule: phoneRule)
+            $0.validationOptions = .validatesOnBlur
+            }.cellUpdate({ (cell, row) in
+                if !row.isValid{
+                    cell.titleLabel?.textColor = .red
+                }
+            })
+        <<< PhoneRow("telNum"){
             $0.title = "固话:"
-            $0.placeholder = "请输入固话号码"
+            $0.placeholder = "请输入固话号码(可略过)"
         }
-        <<< TextRow("zipCode"){
+        <<< PhoneRow("zipCode"){
             $0.title = "邮编:"
             $0.placeholder = "请输入邮编"
-        }
+            let zipRule = RuleClosure<String>{rowValue in
+                return YTools.isZipCodeNumber(zipCodeNum: (rowValue)) ? nil : ValidationError.init(msg: "邮编输入不正确")
+            }
+            $0.add(rule: zipRule)
+            $0.validationOptions = .validatesOnBlur
+            }.cellUpdate({ (cell, row) in
+                if !row.isValid{
+                    cell.titleLabel?.textColor = .red
+                }
+            })
         <<< LabelRow("address"){
             $0.title = "所在地区:"
             $0.value = "点击选择所在地区 ＞"
+            let addressRule = RuleClosure<String>{rowValue in
+                return rowValue == "点击选择所在地区 ＞" ? ValidationError.init(msg: "请选择所在地区") : nil
+            }
+            $0.add(rule: addressRule)
+            $0.validationOptions = .validatesOnChange
             }.cellSetup({ (cell, row) in
                 //cell.backgroundColor = .black
 //                cell.tintColor = .black
@@ -95,20 +128,61 @@ extension AddNewAddressViewController {
                     row.updateCell()
                     YTools.myPrint(content: "\(province.area_name) \(city.area_name) \(town.area_name)", mode: true)
                 })
+            }).cellUpdate({ (cell, row) in
+                if !row.isValid{
+                    cell.textLabel?.textColor = .red
+                }
             })
-        <<< LabelRow(){
+        <<< LabelRow("addressLabel"){
             $0.title = "详细地址"
+            
         }
         <<< TextAreaRow("detailedAddress"){
             $0.placeholder = "请输入详细地址"
-        }
+            let addressRule = RuleClosure<String>{rowValue in
+                return (rowValue == nil || rowValue!.isEmpty) ? ValidationError(msg: "请输入详细地址") : nil
+            }
+            $0.add(rule: addressRule)
+            $0.validationOptions = .validatesOnBlur
+            }.cellUpdate({ (cell, row) in
+                if !row.isValid{
+                    (self.form.rowBy(tag: "addressLabel") as! LabelRow).cell.textLabel?.textColor = .red
+                }else{
+                    (self.form.rowBy(tag: "addressLabel") as! LabelRow).cell.textLabel?.textColor = .black
+                }
+            })
         <<< ButtonRow("saveButton"){
             $0.title = "保存"
             }.cellSetup({ (cell, row) in
                 cell.tintColor = .white
                 cell.backgroundColor = .red
-            }).onCellSelection({ (cell, row) in
-                print(self.form.values())
+            }).onCellSelection({[unowned self] (cell, row) in
+                //print(self.form.values())
+                let accept_name = (self.form.rowBy(tag: "name") as? TextRow)?.value ?? ""
+                //let id = Int((AppDelegate.appUser?.user_id)!)
+                let province = Int(self.address?.0.area_id ?? "100000")
+                let city = Int(self.address?.1.area_id ?? "100000")
+                let area = Int(self.address?.2.area_id ?? "100000")
+                let address = (self.form.rowBy(tag: "detailedAddress") as? TextAreaRow)?.value ?? ""
+                let zip = (self.form.rowBy(tag: "zipCode") as? PhoneRow)?.value ?? ""
+                let telphone = (self.form.rowBy(tag: "telNum") as? PhoneRow)?.value ?? ""
+                let mobile = (self.form.rowBy(tag: "phoneNum") as? PhoneRow)?.value ?? ""
+                //print("id=\(id)  province=\(province) city=\(city) area=\(area) address=\(address) zip=\(zip) telphone=\(telphone) mobile=\(mobile) accept_name=\(accept_name)")
+                var errors = self.form.validate()
+                if errors.count != 0 {
+                    YTools.showMyToast(rootView: self.view, message: errors[0].msg)
+                }else{
+                    self.myCenterViewModel.requestAddAddress(acceptName: accept_name, province: province!, city: city!, area: area!, address: address, zip: zip, telphone: telphone, mobile: mobile, finishCallback: { msg in
+                        if msg == ""{
+                            //添加成功
+                            self.navigationController?.popViewController(animated: true)
+                            //TODO:测试、增加地址页面无数据情况
+                        }else{
+                            //添加失败
+                            YTools.showMyToast(rootView: self.view, message: msg)
+                        }
+                    })
+                }
             })
         // 开启导航辅助，并且遇到被禁用的行就隐藏导航
         navigationOptions = RowNavigationOptions.Enabled.union(.StopDisabledRow)

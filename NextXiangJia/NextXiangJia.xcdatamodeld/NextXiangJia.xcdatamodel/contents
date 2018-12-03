@@ -13,6 +13,7 @@
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isFirstOpen" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="last_login" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="local_pd" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="message_ids" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobile" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,6 +30,6 @@
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AppUser" positionX="-45" positionY="0" width="128" height="435"/>
+        <element name="AppUser" positionX="-45" positionY="0" width="128" height="450"/>
     </elements>
 </model>

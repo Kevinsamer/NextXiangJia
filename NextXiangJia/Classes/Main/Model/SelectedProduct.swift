@@ -12,5 +12,6 @@ class SelectedProduct {
     var good_Id:Int?
     var selectedProduct:GoodsProduct?
     var selectedNum:Int?
-    var productType:Int?//规格类型  0无规格  1有规格
+    ///规格类型  0无规格  1有规格
+    var productType:Int?
 }

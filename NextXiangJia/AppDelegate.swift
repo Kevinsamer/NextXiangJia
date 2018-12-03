@@ -18,6 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         }
     }
+    ///判断是否为登录状态
+    static func isLogin() -> Bool{
+        if appUser?.id == -1 {
+            return false
+        }
+        return true
+    }
+    
+    private var mCenterViewModel:MycenterViewModel = MycenterViewModel()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -51,6 +60,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AppUserCoreDataHelper.AppUserHelper.insertAppUser()
         }
         AppDelegate.appUser = AppUserCoreDataHelper.AppUserHelper.getAppUser()
+        //print(AppDelegate.appUser?.user_id)
+        //----------最后登录差值判断并补登录方法
+        if AppDelegate.appUser?.user_id != -1{
+            //未登录时的游客id为-1，如果不等于-1则已登录，每次进入app时都判断一下最后登录时间与当前时间的差值，如果相差大于2天则调用登录方法
+            //print(AppDelegate.appUser?.local_pd)
+            if YTools.calculateDifferenceBetweenTwoTimes(dateOne: YTools.stringToDate(str: (AppDelegate.appUser?.last_login)!), dateTwo: Date.now()) > 48 {
+                //如果时间差大于48h，再次登录
+                self.mCenterViewModel.requestLoginData(username: (AppDelegate.appUser?.username)!, password: (AppDelegate.appUser?.local_pd)!, finishCallback: {
+
+                })
+            }
+        }
+        //---------
         return true
     }
     

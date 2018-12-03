@@ -71,7 +71,11 @@ public class YTools{
     }
     //处理手机号，4-7位改为*
     class func changePhoneNum(phone: String) -> String{
-        return phone.slicing(from: 0, length: 3)! + "****" + phone.slicing(from: 7, length: 4)!
+        if phone.count == 11{
+            return phone.slicing(from: 0, length: 3)! + "****" + phone.slicing(from: 7, length: 4)!
+        }else{
+            return phone
+        }
     }
     
     //处理价格￥和小数点中间的数字加粗放大
@@ -92,12 +96,16 @@ public class YTools{
     class func dateToString(date:Date) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //dateFormatter.locale = Locale.init(identifier: "zh_CN")
         return dateFormatter.string(from: date)
     }
     //字符串转data,失败返回1970.1.1
-    class func stringToDate(str:String) -> Date{
+    class func stringToDate(str:String, timeZone:TimeZone? = TimeZone.init(secondsFromGMT: 0)) -> Date{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale.current
+//        dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        dateFormatter.timeZone = timeZone
         return dateFormatter.date(from: str) ?? Date(timeIntervalSince1970: 0)
     }
     //颜色数组中随机返回一个颜色
@@ -189,6 +197,47 @@ public class YTools{
                 temp.append(array[i])
             }
             return temp
+        }
+    }
+    ///判断是否登录。未登录则跳转至登录页，登录后再进入目标页
+    class func pushToLoginOrNextControl(navigationControl:UINavigationController){
+        navigationControl.show(LoginViewController(), sender: self)
+    }
+    ///计算两个时间的
+    class func calculateDifferenceBetweenTwoTimes(dateOne one:Date, dateTwo two:Date, components:Set<Calendar.Component> = [Calendar.Component.hour]) -> Int{
+        let chinese = Calendar(identifier: Calendar.Identifier.chinese)
+        let result = chinese.dateComponents(components, from: one, to: two)
+        return result.hour ?? 0
+    }
+    ///验证手机号码
+    class func isPhoneNumber(phoneNum:String?) -> Bool {
+        guard let phoneNumber = phoneNum else {return false}
+        if phoneNumber.count == 0 {
+            return false
+        }
+        let mobile = "^(13[0-9]|15[0-9]|18[0-9]|17[0-9]|147)\\d{8}$"
+        let regexMobile = NSPredicate(format: "SELF MATCHES %@",mobile)
+        if regexMobile.evaluate(with: phoneNumber) == true {
+            return true
+        }else
+        {
+            return false
+        }
+    }
+    
+    ///验证邮编号码
+    class func isZipCodeNumber(zipCodeNum:String?) -> Bool {
+        guard let zipCodeNumber = zipCodeNum else { return false }
+        if zipCodeNumber.count == 0 {
+            return false
+        }
+        let zipCode = "^[1-9][0-9]{5}$"
+        let regexCodeNumber = NSPredicate(format: "SELF MATCHES %@",zipCode)
+        if regexCodeNumber.evaluate(with: zipCodeNumber) == true {
+            return true
+        }else
+        {
+            return false
         }
     }
     

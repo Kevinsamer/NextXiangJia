@@ -142,6 +142,16 @@ extension MyAreaPickerView{
         }
     }
     
+    static func getAreaNameByID(id:String)->String{
+        var temp = ""
+        for area in Areas{
+            if area.area_id == id {
+                temp = area.area_name
+            }
+        }
+        return temp
+    }
+    
     @objc func doneBtnClick(){
         if let block = selectCityHandle {
             selectProvince = provinces[picker.selectedRow(inComponent: 0)]

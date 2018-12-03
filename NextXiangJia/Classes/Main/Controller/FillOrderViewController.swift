@@ -1,27 +1,88 @@
 //
 //  FillOrderViewController.swift
 //  NextXiangJia
-//
+//  订单生成预览类
 //  Created by DEV2018 on 2018/6/29.
 //  Copyright © 2018年 DEV2018. All rights reserved.
 //
 
 import UIKit
-
+import Kingfisher
 private let bottomViewH:CGFloat = 60
 private let goodsCellH:CGFloat = 95
 private let collCellID = "collCellID"
 private let tableCellID = "tableCellID"
 class FillOrderViewController: UIViewController {
-    private var name = ""
+    private var name = "点击添加收货地址"
     private var phone = ""
-    private var address = ""
-    private var totalPrice = ""
-    private var payMode = "在线支付"
+    private var address = "暂无收货地址"
+    private var payment:Int = 10//支付宝手机网站支付id
+    private var payMode = "支付宝支付"
+    private var sendModeID:Int = 1//默认为快递运输方式
     private var sendMode = "快递运输"
-    private var goodsNum: CGFloat = 6
+    private var freightPrice:Double = 0//运费
+    private var goodsNum: CGFloat = 0
     private var vouchersCardNum = ""
     private var vouchersPassword = ""
+    private var myCenterViewModel:MycenterViewModel = MycenterViewModel()
+    private var orderViewModel:OrderViewModel = OrderViewModel()
+    //如果是单个商品生成订单预览，则需要传这三个参数
+    var id:String? = nil
+    var type:String? = nil
+    var num:String? = nil
+    //private var kuaidiPrice:Double = 0.00//记录快递价格
+    ///总价：包含运费、税费、商品价格等
+    private var totalPrice:Double = 0.00{
+        didSet{
+            //print(totalPrice)
+            self.bottomPriceLabel.attributedText = YTools.changePrice(price: "￥\(String(format: "%.2f", totalPrice))", fontNum: 22)
+        }
+    }
+    ///商品总额
+    private var goodsTotalPrice:Double = 0.00{
+        didSet{
+            self.goodsPriceLabel.text = "￥\(goodsTotalPrice)"
+            if self.invoiceSwitch.isOn{
+                self.totalPrice = goodsTotalPrice + tax
+            }else{
+                self.totalPrice = goodsTotalPrice
+            }
+        }
+    }
+    private var tax:Double = 0.00{
+        didSet{
+            if self.invoiceSwitch.isOn{
+                self.taxPriceLabel.text = "+￥\(tax)"
+            }else{
+                self.taxPriceLabel.text = "+￥\(0.0)"
+            }
+            
+        }
+    }
+    var goodsList:[ShopCartGoodsModel]?{
+        didSet{
+            self.goodsInfoTableView.reloadData()
+        }
+    }
+    ///是否由选择地址页面选中地址后返回
+    private var isBackByChoose:Bool = false
+    ///默认的收货地址
+    private var selectedAddress:MyAddressModel?{
+        willSet{
+            //print(selectedAddress?.id)
+            self.nameAndPhoneLabel.text = "\(newValue?.accept_name ?? "收件人姓名")    \(YTools.changePhoneNum(phone: (newValue?.mobile)!))"
+            self.addressLabel.text = "\(newValue?.province ?? "省")\(newValue?.city ?? "市")\(newValue?.area ?? "区")\(newValue?.address  ?? "详细地址")"
+            
+            DispatchQueue.main.async {
+                self.initOrderDelivery(selectAddress: newValue!)
+            }
+//            print("newValue\(newValue?.province)")
+            //print("select\(self.isBackByChoose)")
+        }
+//        didSet{
+//            print("oldValue\(oldValue?.province)")
+//        }
+    }
     
     //MARK: - 懒加载
     //①收件人信息views
@@ -62,7 +123,7 @@ class FillOrderViewController: UIViewController {
     
     //②选择支付方式
     lazy var payModeAlert: MyAlertController = {
-        let alert = MyAlertController(title: "支付方式", message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let alert = MyAlertController(title: "支付方式", message: "请选择付款方式", preferredStyle: UIAlertControllerStyle.actionSheet)
         return alert
     }()
     
@@ -75,7 +136,7 @@ class FillOrderViewController: UIViewController {
     
     lazy var chosenPayModeLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: finalScreenW - 160, y: 0, width: 100, height:40))
-        label.text = "在线支付"
+        label.text = "支付宝支付"
         label.textAlignment = .right
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
@@ -91,19 +152,18 @@ class FillOrderViewController: UIViewController {
     
     //③待支付商品信息
     lazy var goodsInfoTableView: UITableView = {
-        let table = UITableView(frame: CGRect.init(x: 0, y: 0, width: finalScreenW - 20, height: goodsNum * goodsCellH), style: UITableViewStyle.plain)
+        let table = UITableView(frame: CGRect.init(x: 0, y: 0, width: finalScreenW - 20, height: CGFloat(goodsList?.count ?? 1) * goodsCellH), style: UITableViewStyle.plain)
         table.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
         table.delegate = self
         table.dataSource = self
         table.bounces = false
-        
         table.register(UINib.init(nibName: "FillOrderGoodsCell", bundle: nil), forCellReuseIdentifier: tableCellID)
         return table
     }()
     
     lazy var messageEditField: UITextField = {
         //留言输入框
-        let field = UITextField(frame: CGRect(x: 10, y: goodsNum * goodsCellH + 40, width: finalScreenW - 40, height: 40))
+        let field = UITextField(frame: CGRect(x: 10, y: self.goodsInfoTableView.frame.size.height + 40, width: finalScreenW - 40, height: 40))
         field.placeholder = "请输入订单留言"
 //        field.borderStyle = UITextBorderStyle.roundedRect
         field.layer.cornerRadius = 20
@@ -115,20 +175,19 @@ class FillOrderViewController: UIViewController {
         field.delegate = self
         field.returnKeyType = UIReturnKeyType.done
         field.keyboardAppearance = UIKeyboardAppearance.light
-        
         return field
     }()
     
     lazy var sendModeView: UIControl = {
         //配送方式view
-        let view = UIControl(frame: CGRect(x: 0, y: goodsNum * goodsCellH, width: finalScreenW - 20, height: 40))
+        let view = UIControl(frame: CGRect(x: 0, y: self.goodsInfoTableView.height, width: finalScreenW - 20, height: 40))
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         view.addTarget(self, action: #selector(showSendModeAlert), for: UIControlEvents.touchUpInside)
         return view
     }()
     
     lazy var sendModeAlert: MyAlertController = {
-        let alert = MyAlertController(title: "配送方式", message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let alert = MyAlertController(title: "配送方式", message: "请选择配送方式", preferredStyle: UIAlertControllerStyle.actionSheet)
         return alert
     }()
     
@@ -141,7 +200,7 @@ class FillOrderViewController: UIViewController {
     
     lazy var chosensendModeLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: finalScreenW - 160, y: 0, width: 100, height:40))
-        label.text = "快递运输"
+        label.text = "快递"
         label.textAlignment = .right
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
@@ -216,7 +275,7 @@ class FillOrderViewController: UIViewController {
     
     lazy var chosenVouchersLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: finalScreenW - 160, y: 0, width: 100, height:40))
-        label.text = "已使用1个"
+        label.text = "点击添加使用"
         label.textAlignment = .right
         label.adjustsFontSizeToFitWidth = true
         label.font = UIFont.boldSystemFont(ofSize: 14)
@@ -255,7 +314,7 @@ class FillOrderViewController: UIViewController {
         let label = UILabel(frame: CGRect(x: finalScreenW - 130, y: 40, width: 100, height: 30))
         //label.backgroundColor = UIColor.random.lighten()
         label.textAlignment = .right
-        label.text = "-￥8.00"
+        label.text = "-￥0.0"
         label.textColor = #colorLiteral(red: 0.9995694757, green: 0.1469388008, blue: 0, alpha: 1)
         return label
     }()
@@ -270,7 +329,7 @@ class FillOrderViewController: UIViewController {
         let label = UILabel(frame: CGRect(x: finalScreenW - 130, y: 70, width: 100, height: 30))
         //label.backgroundColor = UIColor.random.lighten()
         label.textAlignment = .right
-        label.text = "+￥8.00"
+        label.text = "+￥8.0"
         label.textColor = #colorLiteral(red: 0.9995694757, green: 0.1469388008, blue: 0, alpha: 1)
         return label
     }()
@@ -285,7 +344,7 @@ class FillOrderViewController: UIViewController {
         let label = UILabel(frame: CGRect(x: finalScreenW - 130, y: 100, width: 100, height: 30))
         //label.backgroundColor = UIColor.random.lighten()
         label.textAlignment = .right
-        label.text = "+￥8.00"
+        label.text = "+￥8.0"
         label.textColor = #colorLiteral(red: 0.9995694757, green: 0.1469388008, blue: 0, alpha: 1)
         return label
     }()
@@ -300,7 +359,7 @@ class FillOrderViewController: UIViewController {
         let label = UILabel(frame: CGRect(x: finalScreenW - 130, y: 130, width: 100, height: 30))
         //label.backgroundColor = UIColor.random.lighten()
         label.textAlignment = .right
-        label.text = "+￥8.00"
+        label.text = "+￥0.0"
         label.textColor = #colorLiteral(red: 0.9995694757, green: 0.1469388008, blue: 0, alpha: 1)
         return label
     }()
@@ -315,7 +374,7 @@ class FillOrderViewController: UIViewController {
         let label = UILabel(frame: CGRect(x: finalScreenW - 130, y: 160, width: 100, height: 30))
         //label.backgroundColor = UIColor.random.lighten()
         label.textAlignment = .right
-        label.text = "+￥8.00"
+        label.text = "+￥0.0"
         label.textColor = #colorLiteral(red: 0.9995694757, green: 0.1469388008, blue: 0, alpha: 1)
         return label
     }()
@@ -335,6 +394,7 @@ class FillOrderViewController: UIViewController {
         button.setTitleForAllStates("提交订单")
         button.setTitleColorForAllStates(.white)
         button.backgroundColor = .red
+        button.addTarget(self, action: #selector(postOrder), for: .touchUpInside)
         return button
     }()
     
@@ -343,7 +403,7 @@ class FillOrderViewController: UIViewController {
         label.adjustsFontSizeToFitWidth = true
         label.textColor = .red
         label.adjustsFontSizeToFitWidth = true
-        label.attributedText = YTools.changePrice(price: totalPrice, fontNum: 22)
+        label.attributedText = YTools.changePrice(price: "￥\(goodsTotalPrice)", fontNum: 22)
         return label
     }()
     
@@ -358,12 +418,24 @@ class FillOrderViewController: UIViewController {
         coll.delegate = self
         coll.dataSource = self
         //coll.allowsSelection = false
+        //取消滚动条
+        coll.showsVerticalScrollIndicator = false
         coll.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag
         coll.backgroundColor = .white
         coll.register(UICollectionViewCell.self, forCellWithReuseIdentifier: collCellID)
         coll.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         return coll
     }()
+    
+    lazy var onlineBtn = UIAlertAction(title: "支付宝支付", style: UIAlertActionStyle.default, handler: { (action) in
+        self.chosenPayModeLabel.text = "支付宝支付"
+    })
+//    lazy var arriveBtn = UIAlertAction(title: "货到付款", style: UIAlertActionStyle.default, handler: { (action) in
+//        self.chosenPayModeLabel.text = "货到付款"
+//    })
+    let cancleBtn = UIAlertAction(title: "取消", style: UIAlertActionStyle.cancel, handler: nil)
+    var expressBtn = UIAlertAction()
+    var takeSelfBtn = UIAlertAction()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -378,6 +450,37 @@ class FillOrderViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.isBackByChoose = false
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.myCenterViewModel.requestUserAddress(id: Int((AppDelegate.appUser?.user_id)!)) {[unowned self] in
+            if self.myCenterViewModel.userAddressInfo?.count == 0 {
+                //页面显示前如果请求得到的地址数量为0则显示需要添加地址的信息
+                self.selectedAddress = nil
+                self.nameAndPhoneLabel.text = self.name
+                self.addressLabel.text = self.address
+            }else{
+                if self.selectedAddress == nil && !self.isBackByChoose{
+                    //如果请求到的地址数量不为0且不是选择地址后回调且没有选择的地址，则请求默认地址作为选择的地址
+                    self.myCenterViewModel.requestIsDefaultAddress(user_id: Int((AppDelegate.appUser?.user_id)!), finishCallback: { (defaultAddress) in
+                        self.selectedAddress = defaultAddress
+                    })
+                }else if self.selectedAddress != nil && !self.isBackByChoose{
+                    //如果请求到的地址数量不为0且不是选择地址后回调且有选择的地址，则遍历所有地址找到选中的地址，将该地址替换为选中的地址
+                    //print("i am  in\(self.selectedAddress?.id)")
+                    for address in self.myCenterViewModel.userAddressInfo! {
+                        //print("address\(address.id)")
+                        if address.id == self.selectedAddress?.id {
+                            self.selectedAddress = address
+                        }
+                    }
+                }
+            }
+        }
+    }
     
 }
 //MARK: - 设置UI
@@ -398,35 +501,74 @@ extension FillOrderViewController {
     }
     
     private func initData(){
-        name = "余志超"
-        phone = YTools.changePhoneNum(phone: "13160107520")
-        address = "江苏常州市武进区花园街200 传媒大厦"
-        totalPrice = "￥23333.33"
+        //name,phone,address应该从收货地址数据中获得
+        self.myCenterViewModel.requestIsDefaultAddress(user_id: Int((AppDelegate.appUser?.user_id)!)) { (defaultAddress) in
+            self.selectedAddress = defaultAddress
+        }
+        self.orderViewModel.requestPreviewOrder(isPhone: "true", id: "\(self.id ?? "")", type: "\(self.type ?? "")", num: "\(self.num ?? "")") {[unowned self] (sum,goodsList,tax) in
+//            print(sum)
+//            print(goodsList.count)
+//            print(tax)
+            self.goodsList = goodsList
+            self.goodsTotalPrice = sum
+            self.tax = tax
+        }
+    }
+    
+    private func initOrderDelivery(selectAddress:MyAddressModel){
+        self.orderViewModel.requestProvinceIDByName(provinceName: selectAddress.province) { (provinceId) in
+//            print("province=\(selectAddress.province)")
+//            print("id=\(provinceId)")
+            self.orderViewModel.requestOrderDelivery(goodsList: self.goodsList!, province: provinceId) {[unowned self] (kuaidi,ziti) in
+                DispatchQueue.main.async(execute: {
+                    self.sendModeAlert = MyAlertController(title: "配送方式", message: "请选择配送方式", preferredStyle: UIAlertControllerStyle.actionSheet)
+                    
+                    self.expressBtn = UIAlertAction(title: "\(kuaidi.name)    运费:￥\(kuaidi.price)\(kuaidi.description)", style: .default) { [unowned self] (action) in
+                        if self.chosensendModeLabel.text != kuaidi.name {
+                            self.totalPrice += kuaidi.price
+                        }
+                        self.chosensendModeLabel.text = "\(kuaidi.name)"
+                        self.freightPriceLabel.text = "+￥\(kuaidi.price)"
+                        self.sendModeID = 1
+                    }
+                    self.takeSelfBtn = UIAlertAction(title: "\(ziti.name)    运费:￥\(ziti.price)", style: .default) { [unowned self] (action) in
+                        if self.chosensendModeLabel.text != ziti.name {
+                            self.totalPrice -= kuaidi.price
+                        }
+                        self.chosensendModeLabel.text = "\(ziti.name)"
+                        self.freightPriceLabel.text = "+￥\(ziti.price)"
+                        self.sendModeID = 3
+                    }
+                    //配送方式alert
+                    if kuaidi.if_delivery == 0{
+                        //self.kuaidiPrice = kuaidi.price
+                        self.sendModeAlert.addAction(self.expressBtn)
+                        self.chosensendModeLabel.text = kuaidi.name
+                        self.freightPriceLabel.text = "+￥\(kuaidi.price)"
+                        self.sendModeID = 1
+                        self.totalPrice = self.goodsTotalPrice + kuaidi.price + (self.invoiceSwitch.isOn ? self.tax : 0)
+                    }else{
+                        self.sendModeAlert.message = "您选择的地区部分商品无法送达"
+                        self.chosensendModeLabel.text = ziti.name
+                        self.freightPriceLabel.text = "+￥\(ziti.price)"
+                        self.sendModeID = 3
+                        self.totalPrice = self.goodsTotalPrice + (self.invoiceSwitch.isOn ? self.tax : 0)
+                    }
+                    self.sendModeAlert.addAction(self.takeSelfBtn)
+                    self.sendModeAlert.addAction(self.cancleBtn)
+                })
+            }
+            
+        }
     }
     
     private func setAlertControllers(){
         //支付方式alert
-        let onlineBtn = UIAlertAction(title: "在线支付", style: UIAlertActionStyle.default, handler: { (action) in
-            self.chosenPayModeLabel.text = "在线支付"
-        })
-        let arriveBtn = UIAlertAction(title: "货到付款", style: UIAlertActionStyle.default, handler: { (action) in
-            self.chosenPayModeLabel.text = "货到付款"
-        })
-        let cancleBtn = UIAlertAction(title: "取消", style: UIAlertActionStyle.cancel, handler: nil)
         payModeAlert.addAction(onlineBtn)
-        payModeAlert.addAction(arriveBtn)
+        //payModeAlert.addAction(arriveBtn)
         payModeAlert.addAction(cancleBtn)
         
-        //配送方式alert
-        let expressBtn = UIAlertAction(title: "快递运输", style: .default) { (action) in
-            self.chosensendModeLabel.text = "快递运输"
-        }
-        let takeSelfBtn = UIAlertAction(title: "自提", style: .default) { (action) in
-            self.chosensendModeLabel.text = "自提"
-        }
-        sendModeAlert.addAction(expressBtn)
-        sendModeAlert.addAction(takeSelfBtn)
-        sendModeAlert.addAction(cancleBtn)
+        
         //代金券alert
         let textFieldOne: TextField.Config = { textField in
             textField.left(image: #imageLiteral(resourceName: "image_proper_card"), color: UIColor(hex: 0x007AFF))
@@ -479,7 +621,7 @@ extension FillOrderViewController {
     
     private func setNavigationBar(){
         //去除返回按钮的文字
-        navigationController?.navigationBar.topItem?.title = ""
+        //navigationController?.navigationBar.topItem?.title = ""
         navigationItem.title = "填写订单"
     }
     
@@ -584,7 +726,9 @@ extension FillOrderViewController: UICollectionViewDelegateFlowLayout,UICollecti
         }
         switch indexPath.row {
         case 0:
-            print("选择地址")
+            let vc = ChooseAddressViewController()
+            vc.sendDataProtocol = self
+            self.navigationController?.show(vc, sender: self)
         case 1:
             self.present(payModeAlert, animated: true, completion: nil)
         case 2:
@@ -605,16 +749,25 @@ extension FillOrderViewController: UICollectionViewDelegateFlowLayout,UICollecti
 
 extension FillOrderViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Int(goodsNum)
+        return goodsList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tableCellID) as! FillOrderGoodsCell
-        cell.goodsImageView.image = UIImage(named: "\(indexPath.row)")
-        cell.goodsNameLabel.attributedText = "小米（MI）小米8SE手机 双卡双待  金色  全网通 *********".bold
-        cell.goodsStandardsLabel.text = "颜色：金色   版本：全网通（6G RAM + 64G ROM）"
-        cell.goodsPriceLabel.attributedText = YTools.changePrice(price: "￥1899.00", fontNum: 14)
-        cell.goodsNumLabel.text = "x\(indexPath.row)"
+//        cell.goodsImageView.image = UIImage(named: "\(indexPath.row)")
+        cell.goodsImageView.kf.setImage(with: URL.init(string: BASE_URL + "\(goodsList![indexPath.row].img)"), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
+        cell.goodsNameLabel.attributedText = goodsList?[indexPath.row].name.bold ?? "小米（MI）小米8SE手机 双卡双待  金色  全网通 *********".bold
+        var specString = ""
+        for spec in goodsList![indexPath.row].specArray{
+            if spec.value.contains("upload"){
+                specString += (spec.name + ":" + spec.tip + "   ")
+            }else{
+                specString += (spec.name + ":" + spec.value + "   ")
+            }
+        }
+        cell.goodsStandardsLabel.text = specString
+        cell.goodsPriceLabel.attributedText = YTools.changePrice(price: "￥\(goodsList?[indexPath.row].sell_price ?? 0.00)", fontNum: 14)
+        cell.goodsNumLabel.text = "x\(goodsList?[indexPath.row].count ?? 0)"
         return cell
     }
     
@@ -629,8 +782,13 @@ extension FillOrderViewController:UITableViewDelegate, UITableViewDataSource {
         if invoiceInfoTextField.isFirstResponder {
             invoiceInfoTextField.resignFirstResponder()
         }
+        print(indexPath.row)
     }
     
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+
 }
 //MARK: - 实现textField代理
 extension FillOrderViewController:UITextFieldDelegate {
@@ -657,13 +815,39 @@ extension FillOrderViewController {
             //need
             invoiceInfoTextField.placeholder = "请输入发票抬头"
             invoiceInfoTextField.isEnabled = true
+            self.taxPriceLabel.text = "+￥\(tax)"
+            self.totalPrice += tax
         }else {
             //no
             invoiceInfoTextField.placeholder = "不开发票"
             invoiceInfoTextField.isEnabled = false
             invoiceInfoTextField.clear()
+            self.taxPriceLabel.text = "+￥\(0.0)"
+            self.totalPrice -= tax
         }
+    }
+    
+    @objc private func postOrder(){
+        //提交订单1.判断是否有收货地址
+        if self.selectedAddress == nil{
+            YTools.showMyToast(rootView: self.view, message: "请选择收货地址")
+        }else{
+            self.orderViewModel.requestPostOrder(isPhone: "true", directGid: (self.id == nil ? 0 : Int(self.id!)!) , directType: self.type, directNum: (self.num == nil ? 1 : Int(self.num!)!), directPromo: nil, directActiveId: 0, acceptTime: "任意", payment: 10, message: messageEditField.text ?? "", taxes: (self.invoiceSwitch.isOn ? self.tax : nil), taxTitle: (self.invoiceSwitch.isOn ? self.invoiceInfoTextField.text ?? "" : nil), radioAddress: (self.selectedAddress?.id)!, deliveryId: self.sendModeID, finishCallback: { postOrderResultModel in
+                //提交订单完成，跳转到支付页面
+                let vc = PayViewController()
+                vc.postOrderResultModel = postOrderResultModel
+                self.navigationController?.show(vc, sender: self)
+            })
+        }
+        
     }
 }
 
+extension FillOrderViewController:SendDataProtocol{
+    func SendData(data: Any?) {
+        //print((data as? MyAddressModel)?.accept_name)
+        self.selectedAddress = data as? MyAddressModel
+        self.isBackByChoose = true
+    }
+}
 

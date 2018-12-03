@@ -8,7 +8,7 @@
 
 import UIKit
 import FontAwesome_swift
-
+import PullToRefreshKit
 class NextShopCartViewController: UIViewController {
     var dataArray: [LZCartModel] = []//所有数据集合
     var selectArray: [LZCartModel] = []//结算数据集合
@@ -20,8 +20,86 @@ class NextShopCartViewController: UIViewController {
     var rightBtn = UIButton()//编辑、完成按钮
     var commitButton = UIButton(type: .custom)//结算、删除按钮
     let backgroundView = UIView()//无数据背景视图
+    let alphaBottomView = UIView()//无数据底部视图遮盖层
+    let shopCartViewModel:ShopCartViewModel = ShopCartViewModel()
+    var shopCartModel:ShopCartModel?{
+        didSet{
+            dataArray.removeAll()
+            guard let goodsList = shopCartModel?.goodsLists else {return}
+            //print(goodsList.count)
+            for goods in goodsList{
+                let model = LZCartModel()
+                model.name = goods.name
+                model.image = goods.img
+                var specString = ""
+                for spec in goods.specArray{
+                    if spec.value.contains("upload"){
+                        specString += (spec.name + ":" + spec.tip + "   ")
+                    }else{
+                        specString += (spec.name + ":" + spec.value + "   ")
+                    }
+                }
+                model.date = specString
+                model.number = goods.count
+                model.price = "\(goods.sell_price)"
+                model.goods_id = goods.goods_id
+                model.product_id = goods.product_id
+                dataArray.append(model)
+                //                print("\(model.name):goods_id=\(model.goods_id)&product_id=\(model.product_id)")
+            }
+            //print(dataArray.count)
+            cartTableView?.reloadData(){
+                if self.dataArray.count > 0{
+                    self.removeEmptyView()
+                }else{
+                    self.emptyView()
+                }
+            }
+        }
+    }
     // MARK: - 懒加载属性
+    lazy var group: DispatchGroup = {
+        let group = DispatchGroup()
+        return group
+    }()
+    ///初始化队列
+    ///label:队列标签，只设置队列标签时默认为串行队列
+    ///qos:队列的优先级
+    ///attributes:队列形式，.concurrent表示并行队列
+    lazy var mQueue: DispatchQueue = {
+        let queue = DispatchQueue.init(label: "delGoodsQueue")
+        return queue
+    }()
     
+    lazy var refreshIndicator: UIActivityIndicatorView = {
+        let indi = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        indi.frame = CGRect(origin: self.view.center, size: CGSize(width: 40, height: 40))
+        return indi
+    }()
+    
+    lazy var header: DefaultRefreshHeader = {
+        let header = DefaultRefreshHeader.header()
+        header.setText("下拉刷新", mode: .pullToRefresh)
+        header.setText("释放刷新", mode: .releaseToRefresh)
+        header.setText("数据刷新成功", mode: .refreshSuccess)
+        header.setText("刷新中...", mode: .refreshing)
+        header.setText("数据刷新失败，请检查网络设置", mode: .refreshFailure)
+        header.tintColor = #colorLiteral(red: 0.9995891452, green: 0.6495086551, blue: 0.2688535452, alpha: 1)
+        header.imageRenderingWithTintColor = true
+        header.durationWhenHide = 0.4
+        return header
+    }()
+    
+    lazy var footer: DefaultRefreshFooter = {
+        let footer = DefaultRefreshFooter.footer()
+        footer.setText("上拉加载更多", mode: .pullToRefresh)
+        footer.setText("到底啦", mode: .noMoreData)
+        footer.setText("加载中...", mode: .refreshing)
+        footer.setText("点击加载更多", mode: .tapToRefresh)
+        footer.textLabel.textColor  = #colorLiteral(red: 0.9995891452, green: 0.6495086551, blue: 0.2688535452, alpha: 1)
+        footer.refreshMode = .scroll
+        return footer
+    }()
     // MARK: - 系统回调函数
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +112,10 @@ class NextShopCartViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        initData()
     }
     
 }
@@ -63,7 +145,7 @@ extension NextShopCartViewController{
         backgroundView.snp.makeConstraints { [unowned self] (make) in
 
             make.left.right.equalTo(self.view)
-            make.height.equalTo(60)
+            make.height.equalTo(finalTabBarH)
             //判断设备型号(X或者其他)后设置底部约束
             make.bottom.equalTo(self.view).offset(UIDevice.current.isX() ? 0 - IphonexHomeIndicatorH : 0)
         }
@@ -155,19 +237,15 @@ extension NextShopCartViewController{
     
     //购物车为空时的视图
     func emptyView() {
-        allSelectButton?.isSelected = false
-        backgroundView.backgroundColor = UIColor.white
-        //backgroundView.addTarget(self, action: #selector(removeEmptyView), for: UIControlEvents.touchUpInside)
-        //设置下划手势事件监听
-        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeEmptyView(sender:)))
-        swipe.direction = .down
-        backgroundView.addGestureRecognizer(swipe)
-        self.view.addSubview(backgroundView)
         
-        backgroundView.snp.makeConstraints {[unowned self] (make) in
-            //通过设置make.edges来一次设置目标view的全部约束
-            make.edges.equalTo(self.view)
-        }
+        allSelectButton?.isSelected = false
+        backgroundView.frame = CGRect(origin: .zero, size: (cartTableView?.frame.size)!)
+        backgroundView.backgroundColor = UIColor.white
+        //设置下划手势事件监听--删除
+        //        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeEmptyView(sender:)))
+        //        swipe.direction = .down
+        //        backgroundView.addGestureRecognizer(swipe)
+        self.cartTableView?.addSubview(backgroundView)
         //空视图图片
         let imageView = UIImageView(image: UIImage(named: "cart_default_bg"))
         imageView.contentMode = UIViewContentMode.scaleAspectFit
@@ -193,6 +271,10 @@ extension NextShopCartViewController{
             make.height.equalTo(40)
             make.top.equalTo(imageView.snp.bottom).offset(50)
         }
+        
+        alphaBottomView.frame = CGRect(origin: CGPoint.init(x: 0, y: finalContentViewHaveTabbarH + finalStatusBarH + finalNavigationBarH), size: CGSize(width: finalScreenW, height: finalTabBarH))
+        alphaBottomView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.view.addSubview(alphaBottomView)
         
         //         let tableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
         //        tableView.backgroundColor = UIColor.white
@@ -220,7 +302,7 @@ extension NextShopCartViewController{
     }
     //初始化tableView
     private func setupTableView(){
-        cartTableView = UITableView(frame: CGRect.init(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: finalScreenH - finalStatusBarH - finalNavigationBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH + 60 : 60)),style: UITableViewStyle.plain)
+        cartTableView = UITableView(frame: CGRect.init(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: finalScreenH - finalStatusBarH - finalNavigationBarH - (UIDevice.current.isX() ? IphonexHomeIndicatorH + finalTabBarH : finalTabBarH)),style: UITableViewStyle.plain)
 //        cartTableView?.contentInsetAdjustmentBehavior = .never
         cartTableView?.delegate = self
         cartTableView?.dataSource = self
@@ -228,32 +310,39 @@ extension NextShopCartViewController{
         cartTableView?.backgroundColor = LZColorTool.colorFromRGB(235, G: 246, B: 248)
         cartTableView?.separatorStyle = UITableViewCellSeparatorStyle.none
         cartTableView?.rowHeight = KLZTableViewCellHeight
+        cartTableView?.contentInsetAdjustmentBehavior = .never
         self.view.addSubview(cartTableView!)
         //设置下拉刷新事件
-        cartTableView?.refreshControl = UIRefreshControl()
-        cartTableView?.refreshControl?.attributedTitle = NSAttributedString(string: "下拉刷新")
-        cartTableView?.refreshControl?.addTarget(self, action: #selector(refreshCartTable), for: UIControlEvents.valueChanged)
-//        cartTableView?.snp.makeConstraints({[unowned self] (make) in
-//            make.left.right.equalTo(self.view)
-//            make.top.equalTo(self.view).offset(0)
-//            make.bottom.equalTo(self.view).offset(UIDevice.current.isX() ? 0 - IphonexHomeIndicatorH : 0)
-//        })
+//        cartTableView?.refreshControl = UIRefreshControl()
+//        cartTableView?.refreshControl?.attributedTitle = NSAttributedString(string: "下拉刷新")
+//        cartTableView?.refreshControl?.addTarget(self, action: #selector(refreshCartTable), for: UIControlEvents.valueChanged)
+        cartTableView?.configRefreshHeader(with: header, container: self, action: {[unowned self] in
+            self.refreshCartTable()
+        })
     }
     //初始化数据
     private func initData(){
         dataArray.removeAll()
-        for i in 0...10 {
-            let model = LZCartModel()
-            model.shop = "店铺\(i)"
-            model.name = "测试\(i)"
-            model.price = "100.00"
-            model.number = 2
-            model.date = "2018.06.01"
-            model.image = UIImage(named: "ios_tickets_520")
-            dataArray.append(model)
-        }
+        //构建模拟数据
+//        for i in 0...10 {
+//            let model = LZCartModel()
+//            model.shop = "店铺\(i)"
+//            model.name = "测试\(i)"
+//            model.price = "100.00"
+//            model.number = 2
+//            model.date = "2018.06.01"
+//            model.image = "loading"
+//            dataArray.append(model)
+//        }
+        //请求网络数据
+        requestCartData()
     }
     
+    private func requestCartData(){
+        shopCartViewModel.requestCart {
+            self.shopCartModel = self.shopCartViewModel.shopCartModel
+        }
+    }
     private func setupNavigationBar(){
         //设置图标按钮实现点击高亮效果
         let leftBtn = UIButton.init()
@@ -288,22 +377,23 @@ extension NextShopCartViewController{
 //MARK: - 点击事件
 extension NextShopCartViewController{
     //空视图下划手势事件监听
-    @objc func swipeEmptyView(sender : UISwipeGestureRecognizer){
-        sender.numberOfTouchesRequired = 1
-        if sender.direction == UISwipeGestureRecognizerDirection.down {
-            backgroundView.removeFromSuperview()
-            cartTableView?.refreshControl?.beginRefreshing()
-            refreshCartTable()
-            print("downSwipe")
-        }
-    }
+//    @objc func swipeEmptyView(sender : UISwipeGestureRecognizer){
+//        sender.numberOfTouchesRequired = 1
+//        if sender.direction == UISwipeGestureRecognizerDirection.down {
+//            backgroundView.removeFromSuperview()
+//            cartTableView?.refreshControl?.beginRefreshing()
+//            refreshCartTable()
+//            print("downSwipe")
+//        }
+//    }
     //当购物车为空时，覆盖一个view作为空视图，重新加载数据时移除空视图view
     @objc func removeEmptyView(){
         backgroundView.removeFromSuperview()
+        alphaBottomView.removeFromSuperview()
     }
     //下拉刷新事件
     @objc func refreshCartTable(){
-        Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(refreshTimer), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(refreshTimer), userInfo: nil, repeats: false)
     }
     //延时
     @objc func refreshTimer(){
@@ -312,8 +402,9 @@ extension NextShopCartViewController{
         selectArray.removeAll()
         delArray.removeAll()
         priceCount()
-        cartTableView?.reloadData()
-        cartTableView?.refreshControl?.endRefreshing()
+        cartTableView?.reloadData(){[unowned self] in
+            self.cartTableView?.switchRefreshHeader(to: .normal(.success, 0.5))
+        }
     }
     //结算状态
     private func editJiesuanState(){
@@ -424,13 +515,28 @@ extension NextShopCartViewController{
             }else{
                 let alert = UIAlertController(title: "提示",message: "删除后无法恢复,是否继续删除?",preferredStyle: UIAlertControllerStyle.alert)
                 
-                let ok = UIAlertAction(title: "确定",style: UIAlertActionStyle.default,handler:{okAction in
-                    self.dataArray.removeAll(self.delArray)
-                    self.delArray.removeAll()
-                    self.priceCount()
-                    self.cartTableView?.reloadData {
-                        if self.dataArray.count == 0 {
-                            self.emptyView()
+                let ok = UIAlertAction(title: "确定",style: UIAlertActionStyle.default,handler:{ [unowned self] okAction in
+                    self.view.addSubview(self.refreshIndicator)
+                    self.refreshIndicator.startAnimating()
+                    for model in self.delArray{
+                        self.mQueue.async(group: self.group, qos: DispatchQoS.userInteractive, flags: [], execute: {
+                            self.shopCartViewModel.requestRemoveCart(id: model.product_id == 0 ? model.goods_id : model.product_id, type: model.product_id == 0 ? .goods : .product, finishedCallback: {(remove) in
+                                //                                print("\(i)\(remove.isError)")
+                                //                                if !remove.isError! {
+                                //                                    self.dataArray.removeAll(model)
+                                //                                    self.delArray.removeAll(model)
+                                //                                }
+                            })
+                            //阻塞了主线程
+                            Thread.sleep(forTimeInterval: 0.03)
+                        })
+                    }
+                    self.group.notify(queue: self.mQueue){
+                        DispatchQueue.main.sync {[unowned self] in
+                            self.initData()
+                            self.priceCount()
+                            self.refreshIndicator.stopAnimating()
+                            self.refreshIndicator.removeFromSuperview()
                         }
                     }
                 })
@@ -440,12 +546,6 @@ extension NextShopCartViewController{
                 alert.addAction(ok)
                 alert.addAction(cancel)
                 self.present(alert, animated: true, completion: nil)
-                //
-                print("删除:")
-                for del in delArray{
-                    del.showInfo()
-                }
-                
             }
         }else if editButtonState == 2{
             //结算状态
@@ -453,6 +553,9 @@ extension NextShopCartViewController{
             for select in selectArray{
                 select.showInfo()
             }
+            let vc = FillOrderViewController()
+            vc.goodsList = self.shopCartModel?.goodsLists
+            self.navigationController?.show(vc, sender: self)
         }
     }
 }
@@ -476,19 +579,60 @@ extension NextShopCartViewController : UITableViewDelegate,UITableViewDataSource
         cell?.configCellDateWithModel(model) //数据填充
         
         //点击cell数量加按钮回调
-        cell?.addNumber({number in
+        cell?.addNumber({(number,numberLabel) in
+            var type:JoinCartType = JoinCartType.goods
+            var id:Int = 0
+            if model.product_id == 0 {
+                type = JoinCartType.goods
+                id = model.goods_id
+            }else{
+                type = JoinCartType.product
+                id = model.product_id
+            }
+            self.shopCartViewModel.requestJoinCart(id: id, num: 1, type: type, finishedCallback: {
+                if (self.shopCartViewModel.joinCartModel?.isError)! {
+                    //增加商品错误
+                    YTools.showMyToast(rootView: self.view, message: "\(self.shopCartViewModel.joinCartModel?.message ?? "商品添加失败")")
+                    numberLabel.text = "\(model.number)"
+                }else{
+                    //增加商品成功
+                    numberLabel.text = "\(number)"
+                    model.number = number
+                    self.priceCount()
+                    print("\(model.name ?? "name")\(number)")
+                }
+            })
             
-            model.number = number
-            self.priceCount()
-            print("aaa\(number)")
         })
         
         //点击cell数量减按钮回调
-        cell?.cutNumber({number in
-            
-            model.number = number
-            self.priceCount()
-            print("bbbbb\(number)")
+        cell?.cutNumber({(number,numberLabel) in
+            var type:JoinCartType = JoinCartType.goods
+            var id:Int = 0
+            if model.product_id == 0 {
+                type = JoinCartType.goods
+                id = model.goods_id
+            }else{
+                type = JoinCartType.product
+                id = model.product_id
+            }
+            if model.number == 1{
+                YTools.showMyToast(rootView: self.view, message: "该商品至少购买1件")
+            }else{
+                self.shopCartViewModel.requestJoinCart(id: id, num: -1, type: type, finishedCallback: {
+                    if (self.shopCartViewModel.joinCartModel?.isError)! {
+                        //增加商品错误
+                        YTools.showMyToast(rootView: self.view, message: "\(self.shopCartViewModel.joinCartModel?.message ?? "商品减少失败")")
+                        numberLabel.text = "\(model.number)"
+                    }else{
+                        //增加商品成功
+                        numberLabel.text = "\(number)"
+                        model.number = number
+                        self.priceCount()
+                        print("\(model.name ?? "name")\(number)")
+                    }
+                })
+            }
         })
         
         //选择cell商品回调
@@ -591,37 +735,54 @@ extension NextShopCartViewController : UITableViewDelegate,UITableViewDataSource
             let alert = UIAlertController(title: "提示",message: "删除后无法恢复,是否继续删除?",preferredStyle: UIAlertControllerStyle.alert)
             
             let ok = UIAlertAction(title: "确定",style: UIAlertActionStyle.default,handler:{okAction in
-                
-                let model = self.dataArray.remove(at: (indexPath as NSIndexPath).row)
-                
-                tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-                
-                if self.delArray.contains(model) {
-                    
-                    let index = self.delArray.index(of: model)
-                    self.delArray.remove(at: index!)
-                    
-                    self.priceCount()
+                let model = self.dataArray[indexPath.row]
+                var type:JoinCartType = JoinCartType.goods
+                var id:Int = 0
+                if model.product_id == 0 {
+                    type = JoinCartType.goods
+                    id = model.goods_id
+                }else{
+                    type = JoinCartType.product
+                    id = model.product_id
                 }
-                if self.selectArray.contains(model) {
-                    
-                    let index = self.selectArray.index(of: model)
-                    self.selectArray.remove(at: index!)
-                    
-                    self.priceCount()
-                }
+                self.shopCartViewModel.requestRemoveCart(id: id, type: type, finishedCallback: {(remove) in
+                    if (self.shopCartViewModel.removeCartModel?.isError)! {
+                        //删除出错
+                    }else{
+                        //删除成功
+                        let delModel = self.dataArray.remove(at: (indexPath as NSIndexPath).row)
+                        
+                        tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                        
+                        if self.delArray.contains(delModel) {
+                            
+                            let index = self.delArray.index(of: delModel)
+                            self.delArray.remove(at: index!)
+                            
+                            self.priceCount()
+                        }
+                        if self.selectArray.contains(delModel) {
+                            
+                            let index = self.selectArray.index(of: delModel)
+                            self.selectArray.remove(at: index!)
+                            
+                            self.priceCount()
+                        }
+                        
+                        if self.delArray.count == self.dataArray.count || self.selectArray.count ==  self.dataArray.count{
+                            
+                            self.allSelectButton?.isSelected = true
+                        } else {
+                            self.allSelectButton?.isSelected = false
+                        }
+                        
+                        if self.dataArray.count == 0 {
+                            
+                            self.emptyView()
+                        }
+                    }
+                })
                 
-                if self.delArray.count == self.dataArray.count || self.selectArray.count ==  self.dataArray.count{
-                    
-                    self.allSelectButton?.isSelected = true
-                } else {
-                    self.allSelectButton?.isSelected = false
-                }
-                
-                if self.dataArray.count == 0 {
-                    
-                    self.emptyView()
-                }
             })
             let cancel = UIAlertAction(title: "取消",style: UIAlertActionStyle.cancel,handler: {cancelAction in
                 
@@ -632,10 +793,10 @@ extension NextShopCartViewController : UITableViewDelegate,UITableViewDataSource
         }
         return [actionDel , actionColl]
     }
-    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
-        
-        return "删除"
-    }
+//    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+//
+//        return "删除"
+//    }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false

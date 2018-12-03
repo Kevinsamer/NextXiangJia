@@ -29,7 +29,7 @@ class GoodDetailViewController: ButtonBarPagerTabStripViewController {
             if let joinCart = joinCartModel {
                 if joinCart.isError == false {
                     //添加成功
-                    YTools.showMyToast(rootView: self.view, message: joinCart.message)
+                    YTools.showMyToast(rootView: self.view, message: joinCart.message == "" ? "加入购物车成功" : joinCart.message)
                     addCartAnimationTarget = UIView(frame: CGRect(origin: addInToShopCartButton.center, size: CGSize(width: bottomBarH + 10, height: bottomBarH - 10)))
                     addCartAnimationTarget?.backgroundColor = .red
                     addCartAnimationTarget?.layer.cornerRadius = (bottomBarH - 10) / 2
@@ -308,9 +308,17 @@ extension GoodDetailViewController {
     }
     
     @objc private func buyNowClicked(){
-        print("立即购买")
-        let vc = FillOrderViewController()
-        self.navigationController?.show(vc, sender: self)
+        //print("立即购买")
+        if self.selectedProduct == nil{
+            YTools.showMyToast(rootView: self.view, message: "请选择商品规格")
+        }else{
+            let vc = FillOrderViewController()
+            vc.id = "\(self.selectedProduct?.productType == 0 ? (self.selectedProduct?.good_Id)! : (self.selectedProduct?.selectedProduct?.id)!)"
+            vc.type = self.selectedProduct?.productType == 0 ? "goods" : "product"
+            vc.num = "\((self.selectedProduct?.selectedNum)!)"
+            self.navigationController?.show(vc, sender: self)
+        }
+       
     }
     
     @objc private func addIntoShopcartClicked(){

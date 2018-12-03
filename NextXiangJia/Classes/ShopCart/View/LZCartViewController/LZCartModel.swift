@@ -17,7 +17,9 @@ class LZCartModel: NSObject {
     
     var name:String?
     var date:String?
-    var image:UIImage?
+    var image:String?
+    var goods_id:Int = 0
+    var product_id:Int = 0
     
     public func showInfo(){
         if testMode{

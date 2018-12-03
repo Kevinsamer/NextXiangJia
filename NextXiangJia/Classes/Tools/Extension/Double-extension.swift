@@ -9,7 +9,8 @@
 import Foundation
 
 extension Double {
-    func format(f:String) ->String
+    ///默认值为精确到小数点后两位数
+    func format(f:String = ".2") ->String
     {
         return String(format:"%\(f)f",self)
     }

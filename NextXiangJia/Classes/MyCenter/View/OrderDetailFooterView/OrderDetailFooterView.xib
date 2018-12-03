@@ -117,10 +117,10 @@
                     <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="实付款:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Di6-dy-NRz">
-                    <rect key="frame" x="170" y="294" width="78" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="订单支付金额:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Di6-dy-NRz">
+                    <rect key="frame" x="98" y="294" width="150" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="78" id="U8l-Wb-deC"/>
+                        <constraint firstAttribute="width" constant="150" id="U8l-Wb-deC"/>
                         <constraint firstAttribute="height" constant="21" id="cMx-MT-rL3"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>

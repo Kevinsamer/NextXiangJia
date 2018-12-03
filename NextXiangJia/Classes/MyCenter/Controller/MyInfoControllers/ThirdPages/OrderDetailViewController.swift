@@ -8,12 +8,49 @@
 
 import UIKit
 import FontAwesome_swift
+import Kingfisher
 private let tableCellH:CGFloat = 95
 private let tableCellID = "tableCellID"
 private let footerViewID = "footerViewID"
 private let headerViewH:CGFloat = 160
 private let footerViewH:CGFloat = 330
 class OrderDetailViewController: UIViewController {
+    let centerViewModel:MycenterViewModel = MycenterViewModel()
+    var order_id:Int = 0
+    var orderModel:OrderModel?{
+        didSet{
+            self.orderGoodsTabelView.reloadData()
+            if let order = orderModel {
+                if order.status == 1 && order.pay_status == 0 {
+                    orderState = "待支付"
+                }else if order.distribution_status == 1 || order.distribution_status == 2{
+                    orderState = "待收货"
+                }else if order.status == 5 {
+                    orderState = "已完成"
+                }else if order.status == 3 || order.status == 4{
+                    orderState = "已取消"
+                }
+                name = order.accept_name
+                phone = YTools.changePhoneNum(phone: "\(order.mobile)")
+                address = "\(order.province_str)\(order.city_str)\(order.area_str) \(order.address)"
+                
+                orderStateLabel.text = orderState
+                orderStateFALabel.text = String.fontAwesomeIcon(name: orderState == "已完成" ? .checkCircle : .exclamationCircle)
+                nameAndPhoneBtn.setTitleForAllStates(name + "   " + phone)
+                addressLabel.text = "地址：" + address
+            }
+            
+        }
+    }
+    
+    var goodsList:[OrderGoodsListModel]?{
+        didSet{
+//            if let goodList = goodsList{
+//
+//            }
+            self.orderGoodsTabelView.reloadData()
+        }
+    }
     var goodsNum:Int = 0
     var orderState:String = ""
     var name = ""
@@ -86,6 +123,7 @@ class OrderDetailViewController: UIViewController {
         table.dataSource = self
         table.alwaysBounceVertical = true
         table.allowsSelection = false
+        //table.contentInset = UIEdgeInsetsMake(0, 0, footerViewH, 0)
         //TODO: - head悬停
         table.register(UINib.init(nibName: "FillOrderGoodsCell", bundle: nil), forCellReuseIdentifier: tableCellID)
         table.register(UINib.init(nibName: "OrderDetailFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: footerViewID)
@@ -153,30 +191,35 @@ extension OrderDetailViewController {
         addressView.addSubview(addressLabel)
         headerView.addSubview(addressView)
         self.view.addSubview(orderGoodsTabelView)
+        //self.orderGoodsTabelView.contentInset = UIEdgeInsetsMake(0, 0, -footerViewH, 0)
     }
     
     private func initData(){
-        goodsNum = Int.random(between: 1, and: 10)
-        orderState = "已取消"
+        self.centerViewModel.requestOrderDetail(order_id: self.order_id) { orderModel in
+            self.orderModel = orderModel
+            
+        }
+        self.centerViewModel.requestOrderGoodsList(order_id: self.order_id) { (goodsList) in
+            self.goodsList = goodsList
+        }
+        //goodsNum = Int.random(between: 1, and: 10)
         
-        name = "余志超"
-        phone = YTools.changePhoneNum(phone: "13160107520")
-        address = "江苏常州市武进区花园街200 传媒大厦"
+        
     }
 }
 
 extension OrderDetailViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return goodsNum
+        return goodsList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tableCellID) as! FillOrderGoodsCell
-        cell.goodsImageView.image = UIImage(named: "\(indexPath.row)")
-        cell.goodsNameLabel.attributedText = "小米（MI）小米8SE手机 双卡双待  金色  全网通 *********".bold
-        cell.goodsStandardsLabel.text = "颜色：金色   版本：全网通（6G RAM + 64G ROM）"
-        cell.goodsPriceLabel.attributedText = YTools.changePrice(price: "￥1899.00", fontNum: 14)
-        cell.goodsNumLabel.text = "x\(indexPath.row)"
+        cell.goodsImageView.kf.setImage(with: URL.init(string: BASE_URL + "\(self.goodsList![indexPath.row].img)"), placeholder: UIImage.init(named: "loading"))
+        cell.goodsNameLabel.attributedText = "\(self.goodsList![indexPath.row].goodsArrayModel?.name ?? "商品名称")".bold
+        cell.goodsStandardsLabel.text = "\(self.goodsList![indexPath.row].goodsArrayModel?.value ?? "规格信息")"
+        cell.goodsPriceLabel.attributedText = YTools.changePrice(price: "￥\(self.goodsList![indexPath.row].goods_price)", fontNum: 14)
+        cell.goodsNumLabel.text = "x\(self.goodsList![indexPath.row].goods_nums)"
         return cell
     }
     
@@ -191,8 +234,15 @@ extension OrderDetailViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: footerViewID) as! OrderDetailFooterView
         //footer.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        footer.orderCodeLabel.text = "11111111111111"
-        
+        footer.orderCodeLabel.text = "\(self.orderModel?.order_no ?? "订单编号")"
+        footer.orderTimeLabel.text = "\(self.orderModel?.create_time ?? "下单时间")"
+        footer.orderPriceLabel.text = "￥\(self.orderModel?.goods_amount ?? 0.0)"
+        footer.orderDaijinLabel.text = "-￥\(self.orderModel?.promotions ?? 0.0)"
+        footer.orderShuijinLabel.text = "+￥\(self.orderModel?.taxes ?? 0.0)"
+        footer.orderYunfeiLabel.text = "+￥\(self.orderModel?.payable_freight ?? 0.0)"
+        footer.orderBaojiaLabel.text = "+￥\(self.orderModel?.insured ?? 0.0)"
+        footer.orderShouXuFeiLabel.text = "+￥\(self.orderModel?.pay_fee ?? 0.0)"
+        footer.orderTotalPriceLabel.text = "￥\(self.orderModel?.order_amount ?? 0.0)"
         return footer
     }
     
