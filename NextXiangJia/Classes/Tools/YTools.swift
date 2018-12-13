@@ -241,6 +241,12 @@ public class YTools{
         }
     }
     
+    ///跳转至商品详情页
+    class func pushToGoodsDetail(goodsID id:Int, navigationController:UINavigationController?, sender:Any?){
+        let vc = GoodDetailViewController(goodsID: id)
+        navigationController?.show(vc, sender: sender)
+    }
+    
 }
 //MARK: - objc func
 extension YTools{

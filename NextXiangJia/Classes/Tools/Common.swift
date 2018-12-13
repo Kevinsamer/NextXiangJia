@@ -35,3 +35,8 @@ public var context:NSManagedObjectContext = {
 //个人中心cell文字颜色集合
 let myCenterColors:[UIColor] = [#colorLiteral(red: 0.1960784314, green: 0.6980392157, blue: 0.9254901961, alpha: 1),#colorLiteral(red: 0.2078431373, green: 0.7333333333, blue: 0.5960784314, alpha: 1),#colorLiteral(red: 0.1215686275, green: 0.6705882353, blue: 0.9215686275, alpha: 1),#colorLiteral(red: 0.9450980392, green: 0.2509803922, blue: 0.4823529412, alpha: 1),#colorLiteral(red: 0.968627451, green: 0.3529411765, blue: 0.3803921569, alpha: 1),#colorLiteral(red: 0.9725490196, green: 0.5529411765, blue: 0.568627451, alpha: 1),#colorLiteral(red: 1, green: 0.7019607843, blue: 0.3490196078, alpha: 1)]
 
+//支付宝支付结果通知名
+public let ALiPayResultNotificationName:NSNotification.Name = NSNotification.Name(rawValue: "ALiPayResultNotificationName")
+//自定义alert单例
+let myAlert:UIAlertController = UIAlertController(style: UIAlertControllerStyle.alert)
+

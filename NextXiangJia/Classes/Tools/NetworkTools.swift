@@ -41,10 +41,14 @@ let POSTORDER_URL = BASE_URL + "simple/cart3"
 let DOPAY_URL = BASE_URL + "block/doPay"
 ///我的订单数据接口(传用户id 分页数)
 let MYORDERLIST_URL = BASE_URL + "app/getOrderList"
-///订单商品列表接口(传订单id)
-let ORDERGOODS_URL = BASE_URL + "app/getordergoods"
+///订单商品列表接口(传订单id,is_send 0未发货  1已发货)
+let ORDERGOODS_URL = BASE_URL + "app/iosgetordergoods"
 ///订单详情接口(传订单id，is_phone)
 let ORDERDETAIL_URL = BASE_URL + "ucenter/order_detail"
+///订单取消|确认收货接口（传订单id，op:cancel/confirm）
+let ORDERSTATUS_URL = BASE_URL + "ucenter/order_status"
+///修改订单状态接口，(传订单id和status)
+let UPDATEORDER_URL = BASE_URL + "app/updateOrder"
 //待使用
 let COMMENTS_URL = BASE_URL + "comment_ajax"//?goods_id=1&page=1
 

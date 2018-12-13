@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+///数据传递协议
 protocol SendDataProtocol {
     func SendData(data: Any?)
 }

@@ -100,6 +100,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        if url.host == "safepay"{
+            AlipaySDK.defaultService().processOrder(withPaymentResult: url, standbyCallback: { (resultDic) in
+                //此处接收到返回数据后使用通知把值传到PayVC
+                //TODO:支付宝接入流程文档编写
+                //print("返回码\(resultDic)")
+                NotificationCenter.default.post(name: ALiPayResultNotificationName, object: self, userInfo: resultDic)
+            })
+        }
+        return true
+    }
 
     // MARK: - Core Data stack
 

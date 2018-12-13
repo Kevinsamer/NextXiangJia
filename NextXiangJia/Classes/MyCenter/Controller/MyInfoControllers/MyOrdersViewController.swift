@@ -104,7 +104,7 @@ extension MyOrdersViewController {
         buttonBarView.backgroundColor = UIColor(named: "global_orange")
         pagerBehaviour = .progressive(skipIntermediateViewControllers: true, elasticIndicatorLimit: true)
         containerView.contentInsetAdjustmentBehavior = .never
-        print("buttonBar\(buttonBarView.height)")
+        //print("buttonBar\(buttonBarView.height)")
     }
     
 }

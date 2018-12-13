@@ -656,7 +656,7 @@ extension GoodViewController: UITableViewDelegate, UITableViewDataSource {
 //            if offSetY - beyondOffSetY >= maxContentOfSetY {
 //                self.goToWebDetail()
 //            }
-            print("offSetY:\(offSetY) --- beyondY:\(beyondOffSetY)")
+            //print("offSetY:\(offSetY) --- beyondY:\(beyondOffSetY)")
             if offSetY - beyondOffSetY >= maxContentOfSetY {
                 self.goToWebDetail()
             }

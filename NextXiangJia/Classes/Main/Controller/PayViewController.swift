@@ -7,18 +7,82 @@
 //
 
 import UIKit
+import SwiftyJSON
 private let tableCell:String = "tableCell"
 class PayViewController: UIViewController {
+    var biz:BizContent = BizContent()
+    var orderViewModel:OrderViewModel = OrderViewModel()
+    var out_trade_no:String = ""
+    var totalPayResult:Bool = false
+    ///提交订单后接收的resultModel
     var postOrderResultModel:PostOrderResultModel?{
         didSet{
             if let result = postOrderResultModel {
-                finalSumLabel.text = "\(result.final_sum)元"
-                confirmPay.setTitleForAllStates("确认支付\(result.final_sum)元")
+//                finalSumLabel.text = "\(result.final_sum)元"
+//                confirmPay.setTitleForAllStates("确认支付\(result.final_sum)元")
+                final_sum = result.final_sum
+                order_ids = result.orderIdArray
+                
+            }
+        }
+    }
+    ///我的订单中结算时接收的订单model
+    var orderModel:OrderModel?{
+        didSet{
+            if let order = orderModel{
+                final_sum = order.order_amount
+                order_ids.append(order.id)
             }
         }
     }
     
+    var final_sum:Double = 0{
+        didSet{
+            finalSumLabel.text = "\(final_sum)元"
+            confirmPay.setTitleForAllStates("确认支付\(final_sum)元")
+            biz.total_amount = "\(final_sum.format(f: ".2"))"
+        }
+    }
+    
+    var order_ids:[Int] = [Int](){
+        didSet{
+            for id in order_ids{
+                out_trade_no += "\(id)"
+            }
+            biz.out_trade_no = out_trade_no
+        }
+    }
+    
+    
+    
+    
     //MARK: - 懒加载
+    lazy var payingAlert: UIAlertController = {
+        let alert = UIAlertController(title: "支付处理中,请稍等", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction.init(title: "返回我的订单查看支付结果", style: UIAlertActionStyle.cancel, handler: { (action) in
+            let vc = MyOrdersViewController()
+            vc.isFromPayVC = true
+            self.navigationController?.show(vc, sender: self)
+        }))
+        return alert
+    }()
+    
+    lazy var failedAlert: UIAlertController = {
+        let alert = UIAlertController(title: "支付失败", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction.init(title: "重新支付", style: UIAlertActionStyle.cancel, handler: nil))
+        return alert
+    }()
+    
+    lazy var successAlert: UIAlertController = {
+        let alert = UIAlertController(title: "支付成功", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction.init(title: "确认", style: UIAlertActionStyle.default, handler: { (action) in
+            let vc = MyOrdersViewController()
+            vc.isFromPayVC = true
+            self.navigationController?.show(vc, sender: self)
+        }))
+        return alert
+    }()
+    
     lazy var contentTabelView: UITableView = {
         let table = UITableView(frame: CGRect.init(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: finalScreenH), style: UITableViewStyle.grouped)
         table.alwaysBounceVertical = true
@@ -93,6 +157,8 @@ class PayViewController: UIViewController {
     }()
     
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -118,7 +184,11 @@ class PayViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
-
+    
+    deinit {
+        //移除通知
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension PayViewController{
@@ -129,6 +199,8 @@ extension PayViewController{
         setNavigationBar()
         //2.设置table
         setTableView()
+        //3.添加支付结果通知接收器
+        self.addNotificationObserver(name: ALiPayResultNotificationName, selector: #selector(payResultAction))
     }
     
     private func setNavigationBar(){
@@ -191,11 +263,88 @@ extension PayViewController:UITableViewDataSource,UITableViewDelegate{
 extension PayViewController {
     @objc private func doPay(){
         //调起支付宝
-        print("支付")
+        AlipaySDK.defaultService().payOrder(AliSDKManager.signInfo(bizContent: biz), fromScheme: "xiangjiamall") { (resultDic) in
+            //支付结果回调Block，用于wap支付结果回调（非跳转钱包支付）
+            //print(resultDic)
+            NotificationCenter.default.post(name: ALiPayResultNotificationName, object: self, userInfo: resultDic)
+        }
+//        for id in self.order_ids{
+//            orderViewModel.requestUpdateOrder(order_id: id, status: 2, finishCallback: { (updateResult) in
+//                self.totalPayResult = updateResult
+//            })
+//        }
+        
     }
     
     @objc private func cancelPay(){
         //点击返回键取消支付
         self.cancelAlert.show()
+    }
+    
+    ///获取到通知中userInfo存储的支付结果
+    @objc private func payResultAction(noti:Notification){
+        if let payResult = noti.userInfo{
+            switch JSON(payResult)["resultStatus"].stringValue {
+            case "9000":
+                //支付成功,
+                //1.通知服务器修改订单状态
+                let group = DispatchGroup()
+                let mQueue = DispatchQueue(label: "myQueue")
+                for id in self.order_ids{
+                    print("请求修改订单")
+                    group.enter()
+                    mQueue.async(group: group, qos: .default, flags: [], execute: {
+                        self.orderViewModel.requestUpdateOrder(order_id: id, status: 2, finishCallback: { (updateResult) in
+                            self.totalPayResult = updateResult
+                            group.leave()
+                        })
+                    })
+                    
+                }
+                //2.显示支付成功
+                group.notify(queue: .main, execute: {
+                    print("请求结束后判断总体支付结果")
+                    if self.totalPayResult {
+                        self.successAlert.show()
+                    }else {
+                        self.failedAlert.show()
+                    }
+                })
+                
+                
+                break
+            case "8000":
+                //正在处理中，支付结果未知（有可能已经支付成功），请查询商户订单列表中订单的支付状态
+                payingAlert.show()
+                break
+            case "4000":
+                //订单支付失败
+                failedAlert.show()
+                break
+            case "5000":
+                //重复请求
+                payingAlert.show()
+                break
+            case "6001":
+                //用户中途取消
+                failedAlert.show()
+                break
+            case "6002":
+                //网络连接出错
+                failedAlert.show()
+                break
+            case "6004":
+                //支付结果未知（有可能已经支付成功），请查询商户订单列表中订单的支付状态
+                payingAlert.show()
+            break
+            default:
+                //其他
+//                print("支付失败")
+                failedAlert.show()
+                break
+            }
+        }
+        
+        
     }
 }

@@ -587,7 +587,7 @@ extension ShopCartViewController : UITableViewDelegate,UITableViewDataSource{
         if cell == nil {
             cell = LZCartTableViewCell(style: UITableViewCellStyle.default,reuseIdentifier: "cartCellID")
         }
-        
+        cell?.selectionStyle = .none
         
         let model = dataArray[indexPath.row]
         model.indexPath = indexPath
@@ -814,11 +814,13 @@ extension ShopCartViewController : UITableViewDelegate,UITableViewDataSource{
 //    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //点击进入商品详情
+//        print(indexPath)
+        YTools.pushToGoodsDetail(goodsID: (shopCartModel?.goodsLists[indexPath.row].goods_id)!, navigationController: self.navigationController, sender: self)
     }
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
+//    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+//        return false
+//    }
     //ios11后cell右滑，代替editActionsForRowAt,可修改按钮样式
 //    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 //        let action1 = UIContextualAction(style: .normal, title: "Mark1") { (action, view, handler) in

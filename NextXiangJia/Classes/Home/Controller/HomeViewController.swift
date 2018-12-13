@@ -463,7 +463,7 @@ extension HomeViewController: UICollectionViewDataSource,UICollectionViewDelegat
         }else {
             goodsID = hots[indexPath.row].id
         }
-        //TODO:id暂时改为78   测试根据选择的规格改变图片
+        
         let vc = GoodDetailViewController(goodsID: goodsID)
         navigationController?.show(vc, sender: self)
         

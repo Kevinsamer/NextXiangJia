@@ -184,7 +184,7 @@ class SearchResultController: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //通过DebugViewHierarchy可见searchBar底部灰色线条为_UIBarBackground下的第二个子空间，使用KVC获取其父控件_UIBarBackground后隐藏其第二个子空间即可消除底部灰线
+        //通过Debug View Hierarchy可见searchBar底部灰色线条为_UIBarBackground下的第二个子控件，使用KVC获取其父控件_UIBarBackground后隐藏其第二个子控件即可消除底部灰线
         for view in (self.navigationController?.navigationBar.subviews)! {
             if view.isKind(of: NSClassFromString("_UIBarBackground")!){
                 view.subviews[1].isHidden = true
@@ -229,6 +229,7 @@ extension SearchResultController {
                 if self.searchResults != nil {
                     self.collectionView?.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: false)
                 }
+                //TODO:此处是否不需要reoladData,该动作和数据绑定，只在数据更新时执行
                 self.collectionView?.reloadData()
             }else {
                 if self.searchResultViewModel.searchResults?.count == self.maxNumPerPage && self.searchResults?.last?.id != self.searchResultViewModel.searchResults?.last?.id {

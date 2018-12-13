@@ -9,6 +9,7 @@
 import Foundation
 import SwiftyJSON
 import Alamofire
+import UIKit
 class OrderViewModel{
     
 }
@@ -86,16 +87,17 @@ extension OrderViewModel{
     /// - parameter deliveryId:配送方式id(1为快递配送，3位自提)
     func requestPostOrder(isPhone:String, directGid:Int, directType:String? = nil, directNum:Int, directPromo:String? = nil, directActiveId:Int = 0, acceptTime:String = "任意", payment:Int = 10, message:String, taxes:Double? = nil, taxTitle:String? = nil, radioAddress:Int, deliveryId:Int, finishCallback:@escaping (_ postOrderBackModel:PostOrderResultModel)->()){
         NetworkTools.requestData(type: MethodType.POST, urlString: POSTORDER_URL, parameters: ["is_phone":"\(isPhone)" as NSString, "direct_gid":"\(directGid)" as NSString, "direct_type":"\(directType ?? "")" as NSString, "direct_num":"\(directNum)" as NSString, "direct_promo":"\(directPromo ?? "")" as NSString, "direct_active_id":"\(directActiveId)" as NSString, "accept_time":"任意" as NSString, "payment":"\(payment)" as NSString, "message":"\(message)" as NSString, "taxes":"\(taxes ?? 0)" as NSString, "radio_address":"\(radioAddress)" as NSString, "delivery_id":"\(deliveryId)" as NSString, "tax_title":"\(taxTitle ?? "")" as NSString]) { (result) in
-            print(result)
+            //print(result)
             let resultJson = JSON(result)
             let resultModel = PostOrderResultModel(jsonData: resultJson)
             finishCallback(resultModel)
         }
     }
     
-    ///调起支付方法接口
+    ///网站原生调起支付方法接口，app无法使用,请调用支付宝sdk的方法调起支付宝
     /// - parameter orderId:接收订单id数组，处理为id_id_id_id的字符串
     /// - parameter paymentId:支付方式id,暂时默认为支付宝支付
+    @available(iOS,deprecated: 1.0)
     func requestDoPay(orderId:[Int], paymentId:Int, finishCallback:@escaping ()->()){
         var orderIds:String = "\(orderId[0])"
         if orderId.count > 1 {
@@ -107,5 +109,20 @@ extension OrderViewModel{
             finishCallback()
         }
         
+    }
+    
+    ///更新订单状态接口
+    /// - parameter id:订单id
+    /// - parameter status:状态id  1生成订单----2支付订单----3取消订单(客户触发)----4作废订单(管理员触发)----5完成订单----6退款(订单完成后)----7部分退款(订单完成后)
+    func requestUpdateOrder(order_id id:Int, status:Int, finishCallback:@escaping (_ updateResult:Bool)->()){
+        NetworkTools.requestData(type: .POST, urlString: UPDATEORDER_URL, parameters: ["id":"\(id)" as NSString, "status":"\(status)" as NSString]) { (result) in
+            let json = JSON(result)
+            print(json)
+            if json["code"].intValue == 200 {
+                finishCallback(true)
+            }else{
+                finishCallback(false)
+            }
+        }
     }
 }

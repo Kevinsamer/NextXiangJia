@@ -3,6 +3,7 @@ PODS:
   - AlamofireObjectMapper (5.1.0):
     - Alamofire (~> 4.1)
     - ObjectMapper (~> 3.3)
+  - AlipaySDK-iOS (15.5.5)
   - CircleLabel (1.0.0)
   - CryptoSwift (0.7.2)
   - Eureka (4.2.0)
@@ -42,6 +43,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - AlamofireObjectMapper
+  - AlipaySDK-iOS
   - CircleLabel
   - CryptoSwift (~> 0.7.2)
   - Eureka (~> 4.0)
@@ -64,6 +66,7 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - AlamofireObjectMapper
+    - AlipaySDK-iOS
     - CircleLabel
     - CryptoSwift
     - Eureka
@@ -96,6 +99,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   AlamofireObjectMapper: 3395e698901d8b0e6f48b7d0c43bd47875325102
+  AlipaySDK-iOS: 7b700342e71cb3b626603ce96f9d2fb158acbcfb
   CircleLabel: 61e9f7255c0ee1e1089a45650dda410b9945f93b
   CryptoSwift: cd2158be2bf639aabc63ec804707c7137c90157c
   Eureka: 0748c7bbb2560130e43c7bfa83e99c98854a1f42
@@ -116,6 +120,6 @@ SPEC CHECKSUMS:
   Toast-Swift: ba0b01b095aada709d915f9beb1d38184a2721c3
   XLPagerTabStrip: c908b17cbf42fcd2598ee1adfc49bae25444d88a
 
-PODFILE CHECKSUM: 6dc13b9895c251f157bfaf036eac61558692a3cd
+PODFILE CHECKSUM: 3b1691bbaeaf844646b5bbd373a41623a48a6584
 
 COCOAPODS: 1.5.0.beta.1

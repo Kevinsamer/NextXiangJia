@@ -231,4 +231,12 @@ extension MycenterViewModel {
         }
     }
     
+    ///取消订单||确认收货
+    /// - parameter id:订单id
+    /// - parameter op:操作类型，cancel为取消订单，confirm为确认订单
+    func requestOrderStatus(order_id id:Int, op:String, finishCallback:@escaping ()->()){
+        Alamofire.request(ORDERSTATUS_URL, method: .post, parameters: ["order_id":"\(id)" as NSString, "op":"\(op)" as NSString])
+        finishCallback()
+    }
+    
 }

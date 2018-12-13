@@ -9,12 +9,15 @@
 import UIKit
 import XLPagerTabStrip
 import SnapKit
+import PullToRefreshKit
 private let tableViewCellID = "tableViewCellID"
+private let maxNumPerPage:Int = 20
 class MyOrdersTableViewController: UIViewController, IndicatorInfoProvider{
     var orderNumbers:Int!
     var itemInfo: IndicatorInfo = ""
     var centerViewModel:MycenterViewModel = MycenterViewModel()
-    var page:Int = 1
+    var currentPage:Int = 1
+    var oldY:CGFloat = 0
     ///当前所有的订单数组，上拉加载时直接替换为新数据
     var orders:[OrderModel]?{
         didSet{
@@ -22,8 +25,11 @@ class MyOrdersTableViewController: UIViewController, IndicatorInfoProvider{
                 if orderList.count == 0 {
                     self.ordersTableView.addSubview(noOrderButton)
                     self.ordersTableView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                    self.ordersTableView.switchRefreshFooter(to: FooterRefresherState.removed)
                 }else{
+                    noOrderButton.removeFromSuperview()
                     self.ordersTableView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+                    self.ordersTableView.switchRefreshFooter(to: FooterRefresherState.normal)
                 }
                 self.ordersTableView.reloadData()
             }
@@ -31,6 +37,45 @@ class MyOrdersTableViewController: UIViewController, IndicatorInfoProvider{
     }
     
     //MARK: - 懒加载
+//    lazy var backToTopButton: UIButton = {
+//        //返回顶部按钮,弃用。双击状态栏返回顶部
+//        let btn = UIButton(type: .custom)
+//        btn.frame = CGRect(origin: CGPoint.init(x: finalScreenW - 50, y: finalContentViewNoTabbarH - 30), size: CGSize.init(width: 0, height: 0))
+//        btn.layer.cornerRadius = 20
+//        btn.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+//        btn.layer.borderWidth = 1
+//        btn.setImageForAllStates(#imageLiteral(resourceName: "backToTop"))
+//        btn.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+//        btn.isHidden = true
+//        btn.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+//        btn.addTarget(self, action: #selector(backToTop), for: .touchUpInside)
+//        return btn
+//    }()
+    
+    lazy var header: DefaultRefreshHeader = {
+        let header = DefaultRefreshHeader.header()
+        header.setText("下拉刷新", mode: .pullToRefresh)
+        header.setText("释放刷新", mode: .releaseToRefresh)
+        header.setText("数据刷新成功", mode: .refreshSuccess)
+        header.setText("刷新中...", mode: .refreshing)
+        header.setText("数据刷新失败，请检查网络设置", mode: .refreshFailure)
+        header.tintColor = #colorLiteral(red: 0.9995891452, green: 0.6495086551, blue: 0.2688535452, alpha: 1)
+        header.imageRenderingWithTintColor = true
+        header.durationWhenHide = 0.4
+        return header
+    }()
+    
+    lazy var footer: DefaultRefreshFooter = {
+        let footer = DefaultRefreshFooter.footer()
+        footer.setText("上拉加载更多", mode: .pullToRefresh)
+        footer.setText("到底啦", mode: .noMoreData)
+        footer.setText("加载中...", mode: .refreshing)
+        footer.setText("点击加载更多", mode: .tapToRefresh)
+        footer.textLabel.textColor  = #colorLiteral(red: 0.9995891452, green: 0.6495086551, blue: 0.2688535452, alpha: 1)
+        footer.refreshMode = .scroll
+        return footer
+    }()
+    
     lazy var ordersTableView: UITableView = {
         let tableView = UITableView(frame: CGRect.init(x: 0, y: finalStatusBarH + finalNavigationBarH, width: finalScreenW, height: finalContentViewNoTabbarH - 44), style: UITableViewStyle.plain)//44为buttonBarView的高度
         tableView.contentInsetAdjustmentBehavior = .never
@@ -40,7 +85,23 @@ class MyOrdersTableViewController: UIViewController, IndicatorInfoProvider{
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+        tableView.showsVerticalScrollIndicator = false
+        tableView.configRefreshHeader(with: header, container: self, action: {
+            [unowned self] in
+            self.currentPage = 1
+            self.initData()
+            tableView.reloadData {
+                tableView.switchRefreshHeader(to: HeaderRefresherState.normal(RefreshResult.success, 0.3))
+            }
+        })
         
+        tableView.configRefreshFooter(with: footer, container: self, action: {
+            [unowned self] in
+            self.currentPage += 1
+            self.initData()
+            tableView.reloadData()
+            //tableView.layoutIfNeeded()
+        })
         return tableView
     }()
     
@@ -81,6 +142,11 @@ class MyOrdersTableViewController: UIViewController, IndicatorInfoProvider{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.initData()
+    }
 
     
 }
@@ -89,27 +155,53 @@ extension MyOrdersTableViewController{
     private func setUI(){
         self.view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         //1.初始化数据
+//        print(self.view.frame.height)
+//        print(finalScreenH)
         initData()
         //2.设置tableView
         setTableView()
+        //3.设置回到顶部按钮
+        //setBackButton()
     }
+    
+//    private func setBackButton(){
+//        self.view.addSubview(backToTopButton)
+//    }
     
     private func setTableView(){
         self.view.addSubview(ordersTableView)
     }
     
     private func initData(){
-        self.centerViewModel.requestOrderList(user_id: Int((AppDelegate.appUser?.user_id)!), page: page, query_what: self.itemInfo.title!) { orderList in
-            self.orders = orderList
+        self.centerViewModel.requestOrderList(user_id: Int((AppDelegate.appUser?.user_id)!), page: currentPage, query_what: self.itemInfo.title!) { orderList in
+            if self.currentPage == 1 {
+                //page=1，下拉刷新事件
+                self.orders = orderList
+                if orderList.count < maxNumPerPage{
+                    self.ordersTableView.switchRefreshFooter(to: FooterRefresherState.noMoreData)
+                }else{
+                    self.ordersTableView.switchRefreshFooter(to: FooterRefresherState.normal)
+                }
+            }else{
+                //page>1，上拉加载事件
+                if orderList.count == maxNumPerPage && orderList.last?.id != self.orders?.last?.id{
+                    //如果请求到的数据条数=maxNumPerPage，且本页最后一条数据id和请求到的最后一条数据id不同，则未到最后一页，请求数据需添加至当前数据集合
+                    self.orders?.append(orderList)
+                    self.ordersTableView.switchRefreshFooter(to: FooterRefresherState.normal)
+                }else if orderList.count == maxNumPerPage && orderList.last?.id == self.orders?.last?.id{
+                    //如果请求到的数据条数=maxNumPerPage，且本页最后一条数据id和请求到的最后一条数据id相同，则已到最后一页，请求数据无需添加至当前数据集合
+                    self.ordersTableView.switchRefreshFooter(to: FooterRefresherState.noMoreData)
+                }else{
+                    //如果请求到的数据条数<maxNumPerPage，则已到最后一页，请求数据无需添加至当前数据集合
+                    self.orders?.append(orderList)
+                    self.ordersTableView.switchRefreshFooter(to: FooterRefresherState.noMoreData)
+                }
+            }
+            
         }
-        
-        
-//        if self.orderNumbers == 0 {
-//            //无数据
-//            self.ordersTableView.addSubview(noOrderButton)
-//            self.ordersTableView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-//        }
     }
+    
+    
 }
 
 extension MyOrdersTableViewController:UITableViewDelegate,UITableViewDataSource{
@@ -146,19 +238,20 @@ extension MyOrdersTableViewController:UITableViewDelegate,UITableViewDataSource{
 //            }
             if orderList[indexPath.row].status == 1 && orderList[indexPath.row].pay_status == 0 {
                 cell.orderStateLabel.text = "待支付"
-            }else if orderList[indexPath.row].distribution_status == 1 || orderList[indexPath.row].distribution_status == 2 {
+            }else if (orderList[indexPath.row].distribution_status == 1 || orderList[indexPath.row].distribution_status == 0) && orderList[indexPath.row].status == 2 {
                 cell.orderStateLabel.text = "待收货"
             }else if orderList[indexPath.row].status == 5 {
                 let imageV = UIImageView(frame: CGRect(x: 0, y: -8, width: 40, height: 40))
                 imageV.image = #imageLiteral(resourceName: "OrderList_FinishSign")
                 imageV.contentMode = .scaleAspectFill
+                cell.orderStateLabel.text = nil
                 cell.orderStateLabel.addSubview(imageV)
             }else if orderList[indexPath.row].status == 3 || orderList[indexPath.row].status == 4 {
                 cell.orderStateLabel.text = "已取消"
             }
         }
         
-        cell.goodsNum = Int.random(between: 5, and: 20)
+        //cell.goodsNum = Int.random(between: 5, and: 20)
         
         return cell
     }
@@ -177,7 +270,56 @@ extension MyOrdersTableViewController:UITableViewDelegate,UITableViewDataSource{
         //点击事件
         let vc = OrderDetailViewController()
         vc.order_id = self.orders![indexPath.row].id
-        //TODO:修改服务器代码，返回订单详情数据
         self.navigationController?.show(vc, sender: self)
     }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//    //屏幕滑动方向区分
+//        let newY = scrollView.contentOffset.y
+//        //print(newY)
+////        if newY >= finalScreenH{
+////            if oldY != newY{
+////                if newY > oldY {
+////                    //                print("屏幕向上滑动")
+////                    dismissButton()
+////                }else{
+////                    //                print("屏幕向下滑动")
+////                    showButton()
+////                }
+////            }
+////            oldY = newY
+////        }else{
+////            dismissButton()
+////        }
+//        if newY > finalScreenH {
+//            showButton()
+//        }else{
+//            dismissButton()
+//        }
+//    }
 }
+
+//extension MyOrdersTableViewController{
+//    @objc private func backToTop(){
+//        self.ordersTableView.setContentOffset(CGPoint.zero, animated: true)
+//    }
+//
+//    private func showButton(){
+//        if self.backToTopButton.frame.width != 40 {
+//            self.backToTopButton.isHidden = false
+//            UIView.animate(withDuration: 0.5) {
+//                self.backToTopButton.size = CGSize(width: 40, height: 40)
+//            }
+//        }
+//    }
+//
+//    private func dismissButton(){
+//        if self.backToTopButton.frame.width != 0{
+//            UIView.animate(withDuration: 0.5, animations: {
+//                self.backToTopButton.size = CGSize.zero
+//            }) { (flag) in
+//            }
+//        }
+//    }
+//}
+

@@ -318,6 +318,8 @@ extension CategoryViewController:UICollectionViewDelegateFlowLayout,UICollection
         collectionView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        YTools.pushToGoodsDetail(goodsID: categoryGoods![indexPath.row].id, navigationController: self.navigationController, sender: self)
+    }
 }
 

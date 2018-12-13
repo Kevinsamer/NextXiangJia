@@ -24,7 +24,8 @@ class MyOrderTableViewCell: UITableViewCell {
     @IBOutlet var myOrderGoodsCollView: UICollectionView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        myOrderGoodsCollView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: goodsCollCellID)
+        myOrderGoodsCollView.register(UINib.init(nibName: "GoodsImageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: goodsCollCellID)
+        //myOrderGoodsCollView.register(GoodsImageCollectionViewCell.self, forCellWithReuseIdentifier: goodsCollCellID)
         myOrderGoodsCollView.delegate = self
         myOrderGoodsCollView.dataSource = self
         myOrderGoodsCollView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
@@ -53,14 +54,10 @@ extension MyOrderTableViewCell:UICollectionViewDataSource ,UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: goodsCollCellID, for: indexPath)
-        
-        //TODO:加载图片，添加订单页的下拉刷新和上拉加载
-        let image = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.width, height: cell.frame.height))
-        image.kf.setImage(with: URL.init(string: "\(BASE_URL)\(pics[indexPath.row])"), placeholder: UIImage.init(named: "loading"))
-        cell.addSubview(image)
-        
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: goodsCollCellID, for: indexPath) as! GoodsImageCollectionViewCell
+        //let image = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.width, height: cell.frame.height))
+        cell.goodsImageView.kf.setImage(with: URL.init(string: "\(BASE_URL)\(pics[indexPath.row])"), placeholder: UIImage.init(named: "loading"))
+        //cell.addSubview(image)
         cell.backgroundColor = UIColor.random
         return cell
     }

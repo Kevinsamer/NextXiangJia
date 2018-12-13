@@ -39,4 +39,7 @@ pod "MaterialTapTargetPrompt-iOS"
 
 #MD5
 pod "CryptoSwift", "~>0.7.2"
+
+#zfb
+pod "AlipaySDK-iOS"
 end
