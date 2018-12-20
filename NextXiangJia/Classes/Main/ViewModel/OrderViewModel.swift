@@ -93,6 +93,25 @@ extension OrderViewModel{
             finishCallback(resultModel)
         }
     }
+    //原生网站的支付回调请求链接
+//    http://192.168.108.223/block/callback/_id/9?
+//    buyer_email=13160107520
+//    &buyer_id=2088602259945606
+//    &exterface=create_direct_pay_by_user
+//    &is_success=T
+//    &notify_id=RqPnCoPT3K9%252Fvwbh3Ihy93vQ4hks4slosF%252F0Yri1XVIEaBT5l26zbOpbAoOmcQC6Fyr0
+//    &notify_time=2018-12-10+10%3A49%3A39
+//    &notify_type=trade_status_sync
+//    &out_trade_no=20181210103637984578
+//    &payment_type=1
+//    &seller_email=18006126885%40189.cn
+//    &seller_id=2088721058126224
+//    &subject=%E9%A3%A8%E5%AE%B6
+//    &total_fee=0.11
+//    &trade_no=2018121022001445601016680522
+//    &trade_status=TRADE_SUCCESS
+//    &sign=53d69c0f599f9392943d5d3a4f0bf368
+//    &sign_type=MD5
     
     ///网站原生调起支付方法接口，app无法使用,请调用支付宝sdk的方法调起支付宝
     /// - parameter orderId:接收订单id数组，处理为id_id_id_id的字符串

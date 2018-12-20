@@ -89,7 +89,7 @@ extension MyBalanceViewController {
     }
     
     private func initData(){
-        balance = 1111.11
+        balance = 0.00
     }
     
     private func setupBottomButton(){

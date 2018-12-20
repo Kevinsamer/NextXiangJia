@@ -199,11 +199,29 @@ public class YTools{
             return temp
         }
     }
-    ///判断是否登录。未登录则跳转至登录页，登录后再进入目标页
-    class func pushToLoginOrNextControl(navigationControl:UINavigationController){
-        navigationControl.show(LoginViewController(), sender: self)
+    ///未登录则跳转至登录页，登录后再进入目标页
+    /// - parameter vc:弹出的主体view
+    /// - parameter itemTag:目标tabBarItem的tag,222代表转至首页购物车,444代表转至首页我的,666代表转至商品详情页的购物车
+    class func presentToLoginOrNextControl(vc:UIViewController, itemTag:Int,  completion:(() -> Swift.Void)?){
+        
+        //navigationControl?.popToViewController(LoginViewController(), animated: true)
+        let loginVC = LoginViewController()
+        //loginVC.presentToShow = true
+        loginVC.itemTag = itemTag
+        loginVC.parentVC = vc
+        let navi = UINavigationController.init(rootViewController: loginVC)
+        //TODO:modal弹出登录页后注册页无法弹出bug，考虑还是用原始登录方式?
+        //vc.present(loginVC, animated: true, completion: nil)
+        vc.present(navi, animated: true, completion: completion)
+        
+
+//        navigationControl.show(LoginViewController(), sender: self)
     }
-    ///计算两个时间的
+    
+    ///计算两个时间的时间差值
+    /// - parameter one:第一个时间点
+    /// - parameter two:第二个时间点
+    /// - returns:两个时间点的差值小时数
     class func calculateDifferenceBetweenTwoTimes(dateOne one:Date, dateTwo two:Date, components:Set<Calendar.Component> = [Calendar.Component.hour]) -> Int{
         let chinese = Calendar(identifier: Calendar.Identifier.chinese)
         let result = chinese.dateComponents(components, from: one, to: two)

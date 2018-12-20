@@ -11,7 +11,15 @@ import FontAwesome_swift
 import PullToRefreshKit
 class NextShopCartViewController: UIViewController {
     var dataArray: [LZCartModel] = []//所有数据集合
-    var selectArray: [LZCartModel] = []//结算数据集合
+    var selectArray: [LZCartModel] = []{
+        didSet{
+            if selectArray != dataArray || selectArray.count == 0{
+                self.commitButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            }else{
+                self.commitButton.backgroundColor = #colorLiteral(red: 0.92900002, green: 0.2549999952, blue: 0.2469999939, alpha: 1)
+            }
+        }
+    }//结算数据集合
     var delArray :[LZCartModel] = []//删除数据集合
     var cartTableView: UITableView? = nil
     var priceLabel: UILabel?//已选数量、价格
@@ -115,7 +123,7 @@ class NextShopCartViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        initData()
+        refreshTimer()
     }
     
 }
@@ -179,7 +187,7 @@ extension NextShopCartViewController{
             make.width.equalTo(80)
         }
         //提交按钮(结算、删除状态)初始化
-        commitButton.backgroundColor = LZColorTool.redColor()
+        commitButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         commitButton.setTitle("去结算", for: UIControlState())
         commitButton.addTarget(self, action: #selector(comitButtonClick), for: UIControlEvents.touchUpInside)
         backgroundView.addSubview(commitButton)
@@ -307,7 +315,7 @@ extension NextShopCartViewController{
         cartTableView?.delegate = self
         cartTableView?.dataSource = self
 //        cartTableView?.allowsSelection = false
-        cartTableView?.backgroundColor = LZColorTool.colorFromRGB(235, G: 246, B: 248)
+        cartTableView?.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         cartTableView?.separatorStyle = UITableViewCellSeparatorStyle.none
         cartTableView?.rowHeight = KLZTableViewCellHeight
         cartTableView?.contentInsetAdjustmentBehavior = .never
@@ -520,7 +528,7 @@ extension NextShopCartViewController{
                     self.refreshIndicator.startAnimating()
                     for model in self.delArray{
                         self.mQueue.async(group: self.group, qos: DispatchQoS.userInteractive, flags: [], execute: {
-                            self.shopCartViewModel.requestRemoveCart(id: model.product_id == 0 ? model.goods_id : model.product_id, type: model.product_id == 0 ? .goods : .product, finishedCallback: {(remove) in
+                            self.shopCartViewModel.requestRemoveCart(goods_id: model.product_id == 0 ? model.goods_id : model.product_id, type: model.product_id == 0 ? .goods : .product, finishedCallback: {(remove) in
                                 //                                print("\(i)\(remove.isError)")
                                 //                                if !remove.isError! {
                                 //                                    self.dataArray.removeAll(model)
@@ -549,13 +557,17 @@ extension NextShopCartViewController{
             }
         }else if editButtonState == 2{
             //结算状态
-            print("结算:")
-            for select in selectArray{
-                select.showInfo()
+//            print("结算:")
+//            for select in selectArray{
+//                select.showInfo()
+//            }
+            if self.selectArray == self.dataArray{
+                let vc = FillOrderViewController()
+                vc.goodsList = shopCartModel?.goodsLists
+                self.navigationController?.show(vc, sender: self)
+            }else{
+                YTools.showMyToast(rootView: self.view, message: "全选后提交订单")
             }
-            let vc = FillOrderViewController()
-            vc.goodsList = self.shopCartModel?.goodsLists
-            self.navigationController?.show(vc, sender: self)
         }
     }
 }
@@ -573,7 +585,7 @@ extension NextShopCartViewController : UITableViewDelegate,UITableViewDataSource
             cell = LZCartTableViewCell(style: UITableViewCellStyle.default,reuseIdentifier: "cartCellID")
         }
         
-        
+        cell?.selectionStyle = .none
         let model = dataArray[(indexPath as NSIndexPath).row]
         model.indexPath = indexPath
         cell?.configCellDateWithModel(model) //数据填充
@@ -745,7 +757,7 @@ extension NextShopCartViewController : UITableViewDelegate,UITableViewDataSource
                     type = JoinCartType.product
                     id = model.product_id
                 }
-                self.shopCartViewModel.requestRemoveCart(id: id, type: type, finishedCallback: {(remove) in
+                self.shopCartViewModel.requestRemoveCart(goods_id: id, type: type, finishedCallback: {(remove) in
                     if (self.shopCartViewModel.removeCartModel?.isError)! {
                         //删除出错
                     }else{
@@ -798,8 +810,14 @@ extension NextShopCartViewController : UITableViewDelegate,UITableViewDataSource
 //        return "删除"
 //    }
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
+//    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+//        return false
+//    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //点击进入商品详情
+        //        print(indexPath)
+        YTools.pushToGoodsDetail(goodsID: (shopCartModel?.goodsLists[indexPath.row].goods_id)!, navigationController: self.navigationController, sender: self)
     }
     //ios11后cell右滑，代替editActionsForRowAt,可修改按钮样式
     //    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

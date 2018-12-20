@@ -113,6 +113,13 @@ extension MySuggesttionTabSubmitViewController : UITextFieldDelegate,UITextViewD
 
 extension MySuggesttionTabSubmitViewController{
     @objc func submitButtonClicked(){
-        YTools.myPrint(content: "确认提交: title = \(suggestionTitle.text ?? "title为空")   content = \(suggestionContent.text ?? "content为空")", mode: testMode)
+        if self.suggestionContent.text != "" && self.suggestionTitle.text != "" {
+            YTools.showMyToast(rootView: self.view, message: "请正确填写建议标题和内容")
+        }else{
+            self.suggestionTitle.text = ""
+            self.suggestionContent.text = ""
+            YTools.showMyToast(rootView: self.view, message: "建议已提交，请等待后台审核")
+        }
+        //YTools.myPrint(content: "确认提交: title = \(suggestionTitle.text ?? "title为空")   content = \(suggestionContent.text ?? "content为空")", mode: testMode)
     }
 }

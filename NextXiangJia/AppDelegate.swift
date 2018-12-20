@@ -67,9 +67,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //print(AppDelegate.appUser?.local_pd)
             if YTools.calculateDifferenceBetweenTwoTimes(dateOne: YTools.stringToDate(str: (AppDelegate.appUser?.last_login)!), dateTwo: Date.now()) > 48 {
                 //如果时间差大于48h，再次登录
-                self.mCenterViewModel.requestLoginData(username: (AppDelegate.appUser?.username)!, password: (AppDelegate.appUser?.local_pd)!, finishCallback: {
-
-                })
+                if let name = AppDelegate.appUser?.username{
+                    if let pass = AppDelegate.appUser?.password{
+                        self.mCenterViewModel.requestLoginData(username: name, password: pass, finishCallback: {
+                            
+                        })
+                    }
+                }
+                
             }
         }
         //---------

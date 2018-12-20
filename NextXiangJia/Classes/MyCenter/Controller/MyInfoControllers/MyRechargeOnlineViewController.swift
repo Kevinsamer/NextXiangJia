@@ -46,10 +46,10 @@ extension MyRechargeOnlineViewController {
     }
 
     private func setupBodyContent(){
-        let label = UILabel(frame: CGRect(x: finalScreenW / 2 - 50, y: finalScreenH / 2 - 20, width: 100, height: 40))
+        let label = UILabel(frame: CGRect(x: 0, y: finalScreenH / 2 - 20, width: finalScreenW, height: 40))
         label.textAlignment = .center
-        label.text = "MyRechargePage"
+        label.text = "iOS端在线充值暂时关闭"
         self.view.addSubview(label)
-        self.view.backgroundColor = UIColor.random.lighten(by: 0.6)
+        self.view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     }
 }

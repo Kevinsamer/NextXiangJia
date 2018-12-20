@@ -14,7 +14,7 @@ import SwifterSwift
 import Kingfisher
 import SwiftEventBus
 import SnapKit
-
+import Toast_Swift
 //searchBar attribute
 private let searchBarH:CGFloat = 64
 //banner attribute
@@ -129,6 +129,7 @@ class HomeViewController: UIViewController {
         //collection.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collection.dataSource = self
         collection.delegate = self
+        collection.showsVerticalScrollIndicator = false
         collection.register(UINib.init(nibName: "ItemCell", bundle: nil), forCellWithReuseIdentifier: itemCellID)
         collection.register(UINib.init(nibName: "HomeCollHeadView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headID)
         collection.backgroundColor = UIColor.init(named: "home_collectionview_bg")
@@ -302,9 +303,13 @@ class HomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //self.tabBarController?.tabBar.isHidden = false
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //self.tabBarController?.tabBar.isHidden = false
+        
     }
 
 }
@@ -413,18 +418,21 @@ extension HomeViewController{
     }
     
     @objc func categoryTapAction(){
-        print("Category Clicked")
+//        print("Category Clicked")
         self.tabBarController?.selectedIndex = 3
     }
     @objc func shopCartTapAction(){
-        print("Shopcart Clicked")
+//        print("Shopcart Clicked")
         self.tabBarController?.selectedIndex = 1
     }
     @objc func collectionTapAction(){
-        print("Collection Clicked")
+//        print("Collection Clicked")
+        let vc = MyCollectionViewController()
+        self.navigationController?.show(vc, sender: self)
     }
     @objc func tuangouTapAction(){
-        print("Tuangou Clicked")
+//        print("Tuangou Clicked")
+        YTools.showMyToast(rootView: self.view, message: "今日团购未开启", duration: 0.5, position: ToastPosition.center)
     }
     
 }

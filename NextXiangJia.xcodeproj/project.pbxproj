@@ -128,7 +128,6 @@
 		09495ADA21BA4FB600DFB86B /* APRSASigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 09495AD421BA4FB500DFB86B /* APRSASigner.m */; };
 		09495ADB21BA4FB600DFB86B /* APOrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 09495AD621BA4FB500DFB86B /* APOrderInfo.m */; };
 		09495ADC21BA4FB600DFB86B /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 09495AD821BA4FB600DFB86B /* openssl_wrapper.m */; };
-		09495ADE21BA550C00DFB86B /* openssl in Resources */ = {isa = PBXBuildFile; fileRef = 09495ADD21BA550B00DFB86B /* openssl */; };
 		09495B2D21BA5C2800DFB86B /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09495B2B21BA5C2700DFB86B /* libcrypto.a */; };
 		09495B2E21BA5C2800DFB86B /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09495B2C21BA5C2800DFB86B /* libssl.a */; };
 		094C407820AAC400001E5C77 /* SMSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094C407420AAC3FF001E5C77 /* SMSegment.swift */; };
@@ -408,7 +407,6 @@
 		09495AD721BA4FB500DFB86B /* APRSASigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APRSASigner.h; sourceTree = "<group>"; };
 		09495AD821BA4FB600DFB86B /* openssl_wrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = openssl_wrapper.m; sourceTree = "<group>"; };
 		09495AD921BA4FB600DFB86B /* APOrderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APOrderInfo.h; sourceTree = "<group>"; };
-		09495ADD21BA550B00DFB86B /* openssl */ = {isa = PBXFileReference; lastKnownFileType = folder; path = openssl; sourceTree = "<group>"; };
 		09495AE021BA554900DFB86B /* ossl_typ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ossl_typ.h; sourceTree = "<group>"; };
 		09495AE121BA554A00DFB86B /* lhash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lhash.h; sourceTree = "<group>"; };
 		09495AE221BA554A00DFB86B /* ebcdic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ebcdic.h; sourceTree = "<group>"; };
@@ -669,7 +667,6 @@
 		090269572040F710007FF5B9 /* NextXiangJia */ = {
 			isa = PBXGroup;
 			children = (
-				09495ADD21BA550B00DFB86B /* openssl */,
 				096C42BD2112E03100BBA4DE /* IwebShopModels */,
 				090269892040F921007FF5B9 /* Classes */,
 				090269582040F710007FF5B9 /* AppDelegate.swift */,
@@ -1785,7 +1782,6 @@
 				0902695E2040F710007FF5B9 /* Main.storyboard in Resources */,
 				09E9643D212121DE0095180C /* MyCollectionViewCell.xib in Resources */,
 				0992E45520BC02D900B7902E /* back_button@2x.png in Resources */,
-				09495ADE21BA550C00DFB86B /* openssl in Resources */,
 				09298D43212D036A0015CE6B /* iwebshop_areas.txt in Resources */,
 				0992E45720BC02D900B7902E /* cart_addBtn_nomal@2x.png in Resources */,
 			);
@@ -2315,7 +2311,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_ACTIVITY_MODE = "";
-				DEVELOPMENT_TEAM = 2U9PZ73EZ2;
+				DEVELOPMENT_TEAM = M5KK8AVZVV;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Alamofire\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/AlamofireObjectMapper\"",
@@ -2339,7 +2335,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = "";
 				"MTL_ENABLE_DEBUG_INFO[arch=*]" = default;
-				PRODUCT_BUNDLE_IDENTIFIER = yzc.wjyanghu.com.NextXiangJia;
+				PRODUCT_BUNDLE_IDENTIFIER = www.wjyanghu.com.NextXiangJia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/dev2018/Desktop/Project/NextXiangJia/NextXiangJia/Classes/Tools/AliPay/Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
@@ -2355,7 +2351,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_ACTIVITY_MODE = "";
-				DEVELOPMENT_TEAM = 2U9PZ73EZ2;
+				DEVELOPMENT_TEAM = M5KK8AVZVV;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Alamofire\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/AlamofireObjectMapper\"",
@@ -2378,7 +2374,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MTL_ENABLE_DEBUG_INFO = "";
-				PRODUCT_BUNDLE_IDENTIFIER = yzc.wjyanghu.com.NextXiangJia;
+				PRODUCT_BUNDLE_IDENTIFIER = www.wjyanghu.com.NextXiangJia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/dev2018/Desktop/Project/NextXiangJia/NextXiangJia/Classes/Tools/AliPay/Bridging-Header.h";
 				SWIFT_VERSION = 4.0;

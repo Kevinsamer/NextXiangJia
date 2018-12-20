@@ -63,7 +63,7 @@ extension MyCollectionViewController {
     }
     
     private func initData(){
-        collNum = 10
+        collNum = 0
     }
     
     private func setupBodyContent(){

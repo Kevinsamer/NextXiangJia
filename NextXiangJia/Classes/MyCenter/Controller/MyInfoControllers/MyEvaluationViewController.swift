@@ -11,7 +11,7 @@ import UIKit
 class MyEvaluationViewController: UIViewController {
     //MARK: - 懒加载
     lazy var noDataLabel: UILabel = {
-        let label = UILabel(frame: CGRect(x: finalScreenW / 2 - 50, y: finalScreenH / 2 - 20, width: 100, height: 40))
+        let label = UILabel(frame: CGRect(x: 0, y: finalScreenH / 2 - 20, width: finalScreenW, height: 40))
         label.textAlignment = .center
         label.text = "您当前没有评价信息"
         return label

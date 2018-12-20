@@ -12,12 +12,15 @@ class MainViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.delegate = self
+//        self.tabBarController?.delegate = self
         // Do any additional setup after loading the view.
         addChildrenController("Home")
         addChildrenController("ShopCart")
-        addChildrenController("MyCenter")
         addChildrenController("CategoryCenter")
+        addChildrenController("MyCenter")
+        
+        
         
     }
     
@@ -29,8 +32,22 @@ class MainViewController: UITabBarController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
     }
     
+    
+    
+    
+//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+//
+//        if item.tag == 444 || item.tag == 222{
+//            //点击底部tabbar，如果是购物车和我的则进行登录判断
+//            YTools.presentToLoginOrNextControl(vc: self, completion: {
+//
+//            })
+//
+//        }
+//    }
 
     /*
     // MARK: - Navigation
@@ -48,3 +65,20 @@ class MainViewController: UITabBarController {
         addChildViewController(childVC)
     }
 }
+
+extension MainViewController:UITabBarControllerDelegate{
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        //ps:底部4个tabBarItem设置了tag，首页：111，购物车：222，分类：333，我的：444
+        if viewController.tabBarItem.tag == 222 || viewController.tabBarItem.tag == 444{
+            if AppDelegate.appUser?.id == -1{
+                YTools.presentToLoginOrNextControl(vc: self, itemTag: viewController.tabBarItem.tag, completion: nil)
+                return false
+            }else{
+                return true
+            }
+            
+        }
+        return true
+    }
+}
+

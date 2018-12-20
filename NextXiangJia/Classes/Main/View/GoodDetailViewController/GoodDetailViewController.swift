@@ -300,11 +300,14 @@ extension GoodDetailViewController {
     }
     
     @objc private func shopCartClicked(){
-        print("购物车")
-        let vc = NextShopCartViewController()
-//        let vc = UIViewController()
-//        vc.view.backgroundColor = .red
-        self.navigationController?.show(vc, sender: self)
+//        print("购物车")
+        if AppDelegate.appUser?.id == -1{
+            YTools.presentToLoginOrNextControl(vc: self, itemTag: 666, completion: nil)
+        }else{
+            let vc = NextShopCartViewController()
+            self.navigationController?.show(vc, sender: self)
+        }
+        
     }
     
     @objc private func buyNowClicked(){
@@ -312,11 +315,15 @@ extension GoodDetailViewController {
         if self.selectedProduct == nil{
             YTools.showMyToast(rootView: self.view, message: "请选择商品规格")
         }else{
-            let vc = FillOrderViewController()
-            vc.id = "\(self.selectedProduct?.productType == 0 ? (self.selectedProduct?.good_Id)! : (self.selectedProduct?.selectedProduct?.id)!)"
-            vc.type = self.selectedProduct?.productType == 0 ? "goods" : "product"
-            vc.num = "\((self.selectedProduct?.selectedNum)!)"
-            self.navigationController?.show(vc, sender: self)
+            if AppDelegate.appUser?.id == -1{
+                YTools.presentToLoginOrNextControl(vc: self, itemTag: 0, completion: nil)
+            }else{
+                let vc = FillOrderViewController()
+                vc.id = "\(self.selectedProduct?.productType == 0 ? (self.selectedProduct?.good_Id)! : (self.selectedProduct?.selectedProduct?.id)!)"
+                vc.type = self.selectedProduct?.productType == 0 ? "goods" : "product"
+                vc.num = "\((self.selectedProduct?.selectedNum)!)"
+                self.navigationController?.show(vc, sender: self)
+            }
         }
        
     }
@@ -325,21 +332,23 @@ extension GoodDetailViewController {
         if selectedProduct == nil {
             YTools.showMyToast(rootView: self.view, message: "请选择商品规格")
         }else{
-            if selectedProduct?.productType == 0{
-//                0无规格  1有规格
-                shopcartViewModel.requestJoinCart(id: (selectedProduct?.good_Id)!, num: (selectedProduct?.selectedNum)!, type: .goods) {
-                    self.joinCartModel = self.shopcartViewModel.joinCartModel
+            
+            if AppDelegate.appUser?.id == -1{
+                YTools.presentToLoginOrNextControl(vc: self, itemTag: 0, completion: nil)
+            }else{
+                if selectedProduct?.productType == 0{
+                    //                0无规格  1有规格
+                    shopcartViewModel.requestJoinCart(id: (selectedProduct?.good_Id)!, num: (selectedProduct?.selectedNum)!, type: .goods) {
+                        self.joinCartModel = self.shopcartViewModel.joinCartModel
+                    }
+                    
+                }else {
+                    shopcartViewModel.requestJoinCart(id: (selectedProduct?.selectedProduct?.id)!, num: (selectedProduct?.selectedNum)!, type: .product) {
+                        self.joinCartModel = self.shopcartViewModel.joinCartModel
+                    }
                 }
-
-            }else {
-                shopcartViewModel.requestJoinCart(id: (selectedProduct?.selectedProduct?.id)!, num: (selectedProduct?.selectedNum)!, type: .product) {
-                    self.joinCartModel = self.shopcartViewModel.joinCartModel
-                }
-
             }
         }
-        
-        
     }
 }
 

@@ -12,6 +12,7 @@ private let textFieldH : CGFloat = 40
 private let viewSpace :CGFloat = 20
 
 class ChangePasswordViewController: UIViewController {
+    private var centerViewModel:MycenterViewModel = MycenterViewModel()
     //MARK: - 懒加载
     lazy var oldPassword: MyTextField = {
         let old = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
@@ -152,7 +153,10 @@ extension ChangePasswordViewController: UITextFieldDelegate{
 //MARK: - clickFunc
 extension ChangePasswordViewController {
     @objc func changeButtonClicked(){
-        YTools.showMyToast(rootView: self.view, message: "修改成功")
-        //self.navigationController?.popViewController(animated: true)
+        if !(oldPassword.text?.isEmpty)! && !(newPassword.text?.isEmpty)! && !(newPasswordAgain.text?.isEmpty)!{
+            centerViewModel.requestPasswordEdit(fpassword: oldPassword.text!, password: newPassword.text!, repassword: newPasswordAgain.text!, finishaCallback: { (resultString) in
+                YTools.showMyToast(rootView: self.view, message: resultString)
+            })
+        }
     }
 }

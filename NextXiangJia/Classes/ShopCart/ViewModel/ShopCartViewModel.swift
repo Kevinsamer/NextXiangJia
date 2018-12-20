@@ -9,14 +9,18 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+///加入购物车的商品类型：商品或货品
 enum JoinCartType:String {
     case goods = "goods"
     case product = "product"
 }
 
 class ShopCartViewModel {
+    ///加入购物车的返回model
     var joinCartModel:JoinCartModel?
+    ///购物车model
     var shopCartModel:ShopCartModel?
+    ///从购物车删除商品的model
     var removeCartModel:RemoveCartModel?
 }
 
@@ -51,8 +55,13 @@ extension ShopCartViewModel{
         }
     }
     
-    func requestRemoveCart(id goods_id:Int, type:JoinCartType,finishedCallback:@escaping (_ remove:RemoveCartModel)->()){
-        NetworkTools.requestData(type: MethodType.POST, urlString: REMOVECART_URL, parameters: ["goods_id":"\(goods_id)" as NSString, "type":"\(type)" as NSString]) { (result) in
+    ///请求删除购物车的一种商品
+    /// - parameter id:商品id
+    /// - parameter type: JoinCartType.goods/JoinCartType.products,商品类型，分为有规格和无规格，有规格为product,无规格为goods
+    /// - parameter finishedCallback:回调函数，请求结束后调用
+    /// - parameter remove:请求结束后服务器返回的移除结果model
+    func requestRemoveCart(goods_id id:Int, type:JoinCartType,finishedCallback:@escaping (_ remove:RemoveCartModel)->()){
+        NetworkTools.requestData(type: MethodType.POST, urlString: REMOVECART_URL, parameters: ["goods_id":"\(id)" as NSString, "type":"\(type)" as NSString]) { (result) in
             self.removeCartModel = nil
             let json = JSON(result)
             self.removeCartModel = RemoveCartModel(jsonData: json)
@@ -60,6 +69,8 @@ extension ShopCartViewModel{
         }
     }
     
+    ///请求购物车数据
+    /// - parameter finishedCallback:请求回调
     func requestCart(finishedCallback: @escaping ()->()){
         NetworkTools.requestData(type: .GET, urlString: CARTINFO_URL) { (result) in
             self.shopCartModel = nil

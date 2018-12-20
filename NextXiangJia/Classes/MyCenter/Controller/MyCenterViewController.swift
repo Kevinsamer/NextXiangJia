@@ -160,6 +160,7 @@ class MyCenterViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //self.tabBarController?.tabBar.isHidden = false
+        
         initDatas()
     }
 
@@ -188,7 +189,7 @@ extension MyCenterViewController{
         }else {
             headImageView.kf.setImage(with: URL.init(string: BASE_URL + (AppDelegate.appUser?.head_ico)!), placeholder: UIImage.init(named: "loading"), options: nil, progressBlock: nil, completionHandler: nil)
             myIDLabel.text = AppDelegate.appUser?.username
-            myBalanceNum.text = "\(AppDelegate.appUser?.balance ?? 0.00)"
+            myBalanceNum.text = "\(Double(AppDelegate.appUser?.balance ?? 0.00).format(f: "0.2"))"
             myScoreNum.text = "\(AppDelegate.appUser?.point ?? 0)"
             myExpGroupDetail.text = "\(AppDelegate.appUser?.exp ?? 0)"
         }
@@ -225,7 +226,7 @@ extension MyCenterViewController{
         rootScrollView.contentSize = CGSize(width: finalScreenW, height: rootScrollViewH)
         rootScrollView.alwaysBounceVertical = false
         rootScrollView.isScrollEnabled = true
-        rootScrollView.showsVerticalScrollIndicator = true
+        rootScrollView.showsVerticalScrollIndicator = false
     }
     private func setupNavigationBar(){
         navigationItem.title = "个人中心"

@@ -17,18 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zq4-4t-mZ0">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zq4-4t-mZ0">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c55-ts-mea">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c55-ts-mea">
                                         <rect key="frame" x="0.0" y="-400" width="375" height="600"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="600" id="p5W-dV-3MS"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mmY-FB-h51">
-                                        <rect key="frame" x="0.0" y="220" width="375" height="505"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmY-FB-h51">
+                                        <rect key="frame" x="0.0" y="220" width="375" height="500"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="500" id="JXW-wT-Cc7"/>
@@ -38,8 +38,12 @@
                                 <constraints>
                                     <constraint firstItem="mmY-FB-h51" firstAttribute="top" secondItem="c55-ts-mea" secondAttribute="bottom" constant="20" id="0Mu-fk-BU4"/>
                                     <constraint firstItem="mmY-FB-h51" firstAttribute="width" secondItem="Zq4-4t-mZ0" secondAttribute="width" id="68L-Ny-s1B"/>
+                                    <constraint firstItem="c55-ts-mea" firstAttribute="leading" secondItem="mmY-FB-h51" secondAttribute="leading" id="7ls-8N-Ec2"/>
                                     <constraint firstItem="c55-ts-mea" firstAttribute="width" secondItem="Zq4-4t-mZ0" secondAttribute="width" id="Bib-mY-uKs"/>
+                                    <constraint firstAttribute="trailing" secondItem="c55-ts-mea" secondAttribute="trailing" id="Fp5-Z6-pE6"/>
+                                    <constraint firstAttribute="bottom" secondItem="c55-ts-mea" secondAttribute="bottom" constant="500" id="OBb-Hb-YC1"/>
                                     <constraint firstItem="c55-ts-mea" firstAttribute="top" secondItem="Zq4-4t-mZ0" secondAttribute="top" constant="-400" id="h8n-qY-EkK"/>
+                                    <constraint firstItem="c55-ts-mea" firstAttribute="leading" secondItem="Zq4-4t-mZ0" secondAttribute="leading" id="n8H-RR-HDt"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -67,7 +71,7 @@
         <scene sceneID="XR0-31-stf">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bIz-fV-qeD" customClass="MyNavigationController" customModule="NextXiangJia" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="tabBar_myJD_normal" selectedImage="tabBar_myJD_press" id="pdD-43-hYq"/>
+                    <tabBarItem key="tabBarItem" tag="444" title="" image="tabBar_myJD_normal" selectedImage="tabBar_myJD_press" id="pdD-43-hYq"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Y6K-tR-hnR">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

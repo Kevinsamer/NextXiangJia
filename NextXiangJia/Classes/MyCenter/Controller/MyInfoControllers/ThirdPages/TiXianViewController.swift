@@ -76,7 +76,7 @@ class TiXianViewController: UIViewController {
     lazy var buttomButton: UIButton = {
         let button = UIButton(type: UIButtonType.system)
         button.frame = CGRect(x: 0, y: UIDevice.current.isX() ? finalScreenH - IphonexHomeIndicatorH - bottomButtonH : finalScreenH - bottomButtonH, width: finalScreenW, height: bottomButtonH)
-        button.backgroundColor = #colorLiteral(red: 0.3568627451, green: 0.7568627451, blue: 0.8470588235, alpha: 1)
+        button.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         button.setTitleForAllStates("确认提现")
         button.setTitleColorForAllStates(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
         button.titleLabel?.font = UIFont.systemFont(ofSize: 22)
@@ -117,7 +117,7 @@ extension TiXianViewController {
     }
     
     private func initData(){
-        balance = 1111.11
+        balance = 0.00
     }
     
     private func setupBottomButton(){
@@ -139,7 +139,7 @@ extension TiXianViewController {
 //MARK: - 事件绑定
 extension TiXianViewController {
     @objc private func buttonClicked(){
-        
+        YTools.showMyToast(rootView: self.view, message: "余额不足无法提现")
     }
 }
 

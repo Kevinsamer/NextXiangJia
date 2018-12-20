@@ -50,6 +50,10 @@ let ORDERSTATUS_URL = BASE_URL + "ucenter/order_status"
 ///修改订单状态接口，(传订单id和status)
 let UPDATEORDER_URL = BASE_URL + "app/updateOrder"
 //待使用
+//TODO:将修改密码php代码的中文返回码替换为数字返回码，在app中处理相应的返回码
+///修改密码接口(传原密码、新密码、重复新密码)
+let PASSWORDEDIT_URL = BASE_URL + "app/password_edit"
+
 let COMMENTS_URL = BASE_URL + "comment_ajax"//?goods_id=1&page=1
 
 enum MethodType {

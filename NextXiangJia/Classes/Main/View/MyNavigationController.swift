@@ -60,7 +60,7 @@ class MyNavigationController: UINavigationController {
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         
-        if self.viewControllers.count > 0 {
+        if self.viewControllers.count > 0{
             viewController.hidesBottomBarWhenPushed = true
         }
         super.pushViewController(viewController, animated: animated)
@@ -69,6 +69,7 @@ class MyNavigationController: UINavigationController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.topItem?.title = ""
+        //print(self.viewControllers.count)
         //YTools.setNavigationBarAndTabBar(navCT: (self.viewControllers.first?.navigationController)!, navItem: (self.viewControllers.first?.navigationItem)!)
     }
     

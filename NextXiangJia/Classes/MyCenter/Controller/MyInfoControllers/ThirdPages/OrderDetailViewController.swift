@@ -381,7 +381,7 @@ extension OrderDetailViewController{
     }
     
     @objc private func buyAgain(){
-        print(self.goodsList?.first?.id)
+        //print(self.goodsList?.first?.id)
         YTools.pushToGoodsDetail(goodsID: (self.goodsList?.first?.goods_id)!, navigationController: self.navigationController, sender: self)
     }
 }

@@ -52,11 +52,45 @@ class LoginViewController: UIViewController {
                 AppDelegate.appUser?.email = user.email
                 AppDelegate.appUser?.local_pd = user.local_pd
                 AppUserCoreDataHelper.AppUserHelper.modifyAppUser(appUser: AppDelegate.appUser!)
-                self.navigationController?.popViewController(animated: true)
+//                if self.presentToShow{
+//
+//                }else{
+//                    self.navigationController?.popViewController(animated: true)
+//                }
+                
+                self.username.resignFirstResponder()
+                self.password.resignFirstResponder()
+                self.dismiss(animated: true, completion: {
+                    if self.itemTag == 222{
+                        //跳转至首页购物车
+                        YTools.showMyToast(rootView: (self.parentVC?.view)!, message: "登录成功")
+                        (self.parentVC as? UITabBarController)?.selectedIndex = 1
+                        //self.mainVC?.selectedIndex = 1
+                    }else if self.itemTag == 444{
+                        YTools.showMyToast(rootView: (self.parentVC?.view)!, message: "登录成功")
+                        //self.mainVC?.selectedIndex = 3
+                        //跳转至首页我的
+                        (self.parentVC as? UITabBarController)?.selectedIndex = 3
+                    }else if self.itemTag == 666{
+                        //商品详情页跳转至购物车
+                        YTools.showMyToast(rootView: (self.parentVC?.view)!, message: "登录成功")
+                        let vc = NextShopCartViewController()
+                        self.parentVC?.navigationController?.show(vc, sender: self.parentVC)
+                        //self.navigationController?.show(vc, sender: self)
+                    }else{
+                        YTools.showMyToast(rootView: (self.parentVC?.view)!, message: "登录成功，请继续购物")
+                    }
+                })
+                
             }
         }
     }
-    
+    ///是否present弹出的标志位
+    var presentToShow:Bool = false
+    ///需要跳转的item的tag,底部4个tabBarItem设置了tag，首页：111，购物车：222，分类：333，我的：444
+    var itemTag:Int = 0
+    ///MainViewController
+    var parentVC:UIViewController?
     //MARK: - 懒加载
     lazy var username: MyTextField = {
         let name = MyTextField(frame: CGRect(x: finalScreenW / 2 - textFieldW / 2, y: 100 + finalStatusBarH + finalNavigationBarH, width: textFieldW, height: textFieldH))
@@ -193,6 +227,7 @@ class LoginViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for view in self.view.subviews {
             view.resignFirstResponder()
+            
         }
     }
     /*
@@ -210,9 +245,39 @@ class LoginViewController: UIViewController {
 //MARK: - setUI
 extension LoginViewController{
     func setUI(){
+        
         self.view.backgroundColor = .white
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "登录", navItem:self.navigationItem)
+        if self.navigationController != nil{
+//            if let tabbar = self.tabBarController{
+//                YTools.setNavigationBarAndTabBar(navCT: navi, tabbarCT: tabbar, titleName: "登录", navItem:self.navigationItem)
+//            }
+            navigationItem.title = "登录"
+            let closeBtn = UIButton(type: UIButtonType.custom)
+            closeBtn.frame = CGRect(x: 20, y:finalStatusBarH + 20, width: 30, height: 30)
+            closeBtn.setImageForAllStates(#imageLiteral(resourceName: "login_close"))
+            
+            closeBtn.addTarget(self, action: #selector(closeSelf), for: UIControlEvents.touchUpInside)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: closeBtn)
+        }else{
+            if presentToShow{
+                let imageV = UIImageView(frame: CGRect(x: finalScreenW / 2 - 40, y: finalStatusBarH + 20, width: 80, height: 80))
+                imageV.image = UIImage(named: "topIcon")
+                imageV.clipsToBounds = true
+                imageV.layer.cornerRadius = 40
+                imageV.contentMode = .scaleAspectFit
+//                imageV.backgroundColor = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
+                self.view.addSubview(imageV)
+                
+                let closeBtn = UIButton(type: UIButtonType.custom)
+                closeBtn.frame = CGRect(x: 20, y:finalStatusBarH + 20, width: 30, height: 30)
+                closeBtn.setImageForAllStates(#imageLiteral(resourceName: "login_top_close"))
+                closeBtn.addTarget(self, action: #selector(closeSelf), for: UIControlEvents.touchUpInside)
+                self.view.addSubview(closeBtn)
+            }
+        }
+        //TODO:设置present出来的界面
+        
         //2.bodyContent
         setupBodyContent()
     }
@@ -249,17 +314,27 @@ extension LoginViewController: UITextFieldDelegate{
 }
 //MARK: - clickFunc
 extension LoginViewController {
+    @objc private func closeSelf(){
+        self.username.resignFirstResponder()
+        self.password.resignFirstResponder()
+        self.dismiss(animated: true)
+    }
+    
     @objc func registerClicked(){
         print("register")
         let vc = RegistViewController()
         vc.sendData = self
+//        self.present(vc, animated: true, completion: nil)
+        //self.parentVC?.navigationController?.show(vc, sender: self)
         self.navigationController?.show(vc, sender: self)
     }
     
     @objc func forgetPasswordClicked(){
         print("changePassword")
         let vc = FindPasswordViewController()
+//        self.navigationController?.show(vc, sender: self)
         self.navigationController?.show(vc, sender: self)
+//        self.present(vc, animated: true, completion: nil)
     }
     @objc func loginButtonClicked(){
         //1.输入框验证
@@ -289,13 +364,13 @@ extension LoginViewController {
         
     }
     @objc func loginByQQClicked(){
-        YTools.showMyToast(rootView: self.view, message: "QQ登录")
+        //YTools.showMyToast(rootView: self.view, message: "QQ登录")
     }
     @objc func loginByWXClicked(){
-        YTools.showMyToast(rootView: self.view, message: "WX登录")
+        //YTools.showMyToast(rootView: self.view, message: "WX登录")
     }
     @objc func loginByWBClicked(){
-        YTools.showMyToast(rootView: self.view, message: "WB登录")
+        //YTools.showMyToast(rootView: self.view, message: "WB登录")
     }
     
 }

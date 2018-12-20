@@ -9,13 +9,16 @@
 import UIKit
 
 class HomeViewModel {
+    ///斗鱼数据接口,测试网络请求接口
     lazy var tagGroup : [TagData] = [TagData]()
+    ///首页数据集合
     var homeDataGroup : HomeData?
     
 }
 
 //MARK: - 首页网络请求
 extension HomeViewModel {
+    ///请求都与数据，测试网络请求接口
     func requestBannerData(finishCallback : @escaping () -> ()){
         //swift异步操作聚合同步
 //        let group = DispatchGroup()
@@ -43,6 +46,8 @@ extension HomeViewModel {
         }
     }
     
+    ///请求首页数据
+    /// - parameter finishCallback:回调接口
     func requestHomeData(finishCallback : @escaping () -> ()){
         NetworkTools.requestData(type: .GET, urlString: HOMEDATA_URL) { (result) in
             //print(result)

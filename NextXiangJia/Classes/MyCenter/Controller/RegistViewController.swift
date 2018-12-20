@@ -204,8 +204,15 @@ class RegistViewController: UIViewController {
 extension RegistViewController{
     func setUI(){
         self.view.backgroundColor = .white
+//        print(self.navigationController)
+//        print(self.tabBarController)
         //1.设置navigationBar tabBar
-        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "用户注册", navItem:self.navigationItem)
+//        if let navi = self.navigationController{
+//            if let tab = self.tabBarController{
+//                YTools.setNavigationBarAndTabBar(navCT: navi, tabbarCT: tab, titleName: "用户注册", navItem:self.navigationItem)
+//            }
+//        }
+        navigationItem.title = "用户注册"
         //2.bodyContent
         setupBodyContent()
         NotificationCenter.default.addObserver(self, selector: #selector(textChanged(notification:)), name: NSNotification.Name.UITextFieldTextDidChange, object: regUsername)

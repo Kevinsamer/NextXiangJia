@@ -23,7 +23,10 @@ class MyInfoViewController: FormViewController {
             if AppDelegate.appUser?.id != -1 {
                 //App退出登录
                 AppUserCoreDataHelper.AppUserHelper.delAppUser {
-                    self.navigationController?.popViewController(animated: true)
+                    //self.navigationController?.popViewController(animated: true)
+                    //self.navigationController?.popViewController(animated: true)?.tabBarController?.selectedIndex = 0
+                    self.tabBarController?.selectedIndex = 0
+                    self.navigationController?.popToRootViewController(animated: true)
                 }
                 //发出退出登录的http请求
                 self.myCenterViewModel.requestLoginOut()
@@ -42,6 +45,7 @@ class MyInfoViewController: FormViewController {
         // Do any additional setup after loading the view.
         //设置ui
         setUI()
+        
     }
     
     override func didReceiveMemoryWarning() {

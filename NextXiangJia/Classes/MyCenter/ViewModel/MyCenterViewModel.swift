@@ -10,9 +10,13 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 class MycenterViewModel {
+    ///添加地址结果信息
     var resultMsg:String = ""
+    ///登录用户model
     var userMember:UserMemberModel?
+    ///登录失败信息
     var errorInfo:String?
+    ///用户所有地址信息model
     var userAddressInfo:[MyAddressModel]?
 }
 //默认地址请求参数枚举
@@ -30,7 +34,12 @@ enum queryCondition:String {
 }
 
 
+
 extension MycenterViewModel {
+    ///请求登录
+    /// - parameter username:登录用户名
+    /// - parameter password:密码
+    /// - parameter finishCallback:回调函数
     func requestLoginData(username login_info:String, password:String, finishCallback: @escaping ()->()){
         NetworkTools.requestData(type: MethodType.POST, urlString: LOGIN_URL, parameters: ["login_info":login_info as NSString, "password":password as NSString]) { (result) in
             self.userMember = nil
@@ -51,6 +60,12 @@ extension MycenterViewModel {
         }
     }
     
+    ///请求注册
+    /// - parameter name:注册用户名
+    /// - parameter pass:注册密码
+    /// - parameter repass:重复密码
+    /// - parameter captcha:验证码
+    /// - parameter finishCallback:回调函数
     func requestResisterData(username name:String, password pass:String, repassword repass:String, captcha:String, finishCallback:@escaping ()->()){
         NetworkTools.requestData(type: .POST, urlString: REGISTER_URL, parameters: ["username":name as NSString, "password":pass as NSString, "repassword":repass as NSString, "captcha":captcha as NSString]) { (result) in
             self.userMember = nil
@@ -69,12 +84,15 @@ extension MycenterViewModel {
         }
     }
     
+    ///请求验证码图片数据
+    /// - parameter result:服务器返回的验证码图片数据流
     func requestCaptchaData(finishCallback:@escaping (_ result:Data?)->()){
         Alamofire.request(AUTHCODE_URL, method: HTTPMethod.get).responseString { (response) in
             finishCallback(response.data)
         }
     }
     
+    ///请求退出登录
     func requestLoginOut(){
         Alamofire.request(LOGINOUT_URL, method: .get)
     }
@@ -193,7 +211,7 @@ extension MycenterViewModel {
         NetworkTools.requestData(type: .POST, urlString: MYORDERLIST_URL, parameters: ["user_id":"\(id)" as NSString, "page":"\(page)" as NSString, "query_what":"\(query)" as NSString]) { (result) in
             let resultData = JSON(result)
             let jsonData = resultData["result"].arrayValue
-            
+            print(query)
             var orderList:[OrderModel] = [OrderModel]()
             for json in jsonData {
                 orderList.append(OrderModel(jsonData: json))
@@ -237,6 +255,42 @@ extension MycenterViewModel {
     func requestOrderStatus(order_id id:Int, op:String, finishCallback:@escaping ()->()){
         Alamofire.request(ORDERSTATUS_URL, method: .post, parameters: ["order_id":"\(id)" as NSString, "op":"\(op)" as NSString])
         finishCallback()
+    }
+    ///请求修改密码,服务器返回值对应关系如下：
+    ///   1. 密码格式不正确，请重新输入
+    ///   2. 两次输入的新密码不一致，请重新输入
+    ///   3. 原密码输入错误
+    ///   4. 密码修改成功
+    ///   5. 密码修改失败
+    /// - parameter fpassword:原密码
+    /// - parameter password:新密码
+    /// - parameter repassword:再次输入的新密码
+    /// - parameter finishCallback:回调函数
+    func requestPasswordEdit(fpassword:String, password:String, repassword:String, finishaCallback:@escaping (_ editResult:String)->()){
+        NetworkTools.requestData(type: .POST, urlString: PASSWORDEDIT_URL, parameters: ["fpassword":"\(fpassword)" as NSString, "password":"\(password)" as NSString, "repassword":"\(repassword)" as NSString]) { (result) in
+            let resultCode = result as! Int
+            switch resultCode {
+            case 1:
+                finishaCallback("密码格式不正确，请重新输入")
+                break
+            case 2:
+                finishaCallback("两次输入的新密码不一致，请重新输入")
+                break
+            case 3:
+                finishaCallback("原密码输入错误")
+                break
+            case 4:
+                finishaCallback("密码修改成功")
+                break
+            case 5:
+                finishaCallback("密码修改失败")
+                break
+            default:
+                finishaCallback("密码修改失败")
+                break
+            }
+            
+        }
     }
     
 }
