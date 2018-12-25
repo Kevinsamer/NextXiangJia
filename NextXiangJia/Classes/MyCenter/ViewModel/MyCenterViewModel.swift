@@ -289,8 +289,42 @@ extension MycenterViewModel {
                 finishaCallback("密码修改失败")
                 break
             }
-            
         }
     }
     
+    /// 请求修改用户信息
+    ///
+    /// 服务器返回码对应关系如下
+    /// 1. 邮箱已被注册
+    /// 2. 手机已被注册
+    /// 3. 资料修改成功
+    /// - Parameters:
+    ///   - name: 用户姓名(请求字段为true_name)
+    ///   - sex: 性别  男1  女2
+    ///   - birthday: 生日，eg:2018-07-03
+    ///   - mobile: 手机号
+    ///   - email: 邮箱
+    ///   - zip: 邮编
+    ///   - teltphone: 电话
+    ///   - qq: qq号
+    ///   - finishCallback: 回调函数
+    ///   - resultCode: 服务器返回码
+    func requestInfoEditAct(true_name name:String, sex:String, birthday:String, mobile:String, email:String, zip:String, teltphone:String, qq:String, finishCallback:@escaping (_ resultCode:Int)->()){
+        NetworkTools.requestData(type: .POST, urlString: INFOEDITACT_URL, parameters: ["true_name":"\(name)" as NSString, "sex":"\(sex)" as NSString, "birthday":"\(birthday)" as NSString, "mobile":"\(mobile)" as NSString, "email":"\(email)" as NSString, "zip":"\(zip)" as NSString, "telephone":"\(teltphone)" as NSString, "qq":"\(qq)" as NSString]) { (result) in
+            finishCallback(result as! Int)
+        }
+    }
+    
+    
+    /// 请求当前用户的个人资料
+    ///
+    /// - Parameter finishCallback: 回调函数
+    /// - parameter member:个人资料model
+    func requestMyInfo(finishCallback:@escaping (_ member:UserMemberModel)->()){
+        NetworkTools.requestData(type: MethodType.POST, urlString: MYINFO_URL) { (result) in
+            guard let resultDict = result as? [String : NSObject] else {return}
+            //print(resultDict)
+            finishCallback(UserMemberModel(dict: resultDict))
+        }
+    }
 }

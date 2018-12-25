@@ -9,6 +9,7 @@
 import UIKit
 import Eureka
 import ImageRow
+import Kingfisher
 class MyInfoViewController: FormViewController {
     private var qq:Int?
     private var myCenterViewModel:MycenterViewModel = MycenterViewModel()
@@ -37,6 +38,23 @@ class MyInfoViewController: FormViewController {
         alert.addAction(cancelAction)
         alert.addAction(okAction)
         return alert
+    }()
+    
+    lazy var disGroup: DispatchGroup = {
+        let group = DispatchGroup()
+        return group
+    }()
+    
+    lazy var mQueue: DispatchQueue = {
+        let queue = DispatchQueue.init(label: "initData")
+        return queue
+    }()
+    
+    lazy var alphaView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: finalScreenW, height: 44 * 9))
+        view.isUserInteractionEnabled = false
+        view.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        return view
     }()
     
     override func viewDidLoad() {
@@ -68,35 +86,71 @@ class MyInfoViewController: FormViewController {
 //MARK: - 设置ui
 extension MyInfoViewController {
     private func setUI(){
-        //1.设置navigationBar tabBar
-//        YTools.setNavigationBarAndTabBar(navCT: self.navigationController!, tabbarCT: self.tabBarController!, titleName: "个人资料", navItem:self.navigationItem)
+        //1.设置navigationBar
         navigationItem.title = "个人资料"
+        //0.初始化数据
+        disGroup.enter()
+        mQueue.async(group: disGroup, qos: .default, flags: []) {
+            self.initData()
+        }
+        
+        
         //2.设置bodyContent
-        setupBodyContent()
+        disGroup.notify(queue: mQueue) {
+            DispatchQueue.main.async {
+                self.setupBodyContent()
+            }
+            
+        }
+        
+    }
+    
+    private func initData(){
+        myCenterViewModel.requestMyInfo { (userMember) in
+            AppDelegate.appUser?.true_name = userMember.true_name
+            AppDelegate.appUser?.sex = Int32(userMember.sex)
+            AppDelegate.appUser?.birthday = userMember.birthday
+            AppDelegate.appUser?.mobile = userMember.mobile
+            AppDelegate.appUser?.telephone = userMember.telephone
+            AppDelegate.appUser?.zip = userMember.zip
+            AppDelegate.appUser?.qq = userMember.qq
+            AppDelegate.appUser?.email = userMember.email
+            AppUserCoreDataHelper.AppUserHelper.modifyAppUser(appUser: AppDelegate.appUser!)
+            self.disGroup.leave()
+        }
     }
 
     private func setupBodyContent(){
-//        let label = UILabel(frame: CGRect(x: finalScreenW / 2 - 50, y: finalScreenH / 2 - 20, width: 100, height: 40))
-//        label.textAlignment = .center
-//        label.text = "MyInfoPage"
-//        self.view.addSubview(label)
-//        self.view.backgroundColor = UIColor.random.lighten(by: 0.6)
+        
+        
         
         form +++ Section()
+            
         <<< ImageRow("icon") { row in
             row.title = "头像"
-            row.value = UIImage(named: "my_head")!
+            //row.imageURL = URL.init(string: BASE_URL + (AppDelegate.appUser?.head_ico ?? "/views/iwebmall/skin/default/images/front/user_ico.gif"))
             //row.placeholderImage = UIImage(named: "my_head")!
             row.sourceTypes = [.PhotoLibrary, .Camera]
             row.clearAction =  .no
-            }.cellUpdate { cell, row in
-                cell.accessoryView?.layer.cornerRadius = 20
-                cell.accessoryView?.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-            }
+            
+            row.cell.accessoryView?.layer.cornerRadius = 20
+            row.cell.accessoryView?.frame = CGRect(x: finalScreenW - 40, y: 0, width: 40, height: 40)
+            (row.cell.accessoryView as! UIImageView).kf.setImage(with: URL.init(string: BASE_URL + (AppDelegate.appUser?.head_ico ?? "/views/iwebmall/skin/default/images/front/user_ico.gif")), placeholder: UIImage(named: "user_ico"))
+            }.cellSetup { cell, row in
+                
+                //cell.imageView?.kf.setImage(with: URL.init(string: BASE_URL + ("/views/iwebmall/skin/default/images/front/user_ico.gif")), placeholder: UIImage(named: "my_head"))
+            }.cellUpdate({ (cell, row) in
+                //cell.addSubview(self.alphaView)
+                if row.value == nil {
+                    (row.cell.accessoryView as! UIImageView).kf.setImage(with: URL.init(string: BASE_URL + (AppDelegate.appUser?.head_ico ?? "/views/iwebmall/skin/default/images/front/user_ico.gif")), placeholder: UIImage(named: "user_ico"))
+                }
+            })
         <<< TextRow("username"){ row in
+            
             row.title = "姓名"
             //row.tag = "username"
             row.placeholder = "请输入姓名"
+            row.value = AppDelegate.appUser?.true_name
             row.add(rule: RuleRequired())
             }.cellUpdate({ (cell, row) in
                 if !row.isValid{
@@ -107,7 +161,7 @@ extension MyInfoViewController {
         <<< PickerInputRow<String>("sex"){
             $0.title = "性别"
             $0.options = ["男","女"]
-            $0.value = $0.options.first
+            $0.value = AppDelegate.appUser?.sex == 1 ? $0.options.first : $0.options.last
             //$0.add(rule: RuleRequired())
             //$0.tag = "sex"
         }
@@ -116,8 +170,10 @@ extension MyInfoViewController {
             $0.cell.datePicker.locale = Locale.init(identifier: "zh_CN")
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
+            dateFormatter.timeZone = TimeZone.init(secondsFromGMT: 0)
+            dateFormatter.locale = .current
             $0.dateFormatter = dateFormatter
-            $0.value = Date(timeIntervalSinceReferenceDate: 0)
+            $0.value = dateFormatter.date(from: (AppDelegate.appUser?.birthday)!)
             //$0.tag = "date"
             
             }.cellUpdate({ (cell, row) in
@@ -127,7 +183,7 @@ extension MyInfoViewController {
             $0.title = "手机"
             $0.placeholder = "请输入手机号"
             $0.add(rule: RuleRequired())
-            
+            $0.value = AppDelegate.appUser?.mobile
             //$0.tag = "phone"
             }.cellUpdate({ (cell, row) in
                 if !row.isValid{
@@ -138,37 +194,64 @@ extension MyInfoViewController {
         <<< PhoneRow("tel"){
             $0.title = "电话"
             $0.placeholder = "请输入电话号码"
+            $0.value = AppDelegate.appUser?.telephone
             //$0.tag = "tel"
         }
-        <<< IntRow("zipCode"){
+        <<< PhoneRow("zipCode"){
             $0.title = "邮编"
             $0.placeholder = "请输入邮编"
+            $0.value = AppDelegate.appUser?.zip
             //$0.tag = "zipCode"
         }
-        <<< IntRow("qq"){
+        <<< PhoneRow("qq"){
             $0.title = "QQ"
             $0.placeholder = "请输入QQ"
+            $0.value = AppDelegate.appUser?.qq
+            
             //$0.tag = "qq"
         }
         <<< EmailRow("email"){
             $0.title = "邮箱"
             $0.placeholder = "请输入邮箱"
+            $0.value = AppDelegate.appUser?.email
             //$0.tag = "email"
         }
         <<< ButtonRow("confirm"){
-            $0.title = "确认"
+            $0.title = "修改个人资料"
+            
             }.onCellSelection({ (cell, row) in
-                let nameRow:TextRow = self.form.rowBy(tag: "username")!
-//                let sexRow:PickerInputRow<String> = self.form.rowBy(tag: "sex")!
-//                let dateRow:DateRow = self.form.rowBy(tag: "birthday")!
-//                let phoneRow:PhoneRow = self.form.rowBy(tag: "phone")!
-//                let telRow:PhoneRow = self.form.rowBy(tag: "tel")!
-//                let zipCodeRow:IntRow = self.form.rowBy(tag: "zipCode")!
-//                let qqRow:IntRow = self.form.rowBy(tag: "qq")!
-//                let emailRow:EmailRow = self.form.rowBy(tag: "email")!
-                let icon : ImageRow = self.form.rowBy(tag: "icon")!
-                let values = self.form.values()
-                print("\(values)--\(icon.value ?? UIImage.init(named: "my_head")!)--\(nameRow.value ?? "no name")")
+                if row.title == "确认"{
+                    let nameRow:TextRow = self.form.rowBy(tag: "username")!
+                    let sexRow:PickerInputRow<String> = self.form.rowBy(tag: "sex")!
+                    let dateRow:DateRow = self.form.rowBy(tag: "birthday")!
+                    let phoneRow:PhoneRow = self.form.rowBy(tag: "phone")!
+                    let telRow:PhoneRow = self.form.rowBy(tag: "tel")!
+                    let zipCodeRow:PhoneRow = self.form.rowBy(tag: "zipCode")!
+                    let qqRow:PhoneRow = self.form.rowBy(tag: "qq")!
+                    let emailRow:EmailRow = self.form.rowBy(tag: "email")!
+//                    let icon : ImageRow = self.form.rowBy(tag: "icon")!
+//                    let values = self.form.values()
+//                    print("\(values)--\(icon.value ?? UIImage.init(named: "my_head")!)--\(nameRow.value ?? "no name")--\(YTools.dateToString(date: dateRow.value!).substring(to: 10))")
+                    row.title = "修改个人资料"
+                    row.updateCell()
+                    self.myCenterViewModel.requestInfoEditAct(true_name: nameRow.value ?? "", sex: sexRow.value ?? "", birthday: YTools.dateToString(date: dateRow.value!).substring(to: 10), mobile: phoneRow.value ?? "", email: emailRow.value ?? "", zip: zipCodeRow.value ?? "", teltphone: telRow.value ?? "", qq: qqRow.value ?? "", finishCallback: { (resultCode) in
+                        /// resultCode对应关系如下
+                        /// 1. 邮箱已被注册
+                        /// 2. 手机已被注册
+                        /// 3. 资料修改成功
+                        if resultCode == 1{
+                            YTools.showMyToast(rootView: self.view, message: "邮箱已被注册")
+                        }else if resultCode == 2{
+                            YTools.showMyToast(rootView: self.view, message: "手机已被注册")
+                        }else if resultCode == 3{
+                            YTools.showMyToast(rootView: self.view, message: "资料修改成功")
+                        }
+                    })
+                }else if row.title == "修改个人资料"{
+                    row.title = "确认"
+                    row.updateCell()
+                }
+                
                 
         }).cellSetup({ (cell, row) in
             cell.backgroundColor = UIColor(named: "save_blue")

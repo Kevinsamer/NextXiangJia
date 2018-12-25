@@ -419,7 +419,7 @@ extension HomeViewController{
     
     @objc func categoryTapAction(){
 //        print("Category Clicked")
-        self.tabBarController?.selectedIndex = 3
+        self.tabBarController?.selectedIndex = 2
     }
     @objc func shopCartTapAction(){
 //        print("Shopcart Clicked")

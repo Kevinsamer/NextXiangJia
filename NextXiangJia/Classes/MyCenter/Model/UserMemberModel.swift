@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class UserMemberModel:BaseModel {
     @objc var id:Int = 0//用户id
@@ -35,4 +36,5 @@ class UserMemberModel:BaseModel {
     @objc var custom:String = ""//用户习惯方式，配送和支付方式等信息
     @objc var email:String = ""//邮箱
     var local_pd:String = ""
+
 }
