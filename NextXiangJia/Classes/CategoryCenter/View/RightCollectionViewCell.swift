@@ -28,7 +28,7 @@ class RightCollectionViewCell: UICollectionViewCell {
         let cellH = self.frame.height
         imageView.frame = CGRect(x: imageView.frame.origin.x, y: cellH / 20, width: imageView.frame.width, height: cellH / 2)
         nameLabel.frame = CGRect(x: nameLabel.frame.origin.x, y: cellH * 3 / 5, width: nameLabel.frame.width, height: cellH * 3 / 20)
-        nameLabel.adjustsFontSizeToFitWidth = true
+//        nameLabel.adjustsFontSizeToFitWidth = true
         sellPriceLabel.frame = CGRect(x: sellPriceLabel.frame.origin.x, y: cellH * 4 / 5, width: sellPriceLabel.frame.width, height: cellH * 3 / 20)
         sellPriceLabel.textAlignment = .center
         //sellPriceLabel.translatesAutoresizingMaskIntoConstraints = false

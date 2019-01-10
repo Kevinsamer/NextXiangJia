@@ -1,4 +1,4 @@
-//
+ //
 //  CategoryViewController.swift
 //  NextXiangJia
 //
@@ -87,7 +87,7 @@ class CategoryViewController: UIViewController {
         coll.register(UINib.init(nibName: "RightCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: MyCellID)
         coll.dataSource = self
         coll.delegate = self
-        coll.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        coll.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         coll.alwaysBounceHorizontal = true
         coll.isPagingEnabled = true
         coll.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
